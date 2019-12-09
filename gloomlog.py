@@ -1,28 +1,61 @@
-class scenario(object):
+class encounter(object):
     """
-    A scenario from the game Gloomhaven
+    An encouter from the game Gloomhaven
+    Abstract class to capture scenarios and events
     """
-    def __init__(self, id, location, name):
+    def __init__(self, number, name):
         """
-        id (int):
-            the number of the scenario
-        location (tuple of a character and a number):
-            location of the scenario on the map
+        number (int):
+            the number of the encouter
         name (string):
-            the name of the scenario
+            the name of the encouter
         """
 
-        self.id = id
-        self.location = location
+        self.number = number
         self.name = name
     
 
-    def get_id(self):
+    def get_number(self):
         """
-        Returns the number of the scenario (int)
+        Returns the number of the encouter (int)
         """
 
-        return self.id
+        return self.number
+
+
+    def get_name(self):
+        """
+        Returns the name of the encouter (string)
+        """
+
+        return self.name
+
+    
+    def print_info(self):
+        """
+        Prints the general info about the encouter
+        """
+
+        print(str(self.number) + ". " + self.name)
+
+
+
+class scenario(encounter):
+    """
+    A scenario from the game Gloomhaven
+    """
+    def __init__(self, number, name, location):
+        """
+        number (int):
+            the number of the scenario
+        name (string):
+            the name of the scenario
+        location (tuple of a character and a number):
+            location of the scenario on the map
+        """
+
+        super().__init__(number, name)
+        self.location = location
 
 
     def get_location(self):
@@ -34,33 +67,38 @@ class scenario(object):
         return copy_location
 
 
-    def get_name(self):
-        """
-        Returns the name of the scenario (string)
-        """
-
-        return self.name
-
-    
     def print_info(self):
         """
-        Prints the general info about the scenario
+        Prints the general info about the encouter
         """
 
-        print(self.id + ". " + self.name + " (" + self.location[0] + "-" + self.location[1] + ")")
+        super().print_info()
+        print("Location: (" + self.location[0] + "-" + str(self.location[1]) + ")")
 
 
-def get_log():
+
+def get_encounter():
     """
     Prompts the user to input information about its encounters in Gloomhaven
     """
 
-    id = input("Enter a scenario id (int): ")
+    number = input("Enter an encounter number (int): ")
+    name = input("Enter an encounter name (string): ")
+
+    return encounter(number, name)
+
+
+def get_scenario():
+    """
+    Prompts the user to input information about its scenarios in Gloomhaven
+    """
+
+    number = input("Enter a scenario number (int): ")
+    name = input("Enter a scenario name (string): ")
     location_char = input("Enter a scenario character coordinate (single character string): ")
     location_numb = input("Enter a scenario number coordinate (int): ")
-    name = input("Enter a scenario name (string): ")
 
-    return scenario(id, (location_char, location_numb), name)
+    return scenario(number, name, (location_char, location_numb))
 
 
 def print_log(encounter):
@@ -70,5 +108,9 @@ def print_log(encounter):
 
     encounter.print_info()
 
-encounter = get_log()
-print_log(encounter)
+
+# nctr = get_encounter()
+# print_log(nctr)
+
+scen = get_scenario()
+print_log(scen)

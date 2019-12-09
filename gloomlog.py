@@ -12,6 +12,9 @@ class Encounter(object):
             the name of the encouter
         """
 
+        assert type(number) == int
+        assert type(name) == str
+
         self.number = number
         self.name = name
     
@@ -34,11 +37,15 @@ class Encounter(object):
 
     def __eq__(self, other):
         """
+        Other (Encounter):
+            the encounter to compare to
         Return whether the two encounters are the same
         (bool)
         """
 
-        return type(self) == type(other) and self.number == other.number
+        assert type(other) == type(self)
+
+        return self.number == other.number
 
 
     def __str__(self):
@@ -57,11 +64,21 @@ class GridLocation(object):
 
     def __init__(self, character, number):
         """
-        character (single character string: a - o):
+        character (single character string: A - O):
             the character denoting the horizontal / row value of the location
         number (int: 1 - 18):
             the number denoting the vertical / column value of the location
         """
+
+        assert type(character) == str
+        assert len(character) == 1
+
+        character = character.upper()
+
+        assert 64 < ord(character) and ord(character) < 80
+
+        assert type(number) == int
+        assert 0 < number and number < 19
 
         self.character = character
         self.number = number
@@ -87,11 +104,15 @@ class GridLocation(object):
     
     def __eq__(self, other):
         """
+        other (GridLocation):
+            the grid location to compare to
         Return whether the two grid location point to a similar location on the map of Gloomhaven
         (bool)
         """
 
-        return type(self) == type(other) and self.character == other.character and self.number == other.number
+        assert type(other) == type(self)
+
+        return self.character == other.character and self.number == other.number
     
 
     def __str__(self):
@@ -118,17 +139,19 @@ class Scenario(Encounter):
             the grid location of the scenario on the map of Gloomhaven
         """
 
+        assert type(gridLocation) == GridLocation
+
         super().__init__(number, name)
+
         self.gridLocation = gridLocation
 
 
     def getGridLocation(self):
         """
-        Returns location of the scenario on the map (tuple of a character and a number)
+        Returns GridLocation of the scenario on the map
         """
 
-        copy_location = self.gridLocation
-        return copy_location
+        return self.gridLocation
 
 
     def __str__(self):

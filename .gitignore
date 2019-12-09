@@ -1,0 +1,17 @@
+# common binary extensions (case insensitive)
+**.[dD][oO][cC]
+**.[dD][oO][cC][xX]
+**.[eE][xX][eE]
+**.[mM][sS][iI]
+**.[mM][pP][34]
+**.[pP][dD][fF]
+**.[pP][pP][tT]
+**.[pP][pP][tT][xX]
+**.[xX][lL][sS]
+**.[xX][lL][sS][xX]
+
+# ignore pycache
+__pycache__
+
+# ignore compiled python
+**.[pP][yY][cC]

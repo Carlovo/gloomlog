@@ -1,8 +1,9 @@
-class encounter(object):
+class Encounter(object):
     """
     An encouter from the game Gloomhaven
     Abstract class to capture scenarios and events
     """
+
     def __init__(self, number, name):
         """
         number (int):
@@ -15,7 +16,7 @@ class encounter(object):
         self.name = name
     
 
-    def get_number(self):
+    def getNumber(self):
         """
         Returns the number of the encouter (int)
         """
@@ -23,61 +24,123 @@ class encounter(object):
         return self.number
 
 
-    def get_name(self):
+    def getName(self):
         """
         Returns the name of the encouter (string)
         """
 
         return self.name
+    
+
+    def __eq__(self, other):
+        """
+        Return whether the two encounters are the same
+        (bool)
+        """
+
+        return type(self) == type(other) and self.number == other.number
+
+
+    def __str__(self):
+        """
+        Returns general info about the encouter
+        """
+
+        return str(self.number) + ". " + self.name
+
+
+
+class GridLocation(object):
+    """
+    A location by the grid on the map of Gloomhaven
+    """
+
+    def __init__(self, character, number):
+        """
+        character (single character string: a - o):
+            the character denoting the horizontal / row value of the location
+        number (int: 1 - 18):
+            the number denoting the vertical / column value of the location
+        """
+
+        self.character = character
+        self.number = number
 
     
-    def print_info(self):
+    def getCharacter(self):
         """
-        Prints the general info about the encouter
+        Returns the character denoting the horizontal / row value of the location.
+        (single character string: a - o)
         """
 
-        print(str(self.number) + ". " + self.name)
+        return self.character
+
+
+    def getNumber(self):
+        """
+        Returns the number denoting the vertical / column value of the location.
+        (int: 1 - 18)
+        """
+
+        return self.number
+
+    
+    def __eq__(self, other):
+        """
+        Return whether the two grid location point to a similar location on the map of Gloomhaven
+        (bool)
+        """
+
+        return type(self) == type(other) and self.character == other.character and self.number == other.number
+    
+
+    def __str__(self):
+        """
+        Returns general info about the grid location
+        """
+
+        return "(" + self.character + "-" + str(self.number) + ")"
 
 
 
-class scenario(encounter):
+class Scenario(Encounter):
     """
     A scenario from the game Gloomhaven
     """
-    def __init__(self, number, name, location):
+
+    def __init__(self, number, name, gridLocation):
         """
         number (int):
             the number of the scenario
         name (string):
             the name of the scenario
-        location (tuple of a character and a number):
-            location of the scenario on the map
+        gridLocation (GridLocation):
+            the grid location of the scenario on the map of Gloomhaven
         """
 
         super().__init__(number, name)
-        self.location = location
+        self.gridLocation = gridLocation
 
 
-    def get_location(self):
+    def getGridLocation(self):
         """
         Returns location of the scenario on the map (tuple of a character and a number)
         """
 
-        copy_location = self.location
+        copy_location = self.gridLocation
         return copy_location
 
 
-    def print_info(self):
+    def __str__(self):
         """
-        Prints the general info about the encouter
+        Returns general info about the scenario
         """
 
-        super().print_info()
-        print("Location: (" + self.location[0] + "-" + str(self.location[1]) + ")")
+        return super().__str__() + " " + self.gridLocation.__str__()
 
 
 
-def get_encounter():
+def getEncounter():
     """
     Prompts the user to input information about its encounters in Gloomhaven
     """
@@ -85,10 +148,10 @@ def get_encounter():
     number = input("Enter an encounter number (int): ")
     name = input("Enter an encounter name (string): ")
 
-    return encounter(number, name)
+    return Encounter(number, name)
 
 
-def get_scenario():
+def getScenario():
     """
     Prompts the user to input information about its scenarios in Gloomhaven
     """
@@ -98,19 +161,13 @@ def get_scenario():
     location_char = input("Enter a scenario character coordinate (single character string): ")
     location_numb = input("Enter a scenario number coordinate (int): ")
 
-    return scenario(number, name, (location_char, location_numb))
+    location = GridLocation(location_char, location_numb)
 
-
-def print_log(encounter):
-    """
-    Print the general info of the encouters the user had in Gloomhaven
-    """
-
-    encounter.print_info()
+    return Scenario(number, name, location)
 
 
 # nctr = get_encounter()
 # print_log(nctr)
 
-scen = get_scenario()
-print_log(scen)
+# scen = getScenario()
+# print(scen)

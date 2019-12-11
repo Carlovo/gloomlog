@@ -9,6 +9,81 @@ logging.basicConfig(level=logging.INFO, format='')
 
 
 
+class EncounterCopy(gloomlog.Encounter):
+    """
+    Encounter is an abstract class, but its functionality should still be tested
+    """
+    pass
+
+
+
+class TestGloomlogEncounter(unittest.TestCase):
+    """
+    Test Gloomlog's Encounter class
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing
+        """
+
+        logging.info("Setting up variables for testing Encounter class")
+
+        cls.number = 1000
+        cls.name = "Toeter toetert"
+
+        cls.nctrTest = EncounterCopy(cls.number, cls.name)
+
+
+    def testEncounterNumber(self):
+        """
+        Test whether the Encounter number has been correctly set
+        """
+
+        logging.info("Testing whether the Encounter number has been correctly set")
+        
+        self.assertEqual(self.number, self.nctrTest.getNumber())
+    
+
+    def testEncounterName(self):
+        """
+        Test whether the Encounter name has been correctly set
+        """
+
+        logging.info("Testing whether the Encounter name has been correctly set")
+        
+        self.assertEqual(self.name, self.nctrTest.getName())
+    
+
+    def testEncounterEqual(self):
+        """
+        Test whether the Encounter can test equality
+        """
+
+        logging.info("Testing whether the Encounter can test equality")
+
+        nctrCopy = EncounterCopy(self.number, self.name)
+        
+        self.assertEqual(self.nctrTest, nctrCopy)
+
+    
+    def testEncounterString(self):
+        """
+        Test whether the Encounter string representation is correct
+        """
+
+        logging.info("Testing whether the Encounter string representation is correct")
+
+        expectedString = str(self.number) + ". " + self.name
+        
+        logging.info("Expected Encounter string representation: " + expectedString)
+        logging.info("Outputted Encounter string representation: " + self.nctrTest.__str__())
+
+        self.assertEqual(self.nctrTest.__str__(), expectedString)
+
+
+
 class TestGloomlogGridLocation(unittest.TestCase):
     """
     Test Gloomlog's Location class
@@ -20,7 +95,7 @@ class TestGloomlogGridLocation(unittest.TestCase):
         Set up variables for testing
         """
 
-        logging.info("Setting up variables for testing")
+        logging.info("Setting up variables for testing Location class")
 
         cls.gridLocChar = "G"
         cls.gridLocNumb = 10
@@ -87,7 +162,7 @@ class TestGloomlogScenario(unittest.TestCase):
         Set up variables for testing
         """
 
-        logging.info("Setting up variables for testing")
+        logging.info("Setting up variables for testing Scenario class")
 
         cls.number = 1
         cls.name = "Black Barrow"
@@ -95,26 +170,6 @@ class TestGloomlogScenario(unittest.TestCase):
         cls.gridLocNumb = 10
 
         cls.scenTest = gloomlog.Scenario(cls.number, cls.name, gloomlog.GridLocation(cls.gridLocChar, cls.gridLocNumb))
-
-
-    def testScenarioNumber(self):
-        """
-        Test whether the scenario number has been correctly set
-        """
-
-        logging.info("Testing whether the scenario number has been correctly set")
-        
-        self.assertEqual(self.number, self.scenTest.getNumber())
-    
-
-    def testScenarioName(self):
-        """
-        Test whether the scenario name has been correctly set
-        """
-
-        logging.info("Testing whether the scenario name has been correctly set")
-        
-        self.assertEqual(self.name, self.scenTest.getName())
 
     
     def testScenarioLocationEqual(self):
@@ -127,18 +182,7 @@ class TestGloomlogScenario(unittest.TestCase):
         gridLocCopy = gloomlog.GridLocation(self.gridLocChar, self.gridLocNumb)
         
         self.assertEqual(self.scenTest.getGridLocation(), gridLocCopy)
-    
 
-    def testScenarioEqual(self):
-        """
-        Test whether the scenario can test equality
-        """
-
-        logging.info("Testing whether the scenario can test equality")
-
-        scenCopy = gloomlog.Scenario(self.number, self.name, gloomlog.GridLocation(self.gridLocChar, self.gridLocNumb))
-        
-        self.assertEqual(self.scenTest, scenCopy)
 
     
     def testScenarioString(self):

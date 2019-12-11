@@ -12,6 +12,8 @@ class Encounter(object):
             the name of the encouter
         """
 
+        assert type(self) != Encounter
+
         assert type(number) == int
         assert type(name) == str
 
@@ -72,8 +74,6 @@ class GridLocation(object):
 
         assert type(character) == str
         assert len(character) == 1
-
-        character = character.upper()
 
         assert 64 < ord(character) and ord(character) < 80
 

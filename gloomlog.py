@@ -190,6 +190,34 @@ class Event(Encounter):
 
 
 
+class RoadEvent(Event):
+    """
+    A class for road events from the game Gloomhaven
+    """
+
+    def __str__(self):
+        """
+        Returns general info about the road event
+        """
+
+        return "Road " + super().__str__()
+
+
+
+class CityEvent(Event):
+    """
+    A class for city events from the game Gloomhaven
+    """
+
+    def __str__(self):
+        """
+        Returns general info about the city event
+        """
+
+        return "City " + super().__str__()
+
+
+
 def getEncounter():
     """
     Prompts the user to input information about its encounters in Gloomhaven

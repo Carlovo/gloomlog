@@ -244,5 +244,75 @@ class TestGloomlogEvent(unittest.TestCase):
 
 
 
+class TestGloomlogRoadEvent(unittest.TestCase):
+    """
+    Test Gloomlog's RoadEvent class
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing
+        """
+
+        logging.info("Setting up variables for testing RoadEvent class")
+
+        cls.number = 1000
+        cls.name = "Toeter toetert"
+
+        cls.roadEventTest = gloomlog.RoadEvent(cls.number, cls.name)
+    
+
+    def testRoadEventString(self):
+        """
+        Test whether the RoadEvent string representation is correct
+        """
+
+        logging.info("Testing whether the RoadEvent string representation is correct")
+
+        expectedString = "Road Event: " + str(self.number) + ". " + self.name
+        
+        logging.info("Expected RoadEvent string representation: " + expectedString)
+        logging.info("Outputted RoadEvent string representation: " + self.roadEventTest.__str__())
+
+        self.assertEqual(self.roadEventTest.__str__(), expectedString)
+
+
+
+class TestGloomlogCityEvent(unittest.TestCase):
+    """
+    Test Gloomlog's CityEvent class
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing
+        """
+
+        logging.info("Setting up variables for testing CityEvent class")
+
+        cls.number = 1000
+        cls.name = "Toeter toetert"
+
+        cls.cityEventTest = gloomlog.CityEvent(cls.number, cls.name)
+    
+
+    def testCityEventString(self):
+        """
+        Test whether the CityEvent string representation is correct
+        """
+
+        logging.info("Testing whether the CityEvent string representation is correct")
+
+        expectedString = "City Event: " + str(self.number) + ". " + self.name
+        
+        logging.info("Expected CityEvent string representation: " + expectedString)
+        logging.info("Outputted CityEvent string representation: " + self.cityEventTest.__str__())
+
+        self.assertEqual(self.cityEventTest.__str__(), expectedString)
+
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

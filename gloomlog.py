@@ -163,6 +163,33 @@ class Scenario(Encounter):
 
 
 
+class Event(Encounter):
+    """
+    A abstract class for events from the game Gloomhaven
+    """
+
+    def __init__(self, number, name):
+        """
+        number (int):
+            the number of the event
+        name (string):
+            the name of the event
+        """
+
+        assert type(self) != Event
+
+        super().__init__(number, name)
+
+
+    def __str__(self):
+        """
+        Returns general info about the event
+        """
+
+        return "Event: " + super().__str__()
+
+
+
 def getEncounter():
     """
     Prompts the user to input information about its encounters in Gloomhaven

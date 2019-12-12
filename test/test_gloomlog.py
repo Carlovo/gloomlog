@@ -17,6 +17,14 @@ class EncounterCopy(gloomlog.Encounter):
 
 
 
+class EventCopy(gloomlog.Event):
+    """
+    Event is an abstract class, but its functionality should still be tested
+    """
+    pass
+
+
+
 class TestGloomlogEncounter(unittest.TestCase):
     """
     Test Gloomlog's Encounter class
@@ -198,6 +206,41 @@ class TestGloomlogScenario(unittest.TestCase):
         logging.info("Outputted scenario string representation: " + self.scenTest.__str__())
 
         self.assertEqual(self.scenTest.__str__(), expectedString)
+
+
+
+class TestGloomlogEvent(unittest.TestCase):
+    """
+    Test Gloomlog's Event class
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing
+        """
+
+        logging.info("Setting up variables for testing Event class")
+
+        cls.number = 1000
+        cls.name = "Toeter toetert"
+
+        cls.eventTest = EventCopy(cls.number, cls.name)
+    
+
+    def testEventString(self):
+        """
+        Test whether the Event string representation is correct
+        """
+
+        logging.info("Testing whether the Event string representation is correct")
+
+        expectedString = "Event: " + str(self.number) + ". " + self.name
+        
+        logging.info("Expected Event string representation: " + expectedString)
+        logging.info("Outputted Event string representation: " + self.eventTest.__str__())
+
+        self.assertEqual(self.eventTest.__str__(), expectedString)
 
 
 

@@ -1,3 +1,7 @@
+import json
+
+
+
 class Encounter(object):
     """
     An encouter from the game Gloomhaven
@@ -23,6 +27,17 @@ class Encounter(object):
         """
 
         return self.number
+
+
+    def toJSON(self):
+        """
+        Returns the JSON string representation of the information in the Encounter
+        """
+
+        nctrDict = {"number" : self.number}
+
+        return json.dumps(nctrDict, indent=2)
+
     
 
     def __eq__(self, other):
@@ -55,9 +70,9 @@ class GridLocation(object):
     def __init__(self, character, number):
         """
         character (single character string: A - O):
-            the character denoting the horizontal / row value of the location
+            the character denoting the horizontal / row value of the GridLocation
         number (int: 1 - 18):
-            the number denoting the vertical / column value of the location
+            the number denoting the vertical / column value of the GridLocation
         """
 
         assert type(character) == str
@@ -74,7 +89,7 @@ class GridLocation(object):
     
     def getCharacter(self):
         """
-        Returns the character denoting the horizontal / row value of the location.
+        Returns the character denoting the horizontal / row value of the GridLocation
         (single character string: a - o)
         """
 
@@ -83,18 +98,28 @@ class GridLocation(object):
 
     def getNumber(self):
         """
-        Returns the number denoting the vertical / column value of the location.
+        Returns the number denoting the vertical / column value of the GridLocation
         (int: 1 - 18)
         """
 
         return self.number
+
+
+    def toJSON(self):
+        """
+        Returns the JSON string representation of the information in the GridLocation
+        """
+
+        gridLocDict = {"character" : self.character, "number" : self.number}
+
+        return json.dumps(gridLocDict, indent=2)
 
     
     def __eq__(self, other):
         """
         other (GridLocation):
             the grid location to compare to
-        Return whether the two grid location point to a similar location on the map of Gloomhaven
+        Return whether the two grid location point to a similar GridLocation on the map of Gloomhaven
         (bool)
         """
 
@@ -105,7 +130,7 @@ class GridLocation(object):
 
     def __str__(self):
         """
-        Returns general info about the grid location
+        Returns general info about the GridLocation
         """
 
         return "(" + self.character + "-" + str(self.number) + ")"
@@ -120,11 +145,11 @@ class Scenario(Encounter):
     def __init__(self, number, name, gridLocation):
         """
         number (int):
-            the number of the scenario
+            the number of the Scenario
         name (string):
-            the name of the scenario
+            the name of the Scenario
         gridLocation (GridLocation):
-            the grid location of the scenario on the map of Gloomhaven
+            the grid location of the Scenario on the map of Gloomhaven
         """
 
         assert type(name) == str
@@ -138,7 +163,7 @@ class Scenario(Encounter):
     
     def getName(self):
         """
-        Returns the name of the encouter (string)
+        Returns the name of the Scenario (string)
         """
 
         return self.name
@@ -146,18 +171,31 @@ class Scenario(Encounter):
 
     def getGridLocation(self):
         """
-        Returns GridLocation of the scenario on the map
+        Returns GridLocation of the Scenario on the map
         """
 
         return self.gridLocation
+    
+
+    def toJSON(self):
+        """
+        Returns the JSON string representation of the information in the Scenario
+        """
+
+        scenarioDict = json.loads(super().toJSON())
+
+        scenarioDict["name"] = self.name
+        scenarioDict["GridLocation"] = json.loads(self.gridLocation.toJSON())
+
+        return json.dumps(scenarioDict, indent=2)
 
 
     def __str__(self):
         """
-        Returns general info about the scenario
+        Returns general info about the Scenario
         """
 
-        return super().__str__() + " " + self.name + " " + self.gridLocation.__str__()
+        return "Scenario: " + super().__str__() + " " + self.name + " " + self.gridLocation.__str__()
 
 
 

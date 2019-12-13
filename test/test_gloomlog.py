@@ -53,6 +53,21 @@ class TestGloomlogEncounter(unittest.TestCase):
         self.assertEqual(self.number, self.nctrTest.getNumber())
     
 
+    def testEncounterToJSON(self):
+        """
+        Test whether the Encounter can generate a correct JSON with all information about itself
+        """
+
+        logging.info("Testing whether the Encounter can generate a correct JSON with all information about itself")
+        logging.info("Expected JSON: " + self.nctrTest.toJSON())
+
+        fileJSON = open("TestGloomlogEncounter.json", 'r')
+        textJSON = fileJSON.read()
+        fileJSON.close()
+
+        self.assertEqual(textJSON, self.nctrTest.toJSON())
+    
+
     def testEncounterEqual(self):
         """
         Test whether the Encounter can test equality
@@ -83,7 +98,7 @@ class TestGloomlogEncounter(unittest.TestCase):
 
 class TestGloomlogGridLocation(unittest.TestCase):
     """
-    Test Gloomlog's Location class
+    Test Gloomlog's GridLocation class
     """
 
     @classmethod
@@ -92,7 +107,7 @@ class TestGloomlogGridLocation(unittest.TestCase):
         Set up variables for testing
         """
 
-        logging.info("Setting up variables for testing Location class")
+        logging.info("Setting up variables for testing GridLocation class")
 
         cls.gridLocChar = "G"
         cls.gridLocNumb = 10
@@ -102,30 +117,45 @@ class TestGloomlogGridLocation(unittest.TestCase):
     
     def testGridLocationCharacter(self):
         """
-        Test whether the grid location character has been correctly set
+        Test whether the GridLocation character has been correctly set
         """
 
-        logging.info("Testing whether the grid location character has been correctly set")
+        logging.info("Testing whether the GridLocation character has been correctly set")
         
         self.assertEqual(self.gridLocChar, self.gridLoc.getCharacter())
 
 
     def testGridLocationNumber(self):
         """
-        Test whether the grid location number has been correctly set
+        Test whether the GridLocation number has been correctly set
         """
 
-        logging.info("Testing whether the grid location number has been correctly set")
+        logging.info("Testing whether the GridLocation number has been correctly set")
         
         self.assertEqual(self.gridLocNumb, self.gridLoc.getNumber())
+
+    
+    def testGridLocationToJSON(self):
+        """
+        Test whether the GridLocation can generate a correct JSON with all information about itself
+        """
+
+        logging.info("Testing whether the GridLocation can generate a correct JSON with all information about itself")
+        logging.info("Expected JSON: " + self.gridLoc.toJSON())
+
+        fileJSON = open("TestGloomlogGridLocation.json", 'r')
+        textJSON = fileJSON.read()
+        fileJSON.close()
+
+        self.assertEqual(textJSON, self.gridLoc.toJSON())
     
 
     def testGridLocationEqual(self):
         """
-        Test whether the grid location can test equality
+        Test whether the GridLocation can test equality
         """
 
-        logging.info("Testing whether the grid location can test equality")
+        logging.info("Testing whether the GridLocation can test equality")
 
         gridLocCopy = gloomlog.GridLocation(self.gridLocChar, self.gridLocNumb)
         
@@ -134,10 +164,10 @@ class TestGloomlogGridLocation(unittest.TestCase):
     
     def testGridLocationString(self):
         """
-        Test whether the grid location string representation is correct
+        Test whether the GridLocation string representation is correct
         """
 
-        logging.info("Testing whether the grid location string representation is correct")
+        logging.info("Testing whether the GridLocation string representation is correct")
 
         expectedString = "(" + self.gridLocChar + "-" + str(self.gridLocNumb) + ")"
         
@@ -178,6 +208,21 @@ class TestGloomlogScenario(unittest.TestCase):
         
         self.assertEqual(self.name, self.scenTest.getName())
 
+
+    def testScenarioToJSON(self):
+        """
+        Test whether the Scenario can generate a correct JSON with all information about itself
+        """
+
+        logging.info("Testing whether the Scenario can generate a correct JSON with all information about itself")
+        logging.info("Expected JSON: " + self.scenTest.toJSON())
+
+        fileJSON = open("TestGloomlogScenario.json", 'r')
+        textJSON = fileJSON.read()
+        fileJSON.close()
+
+        self.assertEqual(textJSON, self.scenTest.toJSON())
+
     
     def testScenarioLocationEqual(self):
         """
@@ -199,7 +244,7 @@ class TestGloomlogScenario(unittest.TestCase):
 
         logging.info("Testing whether the scenario string representation is correct")
 
-        expectedString = str(self.number) + ". " + self.name + " (" + self.gridLocChar + "-" + str(self.gridLocNumb) + ")"
+        expectedString = "Scenario: " + str(self.number) + ". " + self.name + " (" + self.gridLocChar + "-" + str(self.gridLocNumb) + ")"
         
         logging.info("Expected scenario string representation: " + expectedString)
         logging.info("Outputted scenario string representation: " + self.scenTest.__str__())

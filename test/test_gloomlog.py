@@ -39,9 +39,8 @@ class TestGloomlogEncounter(unittest.TestCase):
         logging.info("Setting up variables for testing Encounter class")
 
         cls.number = 1000
-        cls.name = "Toeter toetert"
 
-        cls.nctrTest = EncounterCopy(cls.number, cls.name)
+        cls.nctrTest = EncounterCopy(cls.number)
 
 
     def testEncounterNumber(self):
@@ -54,16 +53,6 @@ class TestGloomlogEncounter(unittest.TestCase):
         self.assertEqual(self.number, self.nctrTest.getNumber())
     
 
-    def testEncounterName(self):
-        """
-        Test whether the Encounter name has been correctly set
-        """
-
-        logging.info("Testing whether the Encounter name has been correctly set")
-        
-        self.assertEqual(self.name, self.nctrTest.getName())
-    
-
     def testEncounterEqual(self):
         """
         Test whether the Encounter can test equality
@@ -71,7 +60,7 @@ class TestGloomlogEncounter(unittest.TestCase):
 
         logging.info("Testing whether the Encounter can test equality")
 
-        nctrCopy = EncounterCopy(self.number, self.name)
+        nctrCopy = EncounterCopy(self.number)
         
         self.assertEqual(self.nctrTest, nctrCopy)
 
@@ -83,7 +72,7 @@ class TestGloomlogEncounter(unittest.TestCase):
 
         logging.info("Testing whether the Encounter string representation is correct")
 
-        expectedString = str(self.number) + ". " + self.name
+        expectedString = str(self.number) + "."
         
         logging.info("Expected Encounter string representation: " + expectedString)
         logging.info("Outputted Encounter string representation: " + self.nctrTest.__str__())
@@ -180,6 +169,16 @@ class TestGloomlogScenario(unittest.TestCase):
         cls.scenTest = gloomlog.Scenario(cls.number, cls.name, gloomlog.GridLocation(cls.gridLocChar, cls.gridLocNumb))
 
     
+    def testScenarioName(self):
+        """
+        Test whether the Scenario name has been correctly set
+        """
+
+        logging.info("Testing whether the Scenario name has been correctly set")
+        
+        self.assertEqual(self.name, self.scenTest.getName())
+
+    
     def testScenarioLocationEqual(self):
         """
         Test whether the scenario location has been correctly set
@@ -223,9 +222,8 @@ class TestGloomlogEvent(unittest.TestCase):
         logging.info("Setting up variables for testing Event class")
 
         cls.number = 1000
-        cls.name = "Toeter toetert"
 
-        cls.eventTest = EventCopy(cls.number, cls.name)
+        cls.eventTest = EventCopy(cls.number)
     
 
     def testEventString(self):
@@ -235,7 +233,7 @@ class TestGloomlogEvent(unittest.TestCase):
 
         logging.info("Testing whether the Event string representation is correct")
 
-        expectedString = "Event: " + str(self.number) + ". " + self.name
+        expectedString = "Event: " + str(self.number) + "."
         
         logging.info("Expected Event string representation: " + expectedString)
         logging.info("Outputted Event string representation: " + self.eventTest.__str__())
@@ -258,9 +256,8 @@ class TestGloomlogRoadEvent(unittest.TestCase):
         logging.info("Setting up variables for testing RoadEvent class")
 
         cls.number = 1000
-        cls.name = "Toeter toetert"
 
-        cls.roadEventTest = gloomlog.RoadEvent(cls.number, cls.name)
+        cls.roadEventTest = gloomlog.RoadEvent(cls.number)
     
 
     def testRoadEventString(self):
@@ -270,7 +267,7 @@ class TestGloomlogRoadEvent(unittest.TestCase):
 
         logging.info("Testing whether the RoadEvent string representation is correct")
 
-        expectedString = "Road Event: " + str(self.number) + ". " + self.name
+        expectedString = "Road Event: " + str(self.number) + "."
         
         logging.info("Expected RoadEvent string representation: " + expectedString)
         logging.info("Outputted RoadEvent string representation: " + self.roadEventTest.__str__())
@@ -293,9 +290,8 @@ class TestGloomlogCityEvent(unittest.TestCase):
         logging.info("Setting up variables for testing CityEvent class")
 
         cls.number = 1000
-        cls.name = "Toeter toetert"
 
-        cls.cityEventTest = gloomlog.CityEvent(cls.number, cls.name)
+        cls.cityEventTest = gloomlog.CityEvent(cls.number)
     
 
     def testCityEventString(self):
@@ -305,7 +301,7 @@ class TestGloomlogCityEvent(unittest.TestCase):
 
         logging.info("Testing whether the CityEvent string representation is correct")
 
-        expectedString = "City Event: " + str(self.number) + ". " + self.name
+        expectedString = "City Event: " + str(self.number) + "."
         
         logging.info("Expected CityEvent string representation: " + expectedString)
         logging.info("Outputted CityEvent string representation: " + self.cityEventTest.__str__())

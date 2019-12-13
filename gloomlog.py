@@ -4,21 +4,17 @@ class Encounter(object):
     Abstract class to capture scenarios and events
     """
 
-    def __init__(self, number, name):
+    def __init__(self, number):
         """
         number (int):
             the number of the encouter
-        name (string):
-            the name of the encouter
         """
 
-        assert type(self) != Encounter
+        assert type(self) != Encounter # enforce only abstract use of this class
 
         assert type(number) == int
-        assert type(name) == str
 
         self.number = number
-        self.name = name
     
 
     def getNumber(self):
@@ -27,14 +23,6 @@ class Encounter(object):
         """
 
         return self.number
-
-
-    def getName(self):
-        """
-        Returns the name of the encouter (string)
-        """
-
-        return self.name
     
 
     def __eq__(self, other):
@@ -55,7 +43,7 @@ class Encounter(object):
         Returns general info about the encouter
         """
 
-        return str(self.number) + ". " + self.name
+        return str(self.number) + "."
 
 
 
@@ -139,11 +127,21 @@ class Scenario(Encounter):
             the grid location of the scenario on the map of Gloomhaven
         """
 
+        assert type(name) == str
         assert type(gridLocation) == GridLocation
 
-        super().__init__(number, name)
+        super().__init__(number)
 
+        self.name = name
         self.gridLocation = gridLocation
+
+    
+    def getName(self):
+        """
+        Returns the name of the encouter (string)
+        """
+
+        return self.name
 
 
     def getGridLocation(self):
@@ -159,7 +157,7 @@ class Scenario(Encounter):
         Returns general info about the scenario
         """
 
-        return super().__str__() + " " + self.gridLocation.__str__()
+        return super().__str__() + " " + self.name + " " + self.gridLocation.__str__()
 
 
 
@@ -168,17 +166,15 @@ class Event(Encounter):
     A abstract class for events from the game Gloomhaven
     """
 
-    def __init__(self, number, name):
+    def __init__(self, number):
         """
         number (int):
             the number of the event
-        name (string):
-            the name of the event
         """
 
         assert type(self) != Event
 
-        super().__init__(number, name)
+        super().__init__(number)
 
 
     def __str__(self):
@@ -249,3 +245,8 @@ def getScenario():
 
 # scen = getScenario()
 # print(scen)
+
+
+if __name__ == "__main__":
+    print("programm not yet fully functional")
+

@@ -3,9 +3,10 @@ sys.path.insert(0, '../')
 sys.path.insert(0, './')
 import unittest
 import logging
+import json
 import gloomlog
 
-logging.basicConfig(level=logging.INFO, format='')
+logging.basicConfig(level=logging.WARN, format='')
 
 
 
@@ -40,9 +41,27 @@ class TestGloomlogEncounter(unittest.TestCase):
 
         cls.number = 1000
 
+        fileJSON = open("TestGloomlogEncounter.json", 'r')
+        cls.textJSON = fileJSON.read()
+        fileJSON.close()
+
         cls.nctrTest = EncounterCopy(cls.number)
+        cls.nctrTestJSON = EncounterCopy(encounterJSON=cls.textJSON)
 
 
+    def helperFunctionEqualityAndFromJSON(self):
+        """
+        Helper function for testing the __eq__ and fromJSON methods
+        """
+
+        ncrtNumber, = self.nctrTest.fromJSON(self.textJSON)
+        nctrCopy = EncounterCopy(ncrtNumber)
+
+        self.assertEqual(self.nctrTest, nctrCopy)
+        self.assertEqual(self.nctrTestJSON, nctrCopy)
+        self.assertEqual(self.nctrTest, self.nctrTestJSON)
+    
+    
     def testEncounterNumber(self):
         """
         Test whether the Encounter number has been correctly set
@@ -51,6 +70,16 @@ class TestGloomlogEncounter(unittest.TestCase):
         logging.info("Testing whether the Encounter number has been correctly set")
         
         self.assertEqual(self.number, self.nctrTest.getNumber())
+
+    
+    def testEncounterFromJSON(self):
+        """
+        Test whether an Encounter can be succesfully generated from a correct JSON
+        """
+
+        logging.info("Testing whether an Encounter can be succesfully generated from a correct JSON")
+
+        self.helperFunctionEqualityAndFromJSON()
     
 
     def testEncounterToJSON(self):
@@ -61,11 +90,7 @@ class TestGloomlogEncounter(unittest.TestCase):
         logging.info("Testing whether the Encounter can generate a correct JSON with all information about itself")
         logging.info("Expected JSON: " + self.nctrTest.toJSON())
 
-        fileJSON = open("TestGloomlogEncounter.json", 'r')
-        textJSON = fileJSON.read()
-        fileJSON.close()
-
-        self.assertEqual(textJSON, self.nctrTest.toJSON())
+        self.assertEqual(self.textJSON, self.nctrTest.toJSON())
     
 
     def testEncounterEqual(self):
@@ -75,9 +100,7 @@ class TestGloomlogEncounter(unittest.TestCase):
 
         logging.info("Testing whether the Encounter can test equality")
 
-        nctrCopy = EncounterCopy(self.number)
-        
-        self.assertEqual(self.nctrTest, nctrCopy)
+        self.helperFunctionEqualityAndFromJSON()
 
     
     def testEncounterString(self):
@@ -112,8 +135,26 @@ class TestGloomlogGridLocation(unittest.TestCase):
         cls.gridLocChar = "G"
         cls.gridLocNumb = 10
 
-        cls.gridLoc = gloomlog.GridLocation(cls.gridLocChar, cls.gridLocNumb)
+        fileJSON = open("TestGloomlogGridLocation.json", 'r')
+        cls.textJSON = fileJSON.read()
+        fileJSON.close()
 
+        cls.gridLocTest = gloomlog.GridLocation(cls.gridLocChar, cls.gridLocNumb)
+        cls.gridLocTestJSON = gloomlog.GridLocation(gridLocationJSON=cls.textJSON)
+
+    
+    def helperFunctionEqualityAndFromJSON(self):
+        """
+        Helper function for testing the __eq__ and fromJSON methods
+        """
+
+        gridLocCharacter, gridLocNumber = self.gridLocTest.fromJSON(self.textJSON)
+        gridLocCopy = gloomlog.GridLocation(gridLocCharacter, gridLocNumber)
+
+        self.assertEqual(self.gridLocTest, gridLocCopy)
+        self.assertEqual(self.gridLocTestJSON, gridLocCopy)
+        self.assertEqual(self.gridLocTest, self.gridLocTestJSON)
+    
     
     def testGridLocationCharacter(self):
         """
@@ -122,7 +163,7 @@ class TestGloomlogGridLocation(unittest.TestCase):
 
         logging.info("Testing whether the GridLocation character has been correctly set")
         
-        self.assertEqual(self.gridLocChar, self.gridLoc.getCharacter())
+        self.assertEqual(self.gridLocChar, self.gridLocTest.getCharacter())
 
 
     def testGridLocationNumber(self):
@@ -132,7 +173,17 @@ class TestGloomlogGridLocation(unittest.TestCase):
 
         logging.info("Testing whether the GridLocation number has been correctly set")
         
-        self.assertEqual(self.gridLocNumb, self.gridLoc.getNumber())
+        self.assertEqual(self.gridLocNumb, self.gridLocTest.getNumber())
+
+
+    def testGridLocationFromJSON(self):
+        """
+        Test whether a GridLocation can be succesfully generated from a correct JSON
+        """
+
+        logging.info("Testing whether a GridLocation can be succesfully generated from a correct JSON")
+
+        self.helperFunctionEqualityAndFromJSON()
 
     
     def testGridLocationToJSON(self):
@@ -141,13 +192,13 @@ class TestGloomlogGridLocation(unittest.TestCase):
         """
 
         logging.info("Testing whether the GridLocation can generate a correct JSON with all information about itself")
-        logging.info("Expected JSON: " + self.gridLoc.toJSON())
+        logging.info("Expected JSON: " + self.gridLocTest.toJSON())
 
         fileJSON = open("TestGloomlogGridLocation.json", 'r')
         textJSON = fileJSON.read()
         fileJSON.close()
 
-        self.assertEqual(textJSON, self.gridLoc.toJSON())
+        self.assertEqual(textJSON, self.gridLocTest.toJSON())
     
 
     def testGridLocationEqual(self):
@@ -157,9 +208,7 @@ class TestGloomlogGridLocation(unittest.TestCase):
 
         logging.info("Testing whether the GridLocation can test equality")
 
-        gridLocCopy = gloomlog.GridLocation(self.gridLocChar, self.gridLocNumb)
-        
-        self.assertEqual(self.gridLoc, gridLocCopy)
+        self.helperFunctionEqualityAndFromJSON()
 
     
     def testGridLocationString(self):
@@ -172,9 +221,9 @@ class TestGloomlogGridLocation(unittest.TestCase):
         expectedString = "(" + self.gridLocChar + "-" + str(self.gridLocNumb) + ")"
         
         logging.info("Expected scenario string representation: " + expectedString)
-        logging.info("Outputted scenario string representation: " + self.gridLoc.__str__())
+        logging.info("Outputted scenario string representation: " + self.gridLocTest.__str__())
 
-        self.assertEqual(self.gridLoc.__str__(), expectedString)
+        self.assertEqual(self.gridLocTest.__str__(), expectedString)
 
 
 
@@ -196,7 +245,27 @@ class TestGloomlogScenario(unittest.TestCase):
         cls.gridLocChar = "G"
         cls.gridLocNumb = 10
 
+        fileJSON = open("TestGloomlogScenario.json", 'r')
+        cls.textJSON = fileJSON.read()
+        fileJSON.close()
+
         cls.scenTest = gloomlog.Scenario(cls.number, cls.name, gloomlog.GridLocation(cls.gridLocChar, cls.gridLocNumb))
+        cls.scenTestJSON = gloomlog.Scenario(scenarioJSON=cls.textJSON)
+
+
+    def testScenarioFromJSON(self):
+        """
+        Test whether a Scenario can be succesfully generated from a correct JSON
+        """
+
+        logging.info("Testing whether a Scenario can be succesfully generated from a correct JSON")
+
+        scenNumber, scenName, scenGridLoc = self.scenTest.fromJSON(self.textJSON)
+        scenCopy = gloomlog.Scenario(scenNumber, scenName, scenGridLoc)
+
+        self.assertEqual(self.scenTest, scenCopy)
+        self.assertEqual(self.scenTestJSON, scenCopy)
+        self.assertEqual(self.scenTest, self.scenTestJSON)
 
     
     def testScenarioName(self):

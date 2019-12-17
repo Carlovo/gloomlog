@@ -15,3 +15,6 @@ __pycache__
 
 # ignore compiled python
 **.[pP][yY][cC]
+
+# ignore gloomlog JSONs
+*.json.gml

@@ -8,13 +8,21 @@ class Encounter(object):
     Abstract class to capture scenarios and events
     """
 
-    def __init__(self, number):
+    def __init__(self, number=None, encounterJSON=None):
         """
         number (int):
-            the number of the encouter
+            the number of the Encounter
+        encounterJSON (str):
+            JSON representation of the Encounter
+        
+        Provide either a JSON or all other parameters as input.
+        The JSON will override any other input if set.
         """
 
         assert type(self) != Encounter # enforce only abstract use of this class
+
+        if encounterJSON is not None:
+            number, = self.fromJSON(encounterJSON) # could return just int, but this is more consistent with other classes
 
         assert type(number) == int
 
@@ -23,15 +31,29 @@ class Encounter(object):
 
     def getNumber(self):
         """
-        Returns the number of the encouter (int)
+        Returns the number of the Encounter (int)
         """
 
         return self.number
 
 
+    def fromJSON(self, encounterJSON):
+        """
+        encounterJSON (str):
+            JSON representation of the Encounter
+        Returns a tuple with all input necessary to instantiate an Encounter object
+        """
+
+        assert type(encounterJSON) == str
+
+        encounterDict = json.loads(encounterJSON)
+
+        return (encounterDict["number"],) # could return just int, but this is more consistent with other classes
+    
+    
     def toJSON(self):
         """
-        Returns the JSON string representation of the information in the Encounter
+        Returns the JSON string representation of the information in the Encounter (str)
         """
 
         nctrDict = {"number" : self.number}
@@ -44,8 +66,7 @@ class Encounter(object):
         """
         Other (Encounter):
             the encounter to compare to
-        Return whether the two encounters are the same
-        (bool)
+        Return whether the two encounters are the same (bool)
         """
 
         assert type(other) == type(self)
@@ -55,7 +76,7 @@ class Encounter(object):
 
     def __str__(self):
         """
-        Returns general info about the encouter
+        Returns general info about the encouter (str)
         """
 
         return str(self.number) + "."
@@ -67,13 +88,22 @@ class GridLocation(object):
     A location by the grid on the map of Gloomhaven
     """
 
-    def __init__(self, character, number):
+    def __init__(self, character=None, number=None, gridLocationJSON=None):
         """
         character (single character string: A - O):
             the character denoting the horizontal / row value of the GridLocation
         number (int: 1 - 18):
             the number denoting the vertical / column value of the GridLocation
+        
+        gridLocationJSON (str):
+            JSON representation of the GridLocation
+        
+        Provide either a JSON or all other parameters as input.
+        The JSON will override any other input if set.
         """
+
+        if gridLocationJSON is not None:
+            character, number = self.fromJSON(gridLocationJSON)
 
         assert type(character) == str
         assert len(character) == 1
@@ -105,6 +135,20 @@ class GridLocation(object):
         return self.number
 
 
+    def fromJSON(self, gridLocationJSON):
+        """
+        gridLocationJSON (str):
+            JSON representation of the GridLocation
+        Returns a tuple with all input necessary to instantiate an GridLocation object
+        """
+
+        assert type(gridLocationJSON) == str
+
+        encounterDict = json.loads(gridLocationJSON)
+
+        return (encounterDict["character"], encounterDict["number"])
+    
+    
     def toJSON(self):
         """
         Returns the JSON string representation of the information in the GridLocation
@@ -142,7 +186,7 @@ class Scenario(Encounter):
     A scenario from the game Gloomhaven
     """
 
-    def __init__(self, number, name, gridLocation):
+    def __init__(self, number=None, name=None, gridLocation=None, scenarioJSON=None):
         """
         number (int):
             the number of the Scenario
@@ -151,6 +195,9 @@ class Scenario(Encounter):
         gridLocation (GridLocation):
             the grid location of the Scenario on the map of Gloomhaven
         """
+
+        if scenarioJSON is not None:
+            number, name, gridLocation = self.fromJSON(scenarioJSON)
 
         assert type(name) == str
         assert type(gridLocation) == GridLocation
@@ -177,6 +224,21 @@ class Scenario(Encounter):
         return self.gridLocation
     
 
+    def fromJSON(self, scenarioJSON):
+        """
+        scenarioJSON (str):
+            JSON representation of the Scenario
+        Returns a tuple with all input necessary to instantiate an Scenario object
+        """
+
+        assert type(scenarioJSON) == str
+
+        scenarioDict = json.loads(scenarioJSON)
+        scenarioGridLoc = GridLocation(gridLocationJSON=json.dumps(scenarioDict["GridLocation"]))
+        
+        return (scenarioDict["number"], scenarioDict["name"], scenarioGridLoc)
+    
+    
     def toJSON(self):
         """
         Returns the JSON string representation of the information in the Scenario
@@ -287,4 +349,3 @@ def getScenario():
 
 if __name__ == "__main__":
     print("programm not yet fully functional")
-

@@ -66,7 +66,7 @@ class TestGloomlogEncounter(unittest.TestCase):
         logging.info(
             "Testing whether the Encounter number has been correctly set")
 
-        self.assertEqual(self.number, self.nctrTest.getNumber())
+        self.assertEqual(self.number, self.nctrTest.number)
 
     def testEncounterFromJSON(self):
         """
@@ -162,7 +162,7 @@ class TestGloomlogGridLocation(unittest.TestCase):
         logging.info(
             "Testing whether the GridLocation character has been correctly set")
 
-        self.assertEqual(self.gridLocChar, self.gridLocTest.getCharacter())
+        self.assertEqual(self.gridLocChar, self.gridLocTest.character)
 
     def testGridLocationNumber(self):
         """
@@ -172,7 +172,7 @@ class TestGloomlogGridLocation(unittest.TestCase):
         logging.info(
             "Testing whether the GridLocation number has been correctly set")
 
-        self.assertEqual(self.gridLocNumb, self.gridLocTest.getNumber())
+        self.assertEqual(self.gridLocNumb, self.gridLocTest.number)
 
     def testGridLocationFromJSON(self):
         """
@@ -277,7 +277,7 @@ class TestGloomlogScenario(unittest.TestCase):
         logging.info(
             "Testing whether the Scenario name has been correctly set")
 
-        self.assertEqual(self.name, self.scenTest.getName())
+        self.assertEqual(self.name, self.scenTest.name)
 
     def testScenarioToJSON(self):
         """
@@ -304,7 +304,7 @@ class TestGloomlogScenario(unittest.TestCase):
 
         gridLocCopy = gloomlog.GridLocation(self.gridLocChar, self.gridLocNumb)
 
-        self.assertEqual(self.scenTest.getGridLocation(), gridLocCopy)
+        self.assertEqual(self.scenTest.gridLocation, gridLocCopy)
 
     def testScenarioString(self):
         """

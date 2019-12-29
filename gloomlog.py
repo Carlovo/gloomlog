@@ -29,13 +29,6 @@ class Encounter(object):
 
         self.number = number
 
-    def getNumber(self):
-        """
-        Returns the number of the Encounter (int)
-        """
-
-        return self.number
-
     def fromJSON(self, encounterJSON):
         """
         encounterJSON (str):
@@ -111,22 +104,6 @@ class GridLocation(object):
         self.character = character
         self.number = number
 
-    def getCharacter(self):
-        """
-        Returns the character denoting the horizontal / row value of the GridLocation
-        (single character string: a - o)
-        """
-
-        return self.character
-
-    def getNumber(self):
-        """
-        Returns the number denoting the vertical / column value of the GridLocation
-        (int: 1 - 18)
-        """
-
-        return self.number
-
     def fromJSON(self, gridLocationJSON):
         """
         gridLocationJSON (str):
@@ -194,20 +171,6 @@ class Scenario(Encounter):
 
         self.name = name
         self.gridLocation = gridLocation
-
-    def getName(self):
-        """
-        Returns the name of the Scenario (string)
-        """
-
-        return self.name
-
-    def getGridLocation(self):
-        """
-        Returns GridLocation of the Scenario on the map
-        """
-
-        return self.gridLocation
 
     def fromJSON(self, scenarioJSON):
         """

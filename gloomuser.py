@@ -23,23 +23,38 @@ def multipleChoiceQuestion(question, options):
 
 
 if __name__ == "__main__":
-    if os.path.exists("save.json.gml"):
-        with open("save.json.gml", "r") as file:
-            saveJSON = json.loads(file.read())
-        lastNctrType = [*saveJSON["EnounterList"][-1]][0]
-        lastNctrInfo = saveJSON["EnounterList"][-1][lastNctrType]
+    listFiles = os.listdir("__gloomsave__")
+    listSaves = []
 
-        if lastNctrType[0] == "S":
-            ncrtUser = gloomlog.Scenario(scenarioJSON=json.dumps(lastNctrInfo))
-        elif lastNctrType[0] == "R":
-            ncrtUser = gloomlog.RoadEvent(eventJSON=json.dumps(lastNctrInfo))
-        elif lastNctrType[0] == "C":
-            ncrtUser = gloomlog.CityEvent(eventJSON=json.dumps(lastNctrInfo))
-        else:
-            print("Invalid save file :(")
-            exit()
-    else:
-        ncrtUser = gloomlog.CityEvent(0)
+    for save in listFiles:
+        if save.endswith(".json.gml"):
+            listSaves.append(save.replace(".json.gml", ""))
+
+    save = None
+
+    ncrtUser = gloomlog.CityEvent(0)
+
+    if len(listSaves) > 0:
+        if multipleChoiceQuestion("Would you like to load a save file? (y/n): ", ["y", "n"]) == "y":
+            save = multipleChoiceQuestion(
+                "Which save would you like to load? " + str(listSaves) + ": ", listSaves)
+            with open("__gloomsave__/" + save + ".json.gml", "r") as file:
+                saveJSON = json.loads(file.read())
+            lastNctrType = [*saveJSON["EnounterList"][-1]][0]
+            lastNctrInfo = saveJSON["EnounterList"][-1][lastNctrType]
+
+            if lastNctrType[0] == "S":
+                ncrtUser = gloomlog.Scenario(
+                    scenarioJSON=json.dumps(lastNctrInfo))
+            elif lastNctrType[0] == "R":
+                ncrtUser = gloomlog.RoadEvent(
+                    eventJSON=json.dumps(lastNctrInfo))
+            elif lastNctrType[0] == "C":
+                ncrtUser = gloomlog.CityEvent(
+                    eventJSON=json.dumps(lastNctrInfo))
+            else:
+                print("Invalid save file :(")
+                exit()
 
     print("Your last encounter was:")
     print(ncrtUser)
@@ -47,6 +62,9 @@ if __name__ == "__main__":
     if multipleChoiceQuestion("Would you like to set a new save (y/n)?: ", ("y", "n")) == "n":
         print("Bye!")
         exit()
+
+    if save is None:
+        save = input("How would you like to call your save file?: ")
 
     newEncounter = multipleChoiceQuestion(
         "What type was your last encounter (Scenario/Road Event/City Event), (S/R/C)?: ", ("Scenario", "Road Event", "City Event", "S", "R", "C"))
@@ -90,20 +108,25 @@ if __name__ == "__main__":
         print("Please try again")
         exit()
 
-    with open("save_new.json.gml", "x") as file:
+    os.makedirs("__gloomsave__", exist_ok=True)
+
+    with open("__gloomsave__/" + save + ".json.gml.new", "x") as file:
         file.write(json.dumps(saveInfo, indent=2))
 
-    if os.path.exists("save_prev.json.gml"):
-        os.rename("save_prev.json.gml", "save_old.json.gml")
+    if os.path.exists("__gloomsave__/" + save + ".json.gml.prev"):
+        os.rename("__gloomsave__/" + save + ".json.gml.prev",
+                  "__gloomsave__/" + save + ".json.gml.old")
 
-    if os.path.exists("save.json.gml"):
-        os.rename("save.json.gml", "save_prev.json.gml")
+    if os.path.exists("__gloomsave__/" + save + ".json.gml"):
+        os.rename("__gloomsave__/" + save + ".json.gml",
+                  "__gloomsave__/" + save + ".json.gml.prev")
 
-    if os.path.exists("save_new.json.gml"):
-        os.rename("save_new.json.gml", "save.json.gml")
+    if os.path.exists("__gloomsave__/" + save + ".json.gml.new"):
+        os.rename("__gloomsave__/" + save + ".json.gml.new",
+                  "__gloomsave__/" + save + ".json.gml")
 
-    if os.path.exists("save_old.json.gml"):
-        os.remove("save_old.json.gml")
+    if os.path.exists("__gloomsave__/" + save + ".json.gml.old"):
+        os.remove("__gloomsave__/" + save + ".json.gml.old")
 
     print("Saved:")
     print(newEncounter)

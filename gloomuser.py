@@ -3,23 +3,60 @@ import json
 import gloomlog
 
 
-def multipleChoiceQuestion(question, options):
+def multipleChoiceQuestion(question, options, rangeOptions=None):
     """
     question (str):
         the question to the user
-    options (iterable of strings):
+    options (tuple of strings):
         the options the question allows the user to choose from
+    rangeOptions(str):
+        overrides autogenerations of options shown in question
 
     Keeps asking the user until a valid option is inputted
 
     Returns the option from options chosen by the user (str)
     """
+    assert type(question) == str
+    assert type(options) == tuple
+    for i in options:
+        assert type(i) == str
+    if rangeOptions is None:
+        rangeOptions = str(options)
+    else:
+        assert type(rangeOptions) == str
+
     while True:
-        userInput = input(question)
+        userInput = input(question + " " + rangeOptions + ": ")
         if userInput in options:
             return userInput
         else:
-            print("Invalid input")
+            try:
+                userInput = int(userInput)
+                assert userInput > 0
+            except:
+                print("Invalid input")
+            else:
+                userInput -= 1
+                if userInput < len(options):
+                    return options[userInput]
+                else:
+                    print("Inputted number out of option bounds")
+
+
+def yesNoQuestion(question):
+    """
+    question (str):
+        the question to the user
+
+    Keeps asking the user until 'yes', 'no', '1' or '2' is inputted
+    '1' = 'yes'
+    '2' = 'no'
+
+    Returns whether the user chose 'yes' (bool)
+    """
+    assert type(question) == str
+
+    return multipleChoiceQuestion(question, ('yes', 'no')) == 'yes'
 
 
 if __name__ == "__main__":
@@ -35,9 +72,9 @@ if __name__ == "__main__":
     ncrtUser = gloomlog.CityEvent(0)
 
     if len(listSaves) > 0:
-        if multipleChoiceQuestion("Would you like to load a save file? (y/n): ", ["y", "n"]) == "y":
+        if yesNoQuestion("Would you like to load a save file?"):
             save = multipleChoiceQuestion(
-                "Which save would you like to load? " + str(listSaves) + ": ", listSaves)
+                "Which save would you like to load?", tuple(listSaves))
             with open("__gloomsave__/" + save + ".json.gml", "r") as file:
                 saveJSON = json.loads(file.read())
             lastNctrType = [*saveJSON["EnounterList"][-1]][0]
@@ -59,7 +96,7 @@ if __name__ == "__main__":
     print("Your last encounter was:")
     print(ncrtUser)
 
-    if multipleChoiceQuestion("Would you like to set a new save (y/n)?: ", ("y", "n")) == "n":
+    if not yesNoQuestion("Would you like to set a new save?"):
         print("Bye!")
         exit()
 
@@ -67,7 +104,7 @@ if __name__ == "__main__":
         save = input("How would you like to call your save file?: ")
 
     newEncounter = multipleChoiceQuestion(
-        "What type was your last encounter (Scenario/Road Event/City Event), (S/R/C)?: ", ("Scenario", "Road Event", "City Event", "S", "R", "C"))
+        "What type was your last encounter?", ('Scenario', 'Road Event', 'City Event'))
 
     if newEncounter[0] == "S":
         newEncounter = "scenario"
@@ -79,14 +116,14 @@ if __name__ == "__main__":
         newEncounterClass = gloomlog.CityEvent
 
     newEncounterNumber = int(multipleChoiceQuestion(
-        "What is the number of the {encounter} you did (1-100)?: ".format(encounter=newEncounter), [str(i) for i in range(1, 101)]))
+        "What is the number of the {encounter} you did?".format(encounter=newEncounter), tuple(str(i) for i in range(1, 101)), "(1-100)"))
 
     if newEncounter[0] == "s":
         newEncounterName = input("What is the name of the scenario you did?: ")
         newEncounterGridLocChar = multipleChoiceQuestion(
-            "What is the character of that scenario's location (A-O)?: ", [chr(i) for i in range(65, 80)])
+            "What is the character of that scenario's location?", tuple(chr(i) for i in range(65, 80)), "(A-O)")
         newEncounterGridLocNumb = int(multipleChoiceQuestion(
-            "What is the number of that scenario's location (1-18)?: ", [str(i) for i in range(1, 19)]))
+            "What is the number of that scenario's location?", tuple(str(i) for i in range(1, 19)), "(1-18)"))
         newEncounterGridLoc = gloomlog.GridLocation(
             newEncounterGridLocChar, newEncounterGridLocNumb)
         newEncounter = gloomlog.Scenario(

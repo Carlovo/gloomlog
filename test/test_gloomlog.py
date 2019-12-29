@@ -44,7 +44,7 @@ class TestGloomlogEncounter(unittest.TestCase):
         fileJSON.close()
 
         cls.nctrTest = EncounterCopy(cls.number)
-        cls.nctrTestJSON = EncounterCopy(encounterJSON=cls.textJSON)
+        cls.nctrTestJSON = EncounterCopy(fullJSON=cls.textJSON)
 
     def helperFunctionEqualityAndFromJSON(self):
         """
@@ -139,7 +139,7 @@ class TestGloomlogGridLocation(unittest.TestCase):
         cls.gridLocTest = gloomlog.GridLocation(
             cls.gridLocChar, cls.gridLocNumb)
         cls.gridLocTestJSON = gloomlog.GridLocation(
-            gridLocationJSON=cls.textJSON)
+            fullJSON=cls.textJSON)
 
     def helperFunctionEqualityAndFromJSON(self):
         """
@@ -251,7 +251,7 @@ class TestGloomlogScenario(unittest.TestCase):
 
         cls.scenTest = gloomlog.Scenario(
             cls.number, cls.name, gloomlog.GridLocation(cls.gridLocChar, cls.gridLocNumb))
-        cls.scenTestJSON = gloomlog.Scenario(scenarioJSON=cls.textJSON)
+        cls.scenTestJSON = gloomlog.Scenario(fullJSON=cls.textJSON)
 
     def testScenarioFromJSON(self):
         """

@@ -7,11 +7,11 @@ class Encounter(object):
     Abstract class to capture scenarios and events
     """
 
-    def __init__(self, number=None, encounterJSON=None):
+    def __init__(self, number=None, fullJSON=None):
         """
         number (int):
             the number of the Encounter
-        encounterJSON (str):
+        fullJSON (str):
             JSON representation of the Encounter
 
         Provide either a JSON or all other parameters as input.
@@ -21,9 +21,9 @@ class Encounter(object):
         # enforce only abstract use of this class
         assert type(self) != Encounter
 
-        if encounterJSON is not None:
-            # could return just int, but this is more consistent with other classes
-            number, = self.fromJSON(encounterJSON)
+        if fullJSON is not None:
+            # could be just int, but this is more consistent with other classes
+            number, = self.fromJSON(fullJSON)
 
         assert type(number) == int
 
@@ -76,22 +76,22 @@ class GridLocation(object):
     A location by the grid on the map of Gloomhaven
     """
 
-    def __init__(self, character=None, number=None, gridLocationJSON=None):
+    def __init__(self, character=None, number=None, fullJSON=None):
         """
         character (single character string: A - O):
             the character denoting the horizontal / row value of the GridLocation
         number (int: 1 - 18):
             the number denoting the vertical / column value of the GridLocation
 
-        gridLocationJSON (str):
+        fullJSON (str):
             JSON representation of the GridLocation
 
         Provide either a JSON or all other parameters as input.
         The JSON will override any other input if set.
         """
 
-        if gridLocationJSON is not None:
-            character, number = self.fromJSON(gridLocationJSON)
+        if fullJSON is not None:
+            character, number = self.fromJSON(fullJSON)
 
         assert type(character) == str
         assert len(character) == 1
@@ -151,7 +151,7 @@ class Scenario(Encounter):
     A scenario from the game Gloomhaven
     """
 
-    def __init__(self, number=None, name=None, gridLocation=None, scenarioJSON=None):
+    def __init__(self, number=None, name=None, gridLocation=None, fullJSON=None):
         """
         number (int):
             the number of the Scenario
@@ -159,10 +159,15 @@ class Scenario(Encounter):
             the name of the Scenario
         gridLocation (GridLocation):
             the grid location of the Scenario on the map of Gloomhaven
+        fullJSON (str):
+            JSON representation of the Scenario
+
+        Provide either a JSON or all other parameters as input.
+        The JSON will override any other input if set.
         """
 
-        if scenarioJSON is not None:
-            number, name, gridLocation = self.fromJSON(scenarioJSON)
+        if fullJSON is not None:
+            number, name, gridLocation = self.fromJSON(fullJSON)
 
         assert type(name) == str
         assert type(gridLocation) == GridLocation
@@ -183,7 +188,7 @@ class Scenario(Encounter):
 
         scenarioDict = json.loads(scenarioJSON)
         scenarioGridLoc = GridLocation(
-            gridLocationJSON=json.dumps(scenarioDict["GridLocation"]))
+            fullJSON=json.dumps(scenarioDict["GridLocation"]))
 
         return (scenarioDict["number"], scenarioDict["name"], scenarioGridLoc)
 
@@ -212,7 +217,7 @@ class Event(Encounter):
     A abstract class for events from the game Gloomhaven
     """
 
-    def __init__(self, number=None, eventJSON=None):
+    def __init__(self, number=None, fullJSON=None):
         """
         number (int):
             the number of the event
@@ -220,7 +225,7 @@ class Event(Encounter):
 
         assert type(self) != Event
 
-        super().__init__(number=number, encounterJSON=eventJSON)
+        super().__init__(number=number, fullJSON=fullJSON)
 
     def __str__(self):
         """

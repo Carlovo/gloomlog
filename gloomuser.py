@@ -81,17 +81,16 @@ if __name__ == "__main__":
             lastNctrInfo = saveJSON["EnounterList"][-1][lastNctrType]
 
             if lastNctrType[0] == "S":
-                ncrtUser = gloomlog.Scenario(
-                    scenarioJSON=json.dumps(lastNctrInfo))
+                ncrtUser = gloomlog.Scenario
             elif lastNctrType[0] == "R":
-                ncrtUser = gloomlog.RoadEvent(
-                    eventJSON=json.dumps(lastNctrInfo))
+                ncrtUser = gloomlog.RoadEvent
             elif lastNctrType[0] == "C":
-                ncrtUser = gloomlog.CityEvent(
-                    eventJSON=json.dumps(lastNctrInfo))
+                ncrtUser = gloomlog.CityEvent
             else:
                 print("Invalid save file :(")
                 exit()
+
+            ncrtUser = ncrtUser(fullJSON=json.dumps(lastNctrInfo))
 
     print("Your last encounter was:")
     print(ncrtUser)

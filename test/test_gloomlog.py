@@ -10,6 +10,13 @@ import gloomlog  # noqa
 logging.basicConfig(level=logging.WARN, format='')
 
 
+class HandlerJSONCopy(gloomlog.HandlerJSON):
+    """
+    HandlerJSON is an abstract class, but its functionality should still be tested
+    """
+    pass
+
+
 class EncounterCopy(gloomlog.Encounter):
     """
     Encounter is an abstract class, but its functionality should still be tested
@@ -24,7 +31,43 @@ class EventCopy(gloomlog.Event):
     pass
 
 
-class TestGloomlogEncounter(unittest.TestCase):
+class TestHandlerJSONCopy(unittest.TestCase):
+    """
+    Test Gloomlog's HandlerJSON class
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing
+        """
+
+        logging.info("Setting up variables for testing HandlerJSON class")
+
+        cls.number = 4
+        cls.name = "Jason"
+        cls.handlerJSONTest = HandlerJSONCopy()
+
+        with open("TestGloomlogHandlerJSONCopy.json", "r") as file:
+            cls.textJSON = file.read()
+
+    def testHandlerJSONFromJSON(self):
+        """
+        Test whether HandlerJSON can correctly parse a JSON
+        """
+
+        logging.info(
+            "Testing whether HandlerJSON can correctly parse a JSON")
+
+        testDict = self.handlerJSONTest.fromJSON(self.textJSON)
+
+        self.assertEqual(type(testDict), dict)
+
+        self.assertEqual(testDict["number"], self.number)
+        self.assertEqual(testDict["name"], self.name)
+
+
+class TestGloomlogEncounterCopy(unittest.TestCase):
     """
     Test Gloomlog's Encounter class
     """
@@ -39,9 +82,8 @@ class TestGloomlogEncounter(unittest.TestCase):
 
         cls.number = 1000
 
-        fileJSON = open("TestGloomlogEncounter.json", 'r')
-        cls.textJSON = fileJSON.read()
-        fileJSON.close()
+        with open("TestGloomlogEncounterCopy.json", "r") as file:
+            cls.textJSON = file.read()
 
         cls.nctrTest = EncounterCopy(cls.number)
         cls.nctrTestJSON = EncounterCopy(fullJSON=cls.textJSON)
@@ -51,7 +93,7 @@ class TestGloomlogEncounter(unittest.TestCase):
         Helper function for testing the __eq__ and fromJSON methods
         """
 
-        ncrtNumber, = self.nctrTest.fromJSON(self.textJSON)
+        ncrtNumber = self.nctrTest.fromJSON(self.textJSON)["number"]
         nctrCopy = EncounterCopy(ncrtNumber)
 
         self.assertEqual(self.nctrTest, nctrCopy)
@@ -132,9 +174,8 @@ class TestGloomlogGridLocation(unittest.TestCase):
         cls.gridLocChar = "G"
         cls.gridLocNumb = 10
 
-        fileJSON = open("TestGloomlogGridLocation.json", 'r')
-        cls.textJSON = fileJSON.read()
-        fileJSON.close()
+        with open("TestGloomlogGridLocation.json", "r") as file:
+            cls.textJSON = file.read()
 
         cls.gridLocTest = gloomlog.GridLocation(
             cls.gridLocChar, cls.gridLocNumb)
@@ -146,8 +187,10 @@ class TestGloomlogGridLocation(unittest.TestCase):
         Helper function for testing the __eq__ and fromJSON methods
         """
 
-        gridLocCharacter, gridLocNumber = self.gridLocTest.fromJSON(
-            self.textJSON)
+        gridLocDict = self.gridLocTest.fromJSON(self.textJSON)
+        gridLocCharacter = gridLocDict["character"]
+        gridLocNumber = gridLocDict["number"]
+
         gridLocCopy = gloomlog.GridLocation(gridLocCharacter, gridLocNumber)
 
         self.assertEqual(self.gridLocTest, gridLocCopy)
@@ -193,9 +236,8 @@ class TestGloomlogGridLocation(unittest.TestCase):
             "Testing whether the GridLocation can generate a correct JSON with all information about itself")
         logging.info("Expected JSON: " + self.gridLocTest.toJSON())
 
-        fileJSON = open("TestGloomlogGridLocation.json", 'r')
-        textJSON = fileJSON.read()
-        fileJSON.close()
+        with open("TestGloomlogGridLocation.json", "r") as file:
+            textJSON = file.read()
 
         self.assertEqual(textJSON, self.gridLocTest.toJSON())
 
@@ -245,9 +287,8 @@ class TestGloomlogScenario(unittest.TestCase):
         cls.gridLocChar = "G"
         cls.gridLocNumb = 10
 
-        fileJSON = open("TestGloomlogScenario.json", 'r')
-        cls.textJSON = fileJSON.read()
-        fileJSON.close()
+        with open("TestGloomlogScenario.json", "r") as file:
+            cls.textJSON = file.read()
 
         cls.scenTest = gloomlog.Scenario(
             cls.number, cls.name, gloomlog.GridLocation(cls.gridLocChar, cls.gridLocNumb))
@@ -261,8 +302,12 @@ class TestGloomlogScenario(unittest.TestCase):
         logging.info(
             "Testing whether a Scenario can be succesfully generated from a correct JSON")
 
-        scenNumber, scenName, scenGridLoc = self.scenTest.fromJSON(
-            self.textJSON)
+        scenDict = self.scenTest.fromJSON(self.textJSON)
+        scenNumber = scenDict["number"]
+        scenName = scenDict["name"]
+        scenGridLoc = gloomlog.GridLocation(
+            fullJSON='{"GridLocation": ' + json.dumps(scenDict["GridLocation"]) + '}')
+
         scenCopy = gloomlog.Scenario(scenNumber, scenName, scenGridLoc)
 
         self.assertEqual(self.scenTest, scenCopy)
@@ -288,9 +333,8 @@ class TestGloomlogScenario(unittest.TestCase):
             "Testing whether the Scenario can generate a correct JSON with all information about itself")
         logging.info("Expected JSON: " + self.scenTest.toJSON())
 
-        fileJSON = open("TestGloomlogScenario.json", 'r')
-        textJSON = fileJSON.read()
-        fileJSON.close()
+        with open("TestGloomlogScenario.json", "r") as file:
+            textJSON = file.read()
 
         self.assertEqual(textJSON, self.scenTest.toJSON())
 

@@ -1,4 +1,6 @@
 {
-  "character": "G",
-  "number": 10
+  "GridLocation": {
+    "character": "G",
+    "number": 10
+  }
 }

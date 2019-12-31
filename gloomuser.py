@@ -77,8 +77,8 @@ if __name__ == "__main__":
                 "Which save would you like to load?", tuple(listSaves))
             with open("__gloomsave__/" + save + ".json.gml", "r") as file:
                 saveJSON = json.loads(file.read())
-            lastNctrType = [*saveJSON["EnounterList"][-1]][0]
-            lastNctrInfo = saveJSON["EnounterList"][-1][lastNctrType]
+            lastNctr = saveJSON["EnounterList"][-1]
+            lastNctrType = list(lastNctr.keys())[0]
 
             if lastNctrType[0] == "S":
                 ncrtUser = gloomlog.Scenario
@@ -90,7 +90,7 @@ if __name__ == "__main__":
                 print("Invalid save file :(")
                 exit()
 
-            ncrtUser = ncrtUser(fullJSON=json.dumps(lastNctrInfo))
+            ncrtUser = ncrtUser(fullJSON=json.dumps(lastNctr))
 
     print("Your last encounter was:")
     print(ncrtUser)
@@ -130,16 +130,11 @@ if __name__ == "__main__":
     else:
         newEncounter = newEncounterClass(newEncounterNumber)
 
-    nctrJSON = newEncounter.toJSON()
-    nctrInfo = json.loads(nctrJSON)
-
-    if type(newEncounter) == gloomlog.Scenario:
-        saveInfo = {"EnounterList": [{"Scenario": nctrInfo}, ]}
-    elif type(newEncounter) == gloomlog.RoadEvent:
-        saveInfo = {"EnounterList": [{"RoadEvent": nctrInfo}, ]}
-    elif type(newEncounter) == gloomlog.CityEvent:
-        saveInfo = {"EnounterList": [{"CityEvent": nctrInfo}, ]}
-    else:
+    try:
+        nctrJSON = newEncounter.toJSON()
+        nctrInfo = json.loads(nctrJSON)
+        saveInfo = {"EnounterList": [nctrInfo, ]}
+    except:
         print("Invalid encounters created :(")
         print("Please try again")
         exit()

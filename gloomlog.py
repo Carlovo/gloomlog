@@ -1,7 +1,42 @@
 import json
 
 
-class Encounter(object):
+class HandlerJSON(object):
+    """
+    An abstract class to standardize JSON handling among objects
+    """
+
+    def __init__(self):
+        """
+        There can only be none
+        """
+
+        # enforce only abstract use of this class
+        assert type(self) != HandlerJSON
+
+    def fromJSON(self, fullJSON):
+        """
+        fullJSON (str):
+            JSON representation of an object
+
+        Checks whether the JSON is generally correct to form an object
+        Strips the object header
+
+        Returns a dict with the object parameters in the JSON
+        """
+
+        assert type(fullJSON) == str
+
+        fullDict = json.loads(fullJSON)
+        keysList = list(fullDict.keys())
+
+        assert len(keysList) == 1
+        assert keysList[0] == type(self).__name__
+
+        return fullDict[type(self).__name__]
+
+
+class Encounter(HandlerJSON):
     """
     An encouter from the game Gloomhaven
     Abstract class to capture scenarios and events
@@ -22,33 +57,18 @@ class Encounter(object):
         assert type(self) != Encounter
 
         if fullJSON is not None:
-            # could be just int, but this is more consistent with other classes
-            number, = self.fromJSON(fullJSON)
+            number = self.fromJSON(fullJSON)["number"]
 
         assert type(number) == int
 
         self.number = number
-
-    def fromJSON(self, encounterJSON):
-        """
-        encounterJSON (str):
-            JSON representation of the Encounter
-        Returns a tuple with all input necessary to instantiate an Encounter object
-        """
-
-        assert type(encounterJSON) == str
-
-        encounterDict = json.loads(encounterJSON)
-
-        # could return just int, but this is more consistent with other classes
-        return (encounterDict["number"],)
 
     def toJSON(self):
         """
         Returns the JSON string representation of the information in the Encounter (str)
         """
 
-        nctrDict = {"number": self.number}
+        nctrDict = {type(self).__name__: {"number": self.number}}
 
         return json.dumps(nctrDict, indent=2)
 
@@ -71,7 +91,7 @@ class Encounter(object):
         return str(self.number) + "."
 
 
-class GridLocation(object):
+class GridLocation(HandlerJSON):
     """
     A location by the grid on the map of Gloomhaven
     """
@@ -91,7 +111,9 @@ class GridLocation(object):
         """
 
         if fullJSON is not None:
-            character, number = self.fromJSON(fullJSON)
+            fullDict = self.fromJSON(fullJSON)
+            character = fullDict["character"]
+            number = fullDict["number"]
 
         assert type(character) == str
         assert len(character) == 1
@@ -104,25 +126,13 @@ class GridLocation(object):
         self.character = character
         self.number = number
 
-    def fromJSON(self, gridLocationJSON):
-        """
-        gridLocationJSON (str):
-            JSON representation of the GridLocation
-        Returns a tuple with all input necessary to instantiate an GridLocation object
-        """
-
-        assert type(gridLocationJSON) == str
-
-        encounterDict = json.loads(gridLocationJSON)
-
-        return (encounterDict["character"], encounterDict["number"])
-
     def toJSON(self):
         """
         Returns the JSON string representation of the information in the GridLocation
         """
 
-        gridLocDict = {"character": self.character, "number": self.number}
+        gridLocDict = {"GridLocation": {
+            "character": self.character, "number": self.number}}
 
         return json.dumps(gridLocDict, indent=2)
 
@@ -167,7 +177,11 @@ class Scenario(Encounter):
         """
 
         if fullJSON is not None:
-            number, name, gridLocation = self.fromJSON(fullJSON)
+            fullDict = self.fromJSON(fullJSON)
+            number = fullDict["number"]
+            name = fullDict["name"]
+            gridLocation = GridLocation(
+                fullJSON='{"GridLocation": ' + json.dumps(fullDict["GridLocation"]) + '}')
 
         assert type(name) == str
         assert type(gridLocation) == GridLocation
@@ -177,21 +191,6 @@ class Scenario(Encounter):
         self.name = name
         self.gridLocation = gridLocation
 
-    def fromJSON(self, scenarioJSON):
-        """
-        scenarioJSON (str):
-            JSON representation of the Scenario
-        Returns a tuple with all input necessary to instantiate an Scenario object
-        """
-
-        assert type(scenarioJSON) == str
-
-        scenarioDict = json.loads(scenarioJSON)
-        scenarioGridLoc = GridLocation(
-            fullJSON=json.dumps(scenarioDict["GridLocation"]))
-
-        return (scenarioDict["number"], scenarioDict["name"], scenarioGridLoc)
-
     def toJSON(self):
         """
         Returns the JSON string representation of the information in the Scenario
@@ -199,8 +198,9 @@ class Scenario(Encounter):
 
         scenarioDict = json.loads(super().toJSON())
 
-        scenarioDict["name"] = self.name
-        scenarioDict["GridLocation"] = json.loads(self.gridLocation.toJSON())
+        scenarioDict["Scenario"]["name"] = self.name
+        scenarioDict["Scenario"]["GridLocation"] = json.loads(
+            self.gridLocation.toJSON())["GridLocation"]
 
         return json.dumps(scenarioDict, indent=2)
 

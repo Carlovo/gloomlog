@@ -1,6 +1,12 @@
 {
   "HandlerJSONCopy": {
     "number": 4,
-    "name": "Jason"
+    "name": "Jason",
+    "handlersHandler": {
+      "HandlerJSONCopy": {
+        "lastName": "Bourne",
+        "number": 3
+      }
+    }
   }
 }

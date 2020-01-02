@@ -7,7 +7,7 @@ sys.path.insert(0, './')
 import gloomlog  # noqa
 
 
-logging.basicConfig(level=logging.WARN, format='')
+logging.basicConfig(level=logging.INFO, format='')
 
 
 class HandlerJSONCopy(gloomlog.HandlerJSON):
@@ -44,9 +44,12 @@ class TestHandlerJSONCopy(unittest.TestCase):
 
         logging.info("Setting up variables for testing HandlerJSON class")
 
-        cls.number = 4
-        cls.name = "Jason"
         cls.handlerJSONTest = HandlerJSONCopy()
+        cls.handlerJSONTest.number = 4
+        cls.handlerJSONTest.name = "Jason"
+        cls.handlerJSONTest.handlersHandler = HandlerJSONCopy()
+        cls.handlerJSONTest.handlersHandler.lastName = "Bourne"
+        cls.handlerJSONTest.handlersHandler.number = 3
 
         with open("TestGloomlogHandlerJSONCopy.json", "r") as file:
             cls.textJSON = file.read()
@@ -63,8 +66,23 @@ class TestHandlerJSONCopy(unittest.TestCase):
 
         self.assertEqual(type(testDict), dict)
 
-        self.assertEqual(testDict["number"], self.number)
-        self.assertEqual(testDict["name"], self.name)
+        self.assertEqual(testDict["number"], self.handlerJSONTest.number)
+        self.assertEqual(testDict["name"], self.handlerJSONTest.name)
+        self.assertEqual(testDict["handlersHandler"]["HandlerJSONCopy"]["lastName"],
+                         self.handlerJSONTest.handlersHandler.lastName)
+        self.assertEqual(testDict["handlersHandler"]["HandlerJSONCopy"]["number"],
+                         self.handlerJSONTest.handlersHandler.number)
+
+    def testHandlerJSONToJSON(self):
+        """
+        Test whether HandlerJSON can correctly encode itself to a JSON
+        """
+
+        logging.info(
+            "Testing whether HandlerJSON can correctly encode itself to a JSON")
+        logging.info("Expected JSON: " + self.handlerJSONTest.toJSON())
+
+        self.assertEqual(self.textJSON, self.handlerJSONTest.toJSON())
 
 
 class TestGloomlogEncounterCopy(unittest.TestCase):
@@ -306,7 +324,7 @@ class TestGloomlogScenario(unittest.TestCase):
         scenNumber = scenDict["number"]
         scenName = scenDict["name"]
         scenGridLoc = gloomlog.GridLocation(
-            fullJSON='{"GridLocation": ' + json.dumps(scenDict["GridLocation"]) + '}')
+            fullJSON=json.dumps(scenDict["gridLocation"]))
 
         scenCopy = gloomlog.Scenario(scenNumber, scenName, scenGridLoc)
 

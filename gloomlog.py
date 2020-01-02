@@ -6,6 +6,10 @@ class HandlerJSON(object):
     An abstract class to standardize JSON handling among objects
     """
 
+    # It would be better to inherit from json.JSONEncoder or dict instead of object...
+    # but json.JSONEncoder inheritance gives errors in the unittest framework...
+    # and dict inheritance is limited in functionality
+
     def __init__(self):
         """
         There can only be none
@@ -35,6 +39,16 @@ class HandlerJSON(object):
 
         return fullDict[type(self).__name__]
 
+    def toJSON(self):
+        """
+        Returns the JSON string representation of the information in the object
+        """
+
+        # It would be better to inherit and override json.JSONEncoder.default() for this,
+        # but that seems to give errors in the unittest framework
+
+        return json.dumps(self, default=lambda o: {type(o).__name__: o.__dict__}, indent=2)
+
 
 class Encounter(HandlerJSON):
     """
@@ -62,15 +76,6 @@ class Encounter(HandlerJSON):
         assert type(number) == int
 
         self.number = number
-
-    def toJSON(self):
-        """
-        Returns the JSON string representation of the information in the Encounter (str)
-        """
-
-        nctrDict = {type(self).__name__: {"number": self.number}}
-
-        return json.dumps(nctrDict, indent=2)
 
     def __eq__(self, other):
         """
@@ -126,16 +131,6 @@ class GridLocation(HandlerJSON):
         self.character = character
         self.number = number
 
-    def toJSON(self):
-        """
-        Returns the JSON string representation of the information in the GridLocation
-        """
-
-        gridLocDict = {"GridLocation": {
-            "character": self.character, "number": self.number}}
-
-        return json.dumps(gridLocDict, indent=2)
-
     def __eq__(self, other):
         """
         other (GridLocation):
@@ -181,7 +176,7 @@ class Scenario(Encounter):
             number = fullDict["number"]
             name = fullDict["name"]
             gridLocation = GridLocation(
-                fullJSON='{"GridLocation": ' + json.dumps(fullDict["GridLocation"]) + '}')
+                fullJSON=json.dumps(fullDict["gridLocation"]))
 
         assert type(name) == str
         assert type(gridLocation) == GridLocation
@@ -190,19 +185,6 @@ class Scenario(Encounter):
 
         self.name = name
         self.gridLocation = gridLocation
-
-    def toJSON(self):
-        """
-        Returns the JSON string representation of the information in the Scenario
-        """
-
-        scenarioDict = json.loads(super().toJSON())
-
-        scenarioDict["Scenario"]["name"] = self.name
-        scenarioDict["Scenario"]["GridLocation"] = json.loads(
-            self.gridLocation.toJSON())["GridLocation"]
-
-        return json.dumps(scenarioDict, indent=2)
 
     def __str__(self):
         """

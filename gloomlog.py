@@ -32,12 +32,11 @@ class HandlerJSON(object):
         assert type(fullJSON) == str
 
         fullDict = json.loads(fullJSON)
-        keysList = list(fullDict.keys())
 
-        assert len(keysList) == 1
-        assert keysList[0] == type(self).__name__
+        assert fullDict["type"] == type(self).__name__
+        assert "data" in fullDict
 
-        return fullDict[type(self).__name__]
+        return fullDict["data"]
 
     def toJSON(self):
         """
@@ -47,7 +46,7 @@ class HandlerJSON(object):
         # It would be better to inherit and override json.JSONEncoder.default() for this,
         # but that seems to give errors in the unittest framework
 
-        return json.dumps(self, default=lambda o: {type(o).__name__: o.__dict__}, indent=2)
+        return json.dumps(self, default=lambda o: {"type": type(o).__name__, "data": o.__dict__}, indent=2)
 
 
 class Encounter(HandlerJSON):

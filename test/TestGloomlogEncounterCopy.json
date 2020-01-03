@@ -1,5 +1,6 @@
 {
-  "EncounterCopy": {
+  "type": "EncounterCopy",
+  "data": {
     "number": 1000
   }
 }

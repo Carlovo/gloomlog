@@ -1,9 +1,11 @@
 {
-  "Scenario": {
+  "type": "Scenario",
+  "data": {
     "number": 1,
     "name": "Black Barrow",
     "gridLocation": {
-      "GridLocation": {
+      "type": "GridLocation",
+      "data": {
         "character": "G",
         "number": 10
       }

@@ -83,8 +83,7 @@ if __name__ == "__main__":
             lastNctr = saveJSON["EnounterList"][-1]
 
             try:
-                # list(lastNctr.keys())[0] returns the encounter subclass as a string
-                ncrtUser = nctrTransDict[list(lastNctr.keys())[0]]["class"](
+                ncrtUser = nctrTransDict[lastNctr["type"]]["class"](
                     fullJSON=json.dumps(lastNctr))
             except:
                 print("Invalid save file :(")

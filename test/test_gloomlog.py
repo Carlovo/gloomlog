@@ -68,9 +68,11 @@ class TestHandlerJSONCopy(unittest.TestCase):
 
         self.assertEqual(testDict["number"], self.handlerJSONTest.number)
         self.assertEqual(testDict["name"], self.handlerJSONTest.name)
-        self.assertEqual(testDict["handlersHandler"]["HandlerJSONCopy"]["lastName"],
+        self.assertEqual(testDict["handlersHandler"]["type"],
+                         type(self.handlerJSONTest.handlersHandler).__name__)
+        self.assertEqual(testDict["handlersHandler"]["data"]["lastName"],
                          self.handlerJSONTest.handlersHandler.lastName)
-        self.assertEqual(testDict["handlersHandler"]["HandlerJSONCopy"]["number"],
+        self.assertEqual(testDict["handlersHandler"]["data"]["number"],
                          self.handlerJSONTest.handlersHandler.number)
 
     def testHandlerJSONToJSON(self):

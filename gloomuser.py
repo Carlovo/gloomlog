@@ -60,10 +60,10 @@ def yesNoQuestion(question):
 
 
 if __name__ == "__main__":
-    # 'translate' between multiple string and object representations of encounters
-    nctrTransDict = {"S": {"class": gloomlog.Scenario, "titleName": "Scenario"},
-                     "R": {"class": gloomlog.RoadEvent, "titleName": "Road Event"},
-                     "C": {"class": gloomlog.CityEvent, "titleName": "City Event"}}
+    # 'translate' between string and object representations of encounters
+    nctrTransDict = {"Scenario": {"class": gloomlog.Scenario, "friendlyName": "Scenario"},
+                     "RoadEvent": {"class": gloomlog.RoadEvent, "friendlyName": "Road Event"},
+                     "CityEvent": {"class": gloomlog.CityEvent, "friendlyName": "City Event"}}
 
     listSaves = []
 
@@ -84,7 +84,7 @@ if __name__ == "__main__":
 
             try:
                 # list(lastNctr.keys())[0] returns the encounter subclass as a string
-                ncrtUser = nctrTransDict[list(lastNctr.keys())[0][0]]["class"](
+                ncrtUser = nctrTransDict[list(lastNctr.keys())[0]]["class"](
                     fullJSON=json.dumps(lastNctr))
             except:
                 print("Invalid save file :(")
@@ -102,8 +102,8 @@ if __name__ == "__main__":
 
     newEncounter = nctrTransDict[multipleChoiceQuestion(
         "What type was your last encounter?",
-        tuple(nctrTransDict[i]["titleName"] for i in nctrTransDict.keys())
-    )[0]]
+        tuple(nctrTransDict[i]["friendlyName"] for i in nctrTransDict)
+    ).replace(" ", "")]
 
     newEncounterInfo = []
 
@@ -111,7 +111,7 @@ if __name__ == "__main__":
     newEncounterInfo.append(
         int(multipleChoiceQuestion(
             "What is the number of the {encounter} you did?".format(
-                encounter=newEncounter["titleName"].lower()),
+                encounter=newEncounter["friendlyName"].lower()),
             tuple(str(i) for i in range(1, 101)),
             "(1-100)")))
 

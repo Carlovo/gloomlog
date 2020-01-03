@@ -60,15 +60,18 @@ def yesNoQuestion(question):
 
 
 if __name__ == "__main__":
-    listFiles = os.listdir("__gloomsave__")
+    # 'translate' between multiple string and object representations of encounters
+    nctrTransDict = {"S": {"class": gloomlog.Scenario, "titleName": "Scenario"},
+                     "R": {"class": gloomlog.RoadEvent, "titleName": "Road Event"},
+                     "C": {"class": gloomlog.CityEvent, "titleName": "City Event"}}
+
     listSaves = []
 
-    for save in listFiles:
+    for save in os.listdir("__gloomsave__"):
         if save.endswith(".json.gml"):
             listSaves.append(save.replace(".json.gml", ""))
 
     save = None
-
     ncrtUser = gloomlog.CityEvent(0)
 
     if len(listSaves) > 0:
@@ -78,19 +81,14 @@ if __name__ == "__main__":
             with open("__gloomsave__/" + save + ".json.gml", "r") as file:
                 saveJSON = json.loads(file.read())
             lastNctr = saveJSON["EnounterList"][-1]
-            lastNctrType = list(lastNctr.keys())[0]
 
-            if lastNctrType[0] == "S":
-                ncrtUser = gloomlog.Scenario
-            elif lastNctrType[0] == "R":
-                ncrtUser = gloomlog.RoadEvent
-            elif lastNctrType[0] == "C":
-                ncrtUser = gloomlog.CityEvent
-            else:
+            try:
+                # list(lastNctr.keys())[0] returns the encounter subclass as a string
+                ncrtUser = nctrTransDict[list(lastNctr.keys())[0][0]]["class"](
+                    fullJSON=json.dumps(lastNctr))
+            except:
                 print("Invalid save file :(")
                 exit()
-
-            ncrtUser = ncrtUser(fullJSON=json.dumps(lastNctr))
 
     print("Your last encounter was:")
     print(ncrtUser)
@@ -102,38 +100,40 @@ if __name__ == "__main__":
     if save is None:
         save = input("How would you like to call your save file?: ")
 
-    newEncounter = multipleChoiceQuestion(
-        "What type was your last encounter?", ('Scenario', 'Road Event', 'City Event'))
+    newEncounter = nctrTransDict[multipleChoiceQuestion(
+        "What type was your last encounter?",
+        tuple(nctrTransDict[i]["titleName"] for i in nctrTransDict.keys())
+    )[0]]
 
-    if newEncounter[0] == "S":
-        newEncounter = "scenario"
-    elif newEncounter[0] == "R":
-        newEncounter = "road event"
-        newEncounterClass = gloomlog.RoadEvent
-    else:
-        newEncounter = "city event"
-        newEncounterClass = gloomlog.CityEvent
+    newEncounterInfo = []
 
-    newEncounterNumber = int(multipleChoiceQuestion(
-        "What is the number of the {encounter} you did?".format(encounter=newEncounter), tuple(str(i) for i in range(1, 101)), "(1-100)"))
+    # get encounter number
+    newEncounterInfo.append(
+        int(multipleChoiceQuestion(
+            "What is the number of the {encounter} you did?".format(
+                encounter=newEncounter["titleName"].lower()),
+            tuple(str(i) for i in range(1, 101)),
+            "(1-100)")))
 
-    if newEncounter[0] == "s":
-        newEncounterName = input("What is the name of the scenario you did?: ")
-        newEncounterGridLocChar = multipleChoiceQuestion(
-            "What is the character of that scenario's location?", tuple(chr(i) for i in range(65, 80)), "(A-O)")
-        newEncounterGridLocNumb = int(multipleChoiceQuestion(
-            "What is the number of that scenario's location?", tuple(str(i) for i in range(1, 19)), "(1-18)"))
-        newEncounterGridLoc = gloomlog.GridLocation(
-            newEncounterGridLocChar, newEncounterGridLocNumb)
-        newEncounter = gloomlog.Scenario(
-            newEncounterNumber, newEncounterName, newEncounterGridLoc)
-    else:
-        newEncounter = newEncounterClass(newEncounterNumber)
+    if newEncounter["class"] == gloomlog.Scenario:
+        # get scenario name
+        newEncounterInfo.append(
+            input("What is the name of the scenario you did?: "))
+        # get/create scenario gridLocation
+        newEncounterInfo.append(
+            gloomlog.GridLocation(
+                multipleChoiceQuestion(
+                    "What is the character of that scenario's location?",
+                    tuple(chr(i) for i in range(65, 80)), "(A-O)"),
+                int(multipleChoiceQuestion(
+                    "What is the number of that scenario's location?",
+                    tuple(str(i) for i in range(1, 19)), "(1-18)"))
+            ))
+
+    newEncounter = newEncounter["class"](*newEncounterInfo)
 
     try:
-        nctrJSON = newEncounter.toJSON()
-        nctrInfo = json.loads(nctrJSON)
-        saveInfo = {"EnounterList": [nctrInfo, ]}
+        saveInfo = {"EnounterList": [json.loads(newEncounter.toJSON()), ]}
     except:
         print("Invalid encounters created :(")
         print("Please try again")

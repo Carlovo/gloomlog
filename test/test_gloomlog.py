@@ -7,7 +7,7 @@ sys.path.insert(0, './')
 import gloomlog  # noqa
 
 
-logging.basicConfig(level=logging.INFO, format='')
+logging.basicConfig(level=logging.WARN, format='')
 
 
 class HandlerJSONCopy(gloomlog.HandlerJSON):

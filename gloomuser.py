@@ -16,8 +16,10 @@ def multipleChoiceQuestion(question, options, rangeOptions=None):
 
     Returns the option from options chosen by the user (str)
     """
+
     assert type(question) == str
     assert type(options) == tuple
+
     for i in options:
         assert type(i) == str
     if rangeOptions is None:
@@ -54,9 +56,75 @@ def yesNoQuestion(question):
 
     Returns whether the user chose 'yes' (bool)
     """
+
     assert type(question) == str
 
     return multipleChoiceQuestion(question, ('yes', 'no')) == 'yes'
+
+
+def writeNewTextFile(fileName, fileText):
+    """
+    fileName (str): path name of the file to write
+    fileText (str): text to write in the file
+
+    Write a new text file to disk.
+    """
+
+    assert type(fileName) == str
+    assert type(fileText) == str
+
+    with open(fileName, "x") as file:
+        file.write(fileText)
+
+
+def _backupCreation_(saveFile):
+    """
+    This function should only be used by saveToFile.
+    Use at your own risk.
+
+    saveFile (str): file name of the save file
+
+    Sets the current save file to become a backup file.
+    Sets the new save file to become the current save file.
+    """
+
+    assert type(saveFile) == str
+
+    os.rename(saveFile, saveFile + ".prev")
+    os.rename(saveFile + ".new", saveFile)
+
+
+def saveToFile(savePath, saveFile, saveInfo):
+    """
+    savePath (str): relative path where to save the file
+    saveFile (str): base name of the save file to write
+    saveInfo (str): save info to write in the file
+
+    Saves text to a file.
+    Also, checks if a directory for saving and backups exist,
+    creates a directory and rotates saves and backups if present.
+    """
+
+    assert type(savePath) == str
+    assert type(saveFile) == str
+    assert type(saveInfo) == str
+
+    saveFile = savePath + "/" + saveFile
+
+    if os.path.exists(savePath):
+        if os.path.exists(saveFile):
+            writeNewTextFile(saveFile + ".new", saveInfo)
+            if os.path.exists(saveFile + ".prev"):
+                os.rename(saveFile + ".prev", saveFile + ".old")
+                _backupCreation_(saveFile)
+                os.remove(saveFile + ".old")
+            else:
+                _backupCreation_(saveFile)
+            return
+    else:
+        os.mkdir(savePath)
+
+    writeNewTextFile(saveFile, saveInfo)
 
 
 if __name__ == "__main__":
@@ -65,20 +133,25 @@ if __name__ == "__main__":
                      "RoadEvent": {"class": gloomlog.RoadEvent, "friendlyName": "Road Event"},
                      "CityEvent": {"class": gloomlog.CityEvent, "friendlyName": "City Event"}}
 
+    # this value is also in .gitignore, change it together with this one
+    savePath = "__gloomsave__"
+    saveExtension = ".json.gml"
+
     listSaves = []
 
-    for save in os.listdir("__gloomsave__"):
-        if save.endswith(".json.gml"):
-            listSaves.append(save.replace(".json.gml", ""))
+    if os.path.exists(savePath):
+        for saveFile in os.listdir(savePath):
+            if saveFile.endswith(saveExtension):
+                listSaves.append(saveFile.replace(saveExtension, ""))
 
-    save = None
+    saveFile = None
     ncrtUser = gloomlog.CityEvent(0)
 
     if len(listSaves) > 0:
         if yesNoQuestion("Would you like to load a save file?"):
-            save = multipleChoiceQuestion(
+            saveFile = multipleChoiceQuestion(
                 "Which save would you like to load?", tuple(listSaves))
-            with open("__gloomsave__/" + save + ".json.gml", "r") as file:
+            with open(savePath + "/" + saveFile + saveExtension, "r") as file:
                 saveJSON = json.loads(file.read())
             lastNctr = saveJSON["EnounterList"][-1]
 
@@ -96,8 +169,8 @@ if __name__ == "__main__":
         print("Bye!")
         exit()
 
-    if save is None:
-        save = input("How would you like to call your save file?: ")
+    if saveFile is None:
+        saveFile = input("How would you like to call your save file?: ")
 
     newEncounter = nctrTransDict[multipleChoiceQuestion(
         "What type was your last encounter?",
@@ -132,31 +205,14 @@ if __name__ == "__main__":
     newEncounter = newEncounter["class"](*newEncounterInfo)
 
     try:
-        saveInfo = {"EnounterList": [json.loads(newEncounter.toJSON()), ]}
+        saveInfo = json.dumps({"EnounterList": [json.loads(newEncounter.toJSON()), ]},
+                              indent=2)
     except:
         print("Invalid encounters created :(")
         print("Please try again")
         exit()
 
-    os.makedirs("__gloomsave__", exist_ok=True)
-
-    with open("__gloomsave__/" + save + ".json.gml.new", "x") as file:
-        file.write(json.dumps(saveInfo, indent=2))
-
-    if os.path.exists("__gloomsave__/" + save + ".json.gml.prev"):
-        os.rename("__gloomsave__/" + save + ".json.gml.prev",
-                  "__gloomsave__/" + save + ".json.gml.old")
-
-    if os.path.exists("__gloomsave__/" + save + ".json.gml"):
-        os.rename("__gloomsave__/" + save + ".json.gml",
-                  "__gloomsave__/" + save + ".json.gml.prev")
-
-    if os.path.exists("__gloomsave__/" + save + ".json.gml.new"):
-        os.rename("__gloomsave__/" + save + ".json.gml.new",
-                  "__gloomsave__/" + save + ".json.gml")
-
-    if os.path.exists("__gloomsave__/" + save + ".json.gml.old"):
-        os.remove("__gloomsave__/" + save + ".json.gml.old")
+    saveToFile(savePath, saveFile + saveExtension, saveInfo)
 
     print("Saved:")
     print(newEncounter)

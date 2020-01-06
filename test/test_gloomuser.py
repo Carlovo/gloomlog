@@ -34,6 +34,9 @@ class TestMultipleChoiceQuestion(unittest.TestCase):
         # remember: ranges include only starting number!
         cls.answersInt = tuple(str(i) for i in range(1, 7))
 
+        cls.questionSingular = "???"
+        cls.answerSingular = ('ABC123!',)
+
     @patch('builtins.input', return_value='sour')
     def testQuestionString(self, input):
         """
@@ -69,6 +72,18 @@ class TestMultipleChoiceQuestion(unittest.TestCase):
 
         self.assertEqual(gloomuser.multipleChoiceQuestion(
             self.questionStr, self.answersStr), 'sour')
+
+    @patch('builtins.input', return_value='A')
+    def testQuestionSingular(self, input):
+        """
+        Test whether multipleChoiceQuestion can correctly parse short hand answers and single options
+        """
+
+        logging.info(
+            "Testing whether multipleChoiceQuestion can correctly parse short hand answers and single options")
+
+        self.assertEqual(gloomuser.multipleChoiceQuestion(
+            self.questionSingular, self.answerSingular), 'ABC123!')
 
 
 class TestYesNoQuestion(unittest.TestCase):
@@ -109,6 +124,17 @@ class TestYesNoQuestion(unittest.TestCase):
 
         self.assertTrue(gloomuser.yesNoQuestion(self.questionStr))
 
+    @patch('builtins.input', return_value='y')
+    def testAnswerSingularYes(self, input):
+        """
+        Test whether yesNoQuestion can correctly parse 'y'
+        """
+
+        logging.info(
+            "Testing whether yesNoQuestion can correctly parse 'y'")
+
+        self.assertTrue(gloomuser.yesNoQuestion(self.questionStr))
+
     @patch('builtins.input', return_value='no')
     def testAnswerNo(self, input):
         """
@@ -128,6 +154,17 @@ class TestYesNoQuestion(unittest.TestCase):
 
         logging.info(
             "Testing whether yesNoQuestion can correctly parse '2'")
+
+        self.assertFalse(gloomuser.yesNoQuestion(self.questionStr))
+
+    @patch('builtins.input', return_value='n')
+    def testAnswerSingularNo(self, input):
+        """
+        Test whether yesNoQuestion can correctly parse 'n'
+        """
+
+        logging.info(
+            "Testing whether yesNoQuestion can correctly parse 'n'")
 
         self.assertFalse(gloomuser.yesNoQuestion(self.questionStr))
 

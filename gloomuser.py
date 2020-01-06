@@ -12,37 +12,66 @@ def multipleChoiceQuestion(question, options, rangeOptions=None):
     rangeOptions(str):
         overrides autogenerations of options shown in question
 
-    Keeps asking the user until a valid option is inputted
+    Keeps asking the user until a valid option is inputted.
+
+    User can input a literal option.
+    User can input the number of an option in options,
+        if no option contains a number.
+    User can input the first character of an option in options,
+        if all first characters in options are unique.
 
     Returns the option from options chosen by the user (str)
     """
 
     assert type(question) == str
     assert type(options) == tuple
+    assert len(options) > 0
 
     for i in options:
         assert type(i) == str
+
     if rangeOptions is None:
-        rangeOptions = str(options)
+        if len(options) > 1:
+            rangeOptions = str(options)
+        else:
+            rangeOptions = "(" + options[0] + ")"
     else:
         assert type(rangeOptions) == str
+
+    # if options contains no digits, allow for numbered selection
+    for char in ''.join(rangeOptions):
+        if char.isdigit():
+            containsDigits = True
+            break
+    else:
+        containsDigits = False
+
+    # if first characters in options are unique, allow for shorthand selection
+    fastDict = {i[0]: i for i in options}
+    if len(fastDict) != len(options):
+        fastDict = {}
 
     while True:
         userInput = input(question + " " + rangeOptions + ": ")
         if userInput in options:
             return userInput
         else:
-            try:
-                userInput = int(userInput)
-                assert userInput > 0
-            except:
-                print("Invalid input")
-            else:
-                userInput -= 1
-                if userInput < len(options):
-                    return options[userInput]
+            if userInput in fastDict:
+                return fastDict[userInput]
+            if not containsDigits:
+                try:
+                    userInput = int(userInput)
+                    assert userInput > 0
+                except:
+                    print("Invalid input")
                 else:
-                    print("Inputted number out of option bounds")
+                    userInput -= 1
+                    if userInput < len(options):
+                        return options[userInput]
+                    else:
+                        print("Inputted number out of option bounds")
+            else:
+                print("Invalid input")
 
 
 def yesNoQuestion(question):
@@ -170,7 +199,13 @@ if __name__ == "__main__":
         exit()
 
     if saveFile is None:
-        saveFile = input("How would you like to call your save file?: ")
+        saveFile = input(
+            "How would you like to call your save file?: ").lower()
+        if saveFile in listSaves:
+            print('Save already exists.')
+            print(
+                'Please rerun the programm and load that save or save under a different name.')
+            exit()
 
     newEncounter = nctrTransDict[multipleChoiceQuestion(
         "What type was your last encounter?",

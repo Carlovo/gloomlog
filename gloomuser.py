@@ -7,7 +7,7 @@ def multipleChoiceQuestion(question, options, rangeOptions=None):
     """
     question (str):
         the question to the user
-    options (tuple of strings):
+    options (tuple of unique strings):
         the options the question allows the user to choose from
     rangeOptions(str):
         overrides autogenerations of options shown in question
@@ -16,9 +16,15 @@ def multipleChoiceQuestion(question, options, rangeOptions=None):
 
     User can input a literal option.
     User can input the number of an option in options,
-        if no option contains a number.
+        if the first character of no option contains a number.
     User can input the first character of an option in options,
         if all first characters in options are unique.
+
+    After the question comes a signal that the user may input:
+    :, only literal options
+    #, literal options + numbered positions
+    @, literal options + one character shorthands
+    >, literals + numbers + shorthands
 
     Returns the option from options chosen by the user (str)
     """
@@ -30,6 +36,10 @@ def multipleChoiceQuestion(question, options, rangeOptions=None):
     for i in options:
         assert type(i) == str
 
+    # assert that options are unique
+    dictOptions = {i: True for i in options}
+    assert len(dictOptions) == len(options)
+
     if rangeOptions is None:
         if len(options) > 1:
             rangeOptions = str(options)
@@ -38,9 +48,9 @@ def multipleChoiceQuestion(question, options, rangeOptions=None):
     else:
         assert type(rangeOptions) == str
 
-    # if options contains no digits, allow for numbered selection
-    for char in ''.join(rangeOptions):
-        if char.isdigit():
+    # if first characters of options contain no digits, allow for numbered selection
+    for i in options:
+        if i[0].isdigit():
             containsDigits = True
             break
     else:
@@ -50,9 +60,18 @@ def multipleChoiceQuestion(question, options, rangeOptions=None):
     fastDict = {i[0]: i for i in options}
     if len(fastDict) != len(options):
         fastDict = {}
+        if containsDigits:
+            rangeOptions += ": "
+        else:
+            rangeOptions += "# "
+    else:
+        if containsDigits:
+            rangeOptions += "@ "
+        else:
+            rangeOptions += "> "
 
     while True:
-        userInput = input(question + " " + rangeOptions + ": ")
+        userInput = input(question + " " + rangeOptions)
         if userInput in options:
             return userInput
         else:

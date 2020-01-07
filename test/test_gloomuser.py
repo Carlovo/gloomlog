@@ -26,6 +26,8 @@ class TestMultipleChoiceQuestion(unittest.TestCase):
         logging.info(
             "Setting up variables for testing multipleChoiceQuestion function")
 
+        cls.faulOptions = ('okay', 'okay')
+
         cls.questionStr = "Choose a taste."
         cls.answersStr = ('sweet', 'sour', 'bitter')
 
@@ -36,6 +38,40 @@ class TestMultipleChoiceQuestion(unittest.TestCase):
 
         cls.questionSingular = "???"
         cls.answerSingular = ('ABC123!',)
+
+    def testNoOptions(self):
+        """
+        Test whether multipleChoiceQuestion can correctly detect no options
+        """
+
+        logging.info(
+            "Testing whether multipleChoiceQuestion can correctly detect no options")
+
+        testError = False
+
+        try:
+            gloomuser.multipleChoiceQuestion("Well?", ())
+        except AssertionError:
+            testError = True
+        finally:
+            self.assertTrue(testError)
+
+    def testFaulOptions(self):
+        """
+        Test whether multipleChoiceQuestion can correctly detect double options
+        """
+
+        logging.info(
+            "Testing whether multipleChoiceQuestion can correctly detect double options")
+
+        testError = False
+
+        try:
+            gloomuser.multipleChoiceQuestion("Well?", self.faulOptions)
+        except AssertionError:
+            testError = True
+        finally:
+            self.assertTrue(testError)
 
     @patch('builtins.input', return_value='sour')
     def testQuestionString(self, input):

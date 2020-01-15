@@ -312,5 +312,302 @@ class TestSaveToFile(unittest.TestCase):
         os.rmdir(cls.testPath)
 
 
+class TestNewCampaignSave(unittest.TestCase):
+    """
+    Test Gloomuser's newCampaignSave function
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing newCampaignSave
+        """
+
+        logging.info(
+            "Setting up variables for testing newCampaignSave function")
+
+        cls.tested = False
+
+    def testNewCampaignSave(self):
+        """
+        Test whether newCampaignSave
+        """
+
+        logging.info(
+            "Testing whether newCampaignSave")
+
+        self.assertTrue(self.tested)
+
+
+class TestLoadCampaignSave(unittest.TestCase):
+    """
+    Test Gloomuser's loadCampaignSave function
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing loadCampaignSave
+        """
+
+        logging.info(
+            "Setting up variables for testing loadCampaignSave function")
+
+        cls.tested = False
+
+    def testLoadCampaignSave(self):
+        """
+        Test whether loadCampaignSave
+        """
+
+        logging.info(
+            "Testing whether loadCampaignSave")
+
+        self.assertTrue(self.tested)
+
+
+class TestPrintHelp(unittest.TestCase):
+    """
+    Test Gloomuser's printHelp function
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing printHelp
+        """
+
+        logging.info(
+            "Setting up variables for testing printHelp function")
+
+        cls.tested = False
+
+    def testPrintHelp(self):
+        """
+        Test whether printHelp
+        """
+
+        logging.info(
+            "Testing whether printHelp")
+
+        self.assertTrue(self.tested)
+
+
+class TestExitGloomlog(unittest.TestCase):
+    """
+    Test Gloomuser's exitGloomlog function
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing exitGloomlog
+        """
+
+        logging.info(
+            "Setting up variables for testing exitGloomlog function")
+
+        cls.tested = False
+
+    def testExitGloomlog(self):
+        """
+        Test whether exitGloomlog
+        """
+
+        logging.info(
+            "Testing whether exitGloomlog")
+
+        self.assertTrue(self.tested)
+
+
+class TestErrorExitGloomlog(unittest.TestCase):
+    """
+    Test Gloomuser's errorExitGloomlog function
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing errorExitGloomlog
+        """
+
+        logging.info(
+            "Setting up variables for testing errorExitGloomlog function")
+
+        cls.tested = False
+
+    def testErrorExitGloomlog(self):
+        """
+        Test whether errorExitGloomlog
+        """
+
+        logging.info(
+            "Testing whether errorExitGloomlog")
+
+        self.assertTrue(self.tested)
+
+
+class TestAddEncounterToSave(unittest.TestCase):
+    """
+    Test Gloomuser's addEncounterToSave function
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing addEncounterToSave
+        """
+
+        logging.info(
+            "Setting up variables for testing addEncounterToSave function")
+
+        cls.tested = False
+
+    def testAddEncounterToSave(self):
+        """
+        Test whether addEncounterToSave
+        """
+
+        logging.info(
+            "Testing whether addEncounterToSave")
+
+        self.assertTrue(self.tested)
+
+
+class TestPresentInterface(unittest.TestCase):
+    """
+    Test Gloomuser's presentInterface function
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing presentInterface
+        """
+
+        logging.info(
+            "Setting up variables for testing presentInterface function")
+
+        cls.tested = False
+
+    def testPresentInterface(self):
+        """
+        Test whether presentInterface
+        """
+
+        logging.info(
+            "Testing whether presentInterface")
+
+        self.assertTrue(self.tested)
+
+
+class TestTupleToPrettyStr(unittest.TestCase):
+    """
+    Test Gloomuser's tupleToPrettyStr function
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing tupleToPrettyStr
+        """
+
+        logging.info(
+            "Setting up variables for testing tupleToPrettyStr function")
+
+        cls.tested = False
+
+    def testTupleToPrettyStr(self):
+        """
+        Test whether tupleToPrettyStr
+        """
+
+        logging.info(
+            "Testing whether tupleToPrettyStr")
+
+        self.assertTrue(self.tested)
+
+
+class TestExitInterface(unittest.TestCase):
+    """
+    Test Gloomuser's exitInterface function
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing exitInterface
+        """
+
+        logging.info(
+            "Setting up variables for testing exitInterface function")
+
+        cls.tested = False
+
+    def testExitInterface(self):
+        """
+        Test whether exitInterface
+        """
+
+        logging.info(
+            "Testing whether exitInterface")
+
+        self.assertTrue(self.tested)
+
+
+class TestPresentUserInterfaceMain(unittest.TestCase):
+    """
+    Test Gloomuser's presentUserInterfaceMain function
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing presentUserInterfaceMain
+        """
+
+        logging.info(
+            "Setting up variables for testing presentUserInterfaceMain function")
+
+        cls.tested = False
+
+    def testPresentUserInterfaceMain(self):
+        """
+        Test whether presentUserInterfaceMain
+        """
+
+        logging.info(
+            "Testing whether presentUserInterfaceMain")
+
+        self.assertTrue(self.tested)
+
+
+class TestPresentUserInterfaceSave(unittest.TestCase):
+    """
+    Test Gloomuser's presentUserInterfaceSave function
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing presentUserInterfaceSave
+        """
+
+        logging.info(
+            "Setting up variables for testing presentUserInterfaceSave function")
+
+        cls.tested = False
+
+    def testPresentUserInterfaceSave(self):
+        """
+        Test whether presentUserInterfaceSave
+        """
+
+        logging.info(
+            "Testing whether presentUserInterfaceSave")
+
+        self.assertTrue(self.tested)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

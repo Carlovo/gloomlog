@@ -1,0 +1,472 @@
+from gloommodel import Scenario, GridLocation, CityEvent, RoadEvent
+import json
+
+
+def error_exit_interfaces():
+    """
+    Something really strange happened...
+    """
+
+    # for just shut down
+    # implement passing error to Controller at some point
+    # maybe it can still handle it...
+
+    print('Sorry, GloomLog could not parse that input')
+    print('GloomLog has to shut down :(')
+    exit()
+
+
+class UserInterface:
+
+    # should be overriden in child classes
+    interface_header = ""
+
+    # 'translate' between string and object representations of encounters
+    # should at some point probably be refactored to getattr
+    nctr_trans_dict = {
+        "Scenario": {
+            "class": Scenario, "friendly_name": "scenario"},
+        "RoadEvent": {
+            "class": RoadEvent, "friendly_name": "road event"},
+        "CityEvent": {
+            "class": CityEvent, "friendly_name": "city event"}}
+
+    def __init__(self):
+        # enfore abstract class
+        assert type(self) != UserInterface
+
+        # should be extended in child classes
+        self.user_option_dict = {}
+        self.user_option_dict["help"] = {
+            "function": self.print_help,
+            "args": [],
+            "stay": True,
+            "print": "Show HELP"
+        }
+        self.user_option_dict["exit"] = {
+            "function": self.exit_gloomlog,
+            "args": [],
+            "stay": False,
+            "print": "EXIT GloomLog"
+        }
+
+    def scale_interface(self):
+        self.user_option_tuple = tuple(i for i in self.user_option_dict)
+
+        self.interface_top = ""
+        self.interface_bottom = ""
+
+        max_len = max(
+            len(self.interface_header),
+            len(self.tuple_to_pretty_string(
+                input_tuple=self.user_option_tuple) + ":")
+        )
+
+        for _ in range(max_len):
+            self.interface_top += "="
+            self.interface_bottom += "-"
+
+    def present_interface(self):
+
+        self.scale_interface()
+
+        print('')
+        print(self.interface_top)
+        print(self.interface_header)
+        print(self.interface_top)
+
+        for option in self.user_option_dict:
+            print(self.user_option_dict[option]["print"])
+        print(self.interface_bottom)
+
+        print('Please choose from')
+        user_input = UserInterface.multiple_choice_question(
+            options=self.user_option_tuple)
+
+        try:
+            assert user_input in self.user_option_dict
+        except KeyError:
+            print("Unavailable option selected")
+            error_exit_interfaces()
+
+        print(self.interface_bottom)
+
+        return self.user_option_dict[user_input]["function"](
+            *self.user_option_dict[user_input]["args"]
+        )
+
+    @staticmethod
+    def print_help():
+        """
+        Print GloomLog's help text
+        """
+
+        print(':, only literal options')
+        print('#, literal options + numbered positions')
+        print('@, literal options + one character shorthands')
+        print('>, literals + numbers + shorthands')
+
+        return True
+
+    @staticmethod
+    def exit_gloomlog():
+        """
+        Breaks are not allowwed outside of a loop :(
+        Exceptions and generators would be overkill
+        So use the flag 'stay' in every userOptionDict
+        and this simple function instead
+        """
+
+        return False
+
+    @staticmethod
+    def close_interface():
+
+        return 2
+
+    @staticmethod
+    def tuple_to_pretty_string(input_tuple: tuple):
+        if len(input_tuple) > 1:
+            return str(input_tuple)
+        else:
+            return "(" + input_tuple[0] + ")"
+
+    @staticmethod
+    def multiple_choice_question(options: tuple, question: str = "", range_options: str = None):
+        """
+        question (str):
+            the question to the user
+        options (tuple of unique strings):
+            the options the question allows the user to choose from
+        rangeOptions(str):
+            overrides autogenerations of options shown in question
+
+        Keeps asking the user until a valid option is inputted.
+
+        User can input a literal option.
+        User can input the number of an option in options,
+            if the first character of no option contains a number.
+        User can input the first character of an option in options,
+            if all first characters in options are unique.
+
+        After the question comes a signal that the user may input:
+        :, only literal options
+        # , literal options + numbered positions
+        @, literal options + one character shorthands
+        >, literals + numbers + shorthands
+
+        Returns the option from options chosen by the user (str)
+        """
+
+        assert isinstance(question, str)
+        assert isinstance(options, tuple)
+        assert options
+
+        for i in options:
+            assert isinstance(i, str)
+
+        # assert that options are unique
+        assert len({i: True for i in options}) == len(options)
+
+        if range_options is None:
+            range_options = UserInterface.tuple_to_pretty_string(
+                input_tuple=options
+            )
+        else:
+            assert isinstance(range_options, str)
+
+        # if first characters of options contain no digits,
+        # allow for numbered selection
+        for i in options:
+            if i[0].isdigit():
+                contains_digits = True
+                break
+        else:
+            contains_digits = False
+
+        # if first characters in options are unique,
+        # allow for shorthand selection
+        fast_dict = {i[0]: i for i in options}
+        if len(fast_dict) != len(options):
+            fast_dict = {}
+            if contains_digits:
+                range_options += ": "
+            else:
+                range_options += "# "
+        else:
+            if contains_digits:
+                range_options += "@ "
+            else:
+                range_options += "> "
+
+        if len(question) > 0:
+            range_options = " " + range_options
+
+        while True:
+            user_input = input(question + range_options)
+            if user_input in options:
+                return user_input
+            else:
+                if user_input in fast_dict:
+                    return fast_dict[user_input]
+                if not contains_digits:
+                    try:
+                        user_input = int(user_input)
+                        assert user_input > 0
+                    except BaseException:
+                        print("Invalid input")
+                    else:
+                        user_input -= 1
+                        if user_input < len(options):
+                            return options[user_input]
+                        else:
+                            print("Inputted number out of option bounds")
+                else:
+                    print("Invalid input")
+
+    @staticmethod
+    def yes_no_question(question: str = ""):
+        """
+        question (str):
+            the question to the user
+
+        Keeps asking the user until 'yes', 'no', '1' or '2' is inputted
+        '1' = 'yes'
+        '2' = 'no'
+
+        Returns whether the user chose 'yes' (bool)
+        """
+
+        assert isinstance(question, str)
+
+        return UserInterface.multiple_choice_question(options=("yes", "no"), question=question) == "yes"
+
+
+class UserInterfaceMain(UserInterface):
+
+    interface_header = "What would you like to do?"
+
+    def __init__(self, list_saves: list):
+
+        super().__init__()
+
+        self.list_saves = list_saves
+        self.save_interface = None
+
+        self.user_option_dict["new"] = {
+            "function": self.new_campaign_save,
+            "args": [],
+            "stay": True,
+            "print": "Create NEW campaign save file"
+        }
+
+        if self.list_saves:
+            self.user_option_dict["load"] = {
+                "function": self.load_campaign_save,
+                "args": [],
+                "stay": True,
+                "print": "LOAD a campaign save file"}
+            # implement delete, copy, rename and restore here at some point
+
+    def present_interface(self):
+        if self.save_interface is None:
+            return super().present_interface()
+        else:
+            # TODO remove code duplication (from gloomcontroller) if possible
+            hold = True
+
+            while hold:
+                if hold == 2:
+                    return True
+                if type(hold) == tuple:
+                    return hold
+                hold = self.save_interface.present_interface()
+
+            return hold
+
+    def new_campaign_save(self):
+        """
+        listSaves (list of str): list of save files already present
+        """
+
+        if self.list_saves:
+            print("The following campaign save names are already taken:")
+            print(self.tuple_to_pretty_string(
+                tuple(i for i in self.list_saves)))
+
+        while True:
+            print("Campaign save names will be converted to lower case.")
+            save_file = input(
+                "How would you like to call your campaign save file?: ").lower()
+            if save_file in self.list_saves:
+                print("Save already exists.")
+            else:
+                break
+
+        if self.yes_no_question(question="Would you like to add the default campaign starter to your save (recommended)?"):
+            self.save_interface = UserInterfaceSave(
+                save_file_name=save_file,
+                encounter_list=[CityEvent(number=0)]
+            )
+        else:
+            self.save_interface = UserInterfaceSave(save_file_name=save_file)
+
+        # TODO remove code duplication (from gloomcontroller) if possible
+        hold = True
+
+        while hold:
+            hold = self.save_interface.present_interface()
+            if hold == 2:
+                self.save_interface = None
+                return True
+            if type(hold) == tuple:
+                return hold
+
+        return hold
+
+    def load_campaign_save(self):
+
+        return self.multiple_choice_question(
+            "Which save would you like to load?",
+            tuple(self.list_saves)
+        )
+
+    def present_user_interface_save(self, save_file):
+        # TODO
+        # with open(savePath + "/" + saveFile + saveExtension, "r") as file:
+        #     saveDict = json.loads(file.read())
+
+        # try:
+        #     encounterListPython = saveDict["EnounterList"]
+        #     encounter_list_gloomlog = [self.nctr_trans_dict[i["type"]]["class"](
+        #         fullJSON=json.dumps(i)) for i in encounterListPython]
+        # except BaseException:
+        #     print("Invalid save file :(")
+        #     error_exit_interfaces()
+
+        # save_interface = UserInterfaceSave(
+        #     save_file_name=save_file,
+        #     encounter_list=encounter_list_gloomlog
+        # )
+
+        # # TODO remove code duplication (from gloomcontroller) if possible
+        # hold = True
+
+        # while hold:
+        #     if hold == 2:
+        #         return True
+        #     hold = save_interface.present_interface()
+
+        # return hold
+
+        pass
+
+
+class UserInterfaceSave(UserInterface):
+
+    interface_header = "What would you like to do with the campaign save?"
+
+    def __init__(self, save_file_name: str, encounter_list: list = []):
+
+        super().__init__()
+
+        self.user_option_dict["add"] = {
+            "function": self.add_encounter_to_save,
+            "args": [],
+            "stay": False,
+            # TODO
+            "print": "ADD new encounter (implemented as replace for now)"
+        }
+        self.user_option_dict["close"] = {
+            "function": self.close_interface,
+            "args": [],
+            "stay": False,
+            "print": "CLOSE save and go back to main interface"
+        }
+
+        # implement here at some point:
+        # SAVE progress
+        # REMOVE encounters from save file
+        # EDIT encounter properties
+        # DELETE this save
+        # Inspect BACKUP save file -> Maybe advanced interface
+        # Try to FIX broken save file -> Maybe advanced interface
+
+        # self.save_file_name is slightly redundant for now,
+        # but will be usefull with renaming saves
+        self.save_file_name = save_file_name
+        self.encounter_list = encounter_list
+
+    def present_interface(self):
+
+        print("")
+
+        if self.encounter_list:
+            print("Your last encounter was:")
+            print(self.encounter_list[-1])
+        else:
+            print("Your campaign save does not yet contain any encounters.")
+
+        return super().present_interface()
+
+    def add_encounter_to_save(self):
+
+        new_encounter_friendly_name = self.multiple_choice_question(
+            question="What type was your last encounter?",
+            options=tuple(self.nctr_trans_dict[i]["friendly_name"]
+                          for i in self.nctr_trans_dict)
+        )
+
+        for nctr in self.nctr_trans_dict:
+            if self.nctr_trans_dict[nctr]["friendly_name"] == new_encounter_friendly_name:
+                new_encounter_class = self.nctr_trans_dict[nctr]["class"]
+                break
+        else:
+            print("Undefined class obtained")
+            error_exit_interfaces()
+
+        new_encounter_info = []
+
+        # get encounter number
+        new_encounter_info.append(
+            int(
+                self.multiple_choice_question(
+                    question="What is the number of the {encounter} you did?".format(
+                        encounter=new_encounter_friendly_name),
+                    options=tuple(str(i) for i in range(1, 101)),
+                    range_options="(1-100)"
+                )
+            )
+        )
+
+        if new_encounter_class == Scenario:
+            # get scenario name
+            new_encounter_info.append(
+                input("What is the name of the scenario you did?: "))
+            # get/create scenario gridLocation
+            new_encounter_info.append(
+                GridLocation(
+                    self.multiple_choice_question(
+                        question="What is the character of that scenario's location?",
+                        options=tuple(chr(i) for i in range(65, 80)),
+                        range_options="(A-O)"
+                    ),
+                    int(
+                        self.multiple_choice_question(
+                            question="What is the number of that scenario's location?",
+                            options=tuple(str(i) for i in range(1, 19)),
+                            range_options="(1-18)")
+                    )
+                )
+            )
+
+        new_encounter = new_encounter_class(*new_encounter_info)
+
+        try:
+            save_info = json.dumps(
+                {"EnounterList": [json.loads(new_encounter.toJSON()), ]}, indent=2)
+        except BaseException:
+            print("Invalid encounters created :(")
+            error_exit_interfaces()
+
+        return (self.save_file_name, save_info)

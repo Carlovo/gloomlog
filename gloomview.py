@@ -276,11 +276,12 @@ class UserInterfaceMain(UserInterface):
             hold = True
 
             while hold:
+                hold = self.save_interface.present_interface()
                 if hold == 2:
+                    self.save_interface = None
                     return True
                 if type(hold) == tuple:
                     return hold
-                hold = self.save_interface.present_interface()
 
             return hold
 

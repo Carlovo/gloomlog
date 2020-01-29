@@ -37,17 +37,21 @@ class UserInterface:
 
         # should be extended in child classes
         self.user_option_dict = {}
-        self.user_option_dict["help"] = {
-            "function": self.print_help,
-            "args": [],
-            "stay": True,
-            "print": "Show HELP"
-        }
-        self.user_option_dict["exit"] = {
-            "function": self.exit_gloomlog,
-            "args": [],
-            "stay": False,
-            "print": "EXIT GloomLog"
+        self.update_user_option_dict(
+            option_key="help",
+            option_function=self.print_help,
+            option_print="Show HELP"
+        )
+        self.update_user_option_dict(
+            option_key="exit",
+            option_function=self.exit_gloomlog,
+            option_print="EXIT GloomLog"
+        )
+
+    def update_user_option_dict(self, option_key: str, option_function, option_print: str):
+        self.user_option_dict[option_key] = {
+            "function": option_function,
+            "print": option_print
         }
 
     def scale_interface(self):
@@ -91,9 +95,7 @@ class UserInterface:
 
         print(self.interface_bottom)
 
-        return self.user_option_dict[user_input]["function"](
-            *self.user_option_dict[user_input]["args"]
-        )
+        return self.user_option_dict[user_input]["function"]()
 
     @staticmethod
     def print_help():
@@ -253,19 +255,18 @@ class UserInterfaceMain(UserInterface):
         self.list_saves = list_saves
         self.save_interface = None
 
-        self.user_option_dict["new"] = {
-            "function": self.new_campaign_save,
-            "args": [],
-            "stay": True,
-            "print": "Create NEW campaign save file"
-        }
+        self.update_user_option_dict(
+            option_key="new",
+            option_function=self.new_campaign_save,
+            option_print="Create NEW campaign save file"
+        )
 
         if self.list_saves:
-            self.user_option_dict["load"] = {
-                "function": self.load_campaign_save,
-                "args": [],
-                "stay": True,
-                "print": "LOAD a campaign save file"}
+            self.update_user_option_dict(
+                option_key="load",
+                option_function=self.load_campaign_save,
+                option_print="LOAD a campaign save file"
+            )
             # implement delete, copy, rename and restore here at some point
 
     def present_interface(self):
@@ -360,19 +361,17 @@ class UserInterfaceSave(UserInterface):
 
         super().__init__()
 
-        self.user_option_dict["add"] = {
-            "function": self.add_encounter_to_save,
-            "args": [],
-            "stay": False,
+        self.update_user_option_dict(
+            option_key="add",
+            option_function=self.add_encounter_to_save,
             # TODO
-            "print": "ADD new encounter (implemented as replace for now)"
-        }
-        self.user_option_dict["close"] = {
-            "function": self.close_interface,
-            "args": [],
-            "stay": False,
-            "print": "CLOSE save and go back to main interface"
-        }
+            option_print="ADD new encounter (implemented as replace for now)"
+        )
+        self.update_user_option_dict(
+            option_key="close",
+            option_function=self.close_interface,
+            option_print="CLOSE save and go back to main interface"
+        )
 
         # implement here at some point:
         # SAVE progress

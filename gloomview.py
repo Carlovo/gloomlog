@@ -327,40 +327,29 @@ class UserInterfaceMain(UserInterface):
 
     def load_campaign_save(self):
 
-        return self.multiple_choice_question(
-            "Which save would you like to load?",
-            tuple(self.list_saves)
+        save_file = self.multiple_choice_question(
+            options=tuple(self.list_saves),
+            question="Which save would you like to load?"
         )
 
-    def present_user_interface_save(self, save_file):
-        # TODO
-        # with open(savePath + "/" + saveFile + saveExtension, "r") as file:
-        #     saveDict = json.loads(file.read())
+        self.save_interface = UserInterfaceSave(save_file_name=save_file)
 
-        # try:
-        #     encounterListPython = saveDict["EnounterList"]
-        #     encounter_list_gloomlog = [self.nctr_trans_dict[i["type"]]["class"](
-        #         fullJSON=json.dumps(i)) for i in encounterListPython]
-        # except BaseException:
-        #     print("Invalid save file :(")
-        #     error_exit_interfaces()
+        return save_file
 
-        # save_interface = UserInterfaceSave(
-        #     save_file_name=save_file,
-        #     encounter_list=encounter_list_gloomlog
-        # )
+    def prepare_save_interface(self, save_text: str):
+        try:
+            save_dict = json.loads(save_text)
+            encounter_list = [
+                self.nctr_trans_dict[encounter_as_dict["type"]]["class"](
+                    fullJSON=json.dumps(encounter_as_dict)
+                )
+                for encounter_as_dict in save_dict["EnounterList"]
+            ]
+        except BaseException:
+            print("Invalid save file :(")
+            error_exit_interfaces()
 
-        # # TODO remove code duplication (from gloomcontroller) if possible
-        # hold = True
-
-        # while hold:
-        #     if hold == 2:
-        #         return True
-        #     hold = save_interface.present_interface()
-
-        # return hold
-
-        pass
+        self.save_interface.encounter_list = encounter_list
 
 
 class UserInterfaceSave(UserInterface):

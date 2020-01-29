@@ -105,3 +105,10 @@ class Backend:
             os.mkdir(save_path)
 
         self.write_new_text_file(file_name=save_file, file_text=save_info)
+
+    @classmethod
+    def load_save_file_as_text(cls, save_file: str) -> str:
+        with open(cls.save_path + "/" + save_file + cls.save_extension, "r") as file:
+            save_text = file.read()
+
+        return save_text

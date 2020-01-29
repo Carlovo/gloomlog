@@ -34,6 +34,9 @@ class Controller:
             hold = self.interface.present_interface()
             if type(hold) == tuple:
                 self.backend.save_to_file(save_file=hold[0], save_info=hold[1])
+            if type(hold) == str:
+                save_text = self.backend.load_save_file_as_text(save_file=hold)
+                self.interface.prepare_save_interface(save_text=save_text)
 
         self.exit_gloomlog()
 

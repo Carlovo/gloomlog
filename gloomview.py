@@ -21,15 +21,11 @@ class UserInterface:
     # should be overriden in child classes
     interface_header = ""
 
-    # 'translate' between string and object representations of encounters
-    # should at some point probably be refactored to getattr
-    nctr_trans_dict = {
-        "Scenario": {
-            "class": Scenario, "friendly_name": "scenario"},
-        "RoadEvent": {
-            "class": RoadEvent, "friendly_name": "road event"},
-        "CityEvent": {
-            "class": CityEvent, "friendly_name": "city event"}}
+    encounter_types = (
+        Scenario,
+        RoadEvent,
+        CityEvent
+    )
 
     def __init__(self):
         # enfore abstract class
@@ -340,12 +336,18 @@ class UserInterfaceMain(UserInterface):
     def prepare_save_interface(self, save_text: str):
         try:
             save_dict = json.loads(save_text)
-            encounter_list = [
-                self.nctr_trans_dict[encounter_as_dict["type"]]["class"](
-                    fullJSON=json.dumps(encounter_as_dict)
-                )
-                for encounter_as_dict in save_dict["EnounterList"]
-            ]
+            encounter_list = []
+            for encounter_as_dict in save_dict["EnounterList"]:
+                for encounter_type in self.encounter_types:
+                    if encounter_type.__name__ == encounter_as_dict["type"]:
+                        encounter_list.append(
+                            encounter_type(
+                                fullJSON=json.dumps(encounter_as_dict)
+                            )
+                        )
+                        break
+                else:
+                    raise TypeError
         except BaseException:
             print("Invalid save file :(")
             error_exit_interfaces()
@@ -402,13 +404,12 @@ class UserInterfaceSave(UserInterface):
 
         new_encounter_friendly_name = self.multiple_choice_question(
             question="What type was your last encounter?",
-            options=tuple(self.nctr_trans_dict[i]["friendly_name"]
-                          for i in self.nctr_trans_dict)
+            options=tuple(encounter_type.friendly_name
+                          for encounter_type in self.encounter_types)
         )
 
-        for nctr in self.nctr_trans_dict:
-            if self.nctr_trans_dict[nctr]["friendly_name"] == new_encounter_friendly_name:
-                new_encounter_class = self.nctr_trans_dict[nctr]["class"]
+        for new_encounter_class in self.encounter_types:
+            if new_encounter_class.friendly_name == new_encounter_friendly_name:
                 break
         else:
             print("Undefined class obtained")
@@ -450,6 +451,7 @@ class UserInterfaceSave(UserInterface):
             )
 
         new_encounter = new_encounter_class(*new_encounter_info)
+        self.encounter_list.append(new_encounter)
 
         try:
             save_info = json.dumps(

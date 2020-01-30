@@ -9,10 +9,6 @@ class Backend:
     delete_extension = ".old"
     new_extension = ".new"
 
-    def __init__(self):
-
-        self.list_saves = self.check_saves()
-
     def check_saves(self) -> list:
         list_saves = []
 

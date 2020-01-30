@@ -21,7 +21,7 @@ class Controller:
     def run(self):
 
         self.backend = Backend()
-        saves_copy = self.backend.list_saves.copy()
+        saves_copy = self.backend.check_saves()
         self.interface = UserInterfaceMain(list_saves=saves_copy)
 
         self.present_user_interface_main()
@@ -34,6 +34,8 @@ class Controller:
             hold = self.interface.present_interface()
             if type(hold) == tuple:
                 self.backend.save_to_file(save_file=hold[0], save_info=hold[1])
+                # slight overkill, but works well enough for a simple app as this
+                self.interface.list_saves = self.backend.check_saves()
             if type(hold) == str:
                 save_text = self.backend.load_save_file_as_text(save_file=hold)
                 self.interface.prepare_save_interface(save_text=save_text)

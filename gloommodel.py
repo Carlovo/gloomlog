@@ -55,6 +55,9 @@ class Encounter(HandlerJSON):
     Abstract class to capture scenarios and events
     """
 
+    # should be overwritten by child classes
+    friendly_name = "encounter"
+
     def __init__(self, number=None, fullJSON=None):
         """
         number (int):
@@ -155,6 +158,8 @@ class Scenario(Encounter):
     A scenario from the game Gloomhaven
     """
 
+    friendly_name = "scenario"
+
     def __init__(self, number=None, name=None, gridLocation=None, fullJSON=None):
         """
         number (int):
@@ -198,6 +203,9 @@ class Event(Encounter):
     A abstract class for events from the game Gloomhaven
     """
 
+    # should be overwritten by child classes
+    friendly_name = "event"
+
     def __init__(self, number=None, fullJSON=None):
         """
         number (int):
@@ -221,6 +229,8 @@ class RoadEvent(Event):
     A class for road events from the game Gloomhaven
     """
 
+    friendly_name = "road event"
+
     def __str__(self):
         """
         Returns general info about the road event
@@ -233,6 +243,8 @@ class CityEvent(Event):
     """
     A class for city events from the game Gloomhaven
     """
+
+    friendly_name = "city event"
 
     def __str__(self):
         """

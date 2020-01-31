@@ -16,7 +16,8 @@ class Backend:
             for save_file in os.listdir(self.save_path):
                 if save_file.endswith(self.save_extension):
                     list_saves.append(
-                        save_file.replace(self.save_extension, ""))
+                        save_file.replace(self.save_extension, "")
+                    )
 
         return list_saves
 
@@ -104,6 +105,8 @@ class Backend:
 
     @classmethod
     def load_save_file_as_text(cls, save_file: str) -> str:
+        assert isinstance(save_file, str)
+
         with open(cls.save_path + "/" + save_file + cls.save_extension, "r") as file:
             save_text = file.read()
 

@@ -44,22 +44,36 @@ class UserInterface:
             option_print="EXIT GloomLog"
         )
 
-    def update_user_option_dict(self, option_key: str, option_function, option_print: str):
+    def update_user_option_dict(
+        self,
+        option_key: str,
+        option_function: callable,
+        option_print: str
+    ):
+        assert isinstance(option_key, str)
+        assert callable(option_function)
+        assert isinstance(option_print, str)
+
         self.user_option_dict[option_key] = {
             "function": option_function,
             "print": option_print
         }
 
     def scale_interface(self):
-        self.user_option_tuple = tuple(i for i in self.user_option_dict)
+        self.user_option_tuple = tuple(
+            option for option in self.user_option_dict
+        )
 
         self.interface_top = ""
         self.interface_bottom = ""
 
         max_len = max(
             len(self.interface_header),
-            len(self.tuple_to_pretty_string(
-                input_tuple=self.user_option_tuple) + ":")
+            len(
+                self.tuple_to_pretty_string(
+                    input_tuple=self.user_option_tuple
+                ) + ":"
+            )
         )
 
         for _ in range(max_len):
@@ -94,7 +108,7 @@ class UserInterface:
         return self.user_option_dict[user_input]["function"]()
 
     @staticmethod
-    def print_help():
+    def print_help() -> True:
         """
         Print GloomLog's help text
         """
@@ -107,7 +121,7 @@ class UserInterface:
         return True
 
     @staticmethod
-    def exit_gloomlog():
+    def exit_gloomlog() -> False:
         """
         Breaks are not allowwed outside of a loop :(
         Exceptions and generators would be overkill
@@ -118,19 +132,25 @@ class UserInterface:
         return False
 
     @staticmethod
-    def close_interface():
+    def close_interface() -> 2:
 
         return 2
 
     @staticmethod
-    def tuple_to_pretty_string(input_tuple: tuple):
+    def tuple_to_pretty_string(input_tuple: tuple) -> str:
+        assert isinstance(input_tuple, tuple)
+
         if len(input_tuple) > 1:
             return str(input_tuple)
         else:
-            return "(" + input_tuple[0] + ")"
+            return "(" + str(input_tuple[0]) + ")"
 
     @staticmethod
-    def multiple_choice_question(options: tuple, question: str = "", range_options: str = None):
+    def multiple_choice_question(
+        options: tuple,
+        question: str = "",
+        range_options: str = None
+    ) -> str:
         """
         question (str):
             the question to the user
@@ -223,7 +243,7 @@ class UserInterface:
                     print("Invalid input")
 
     @staticmethod
-    def yes_no_question(question: str = ""):
+    def yes_no_question(question: str = "") -> bool:
         """
         question (str):
             the question to the user
@@ -248,6 +268,10 @@ class UserInterfaceMain(UserInterface):
 
         super().__init__()
 
+        assert isinstance(list_saves, list)
+        for save in list_saves:
+            assert isinstance(save, str)
+
         self.list_saves = list_saves
         self.save_interface = None
 
@@ -265,7 +289,8 @@ class UserInterfaceMain(UserInterface):
             )
             # implement delete, copy, rename and restore here at some point
 
-    def present_interface(self):
+    def present_interface(self) -> object:
+        # TODO: refactor to a single return type
         if self.save_interface is None:
             return super().present_interface()
         else:
@@ -282,7 +307,7 @@ class UserInterfaceMain(UserInterface):
 
             return hold
 
-    def new_campaign_save(self):
+    def new_campaign_save(self) -> object:
         """
         listSaves (list of str): list of save files already present
         """
@@ -322,11 +347,12 @@ class UserInterfaceMain(UserInterface):
 
         return hold
 
-    def load_campaign_save(self):
+    def load_campaign_save(self) -> str:
+
+        print("Which save would you like to load?")
 
         save_file = self.multiple_choice_question(
-            options=tuple(self.list_saves),
-            question="Which save would you like to load?"
+            options=tuple(self.list_saves)
         )
 
         self.save_interface = UserInterfaceSave(save_file_name=save_file)
@@ -334,6 +360,8 @@ class UserInterfaceMain(UserInterface):
         return save_file
 
     def prepare_save_interface(self, save_text: str):
+        assert isinstance(save_text, str)
+
         try:
             save_dict = json.loads(save_text)
             encounter_list = []
@@ -363,6 +391,11 @@ class UserInterfaceSave(UserInterface):
 
         super().__init__()
 
+        assert isinstance(save_file_name, str)
+        assert isinstance(encounter_list, list)
+        for encounter in encounter_list:
+            assert type(encounter) in self.encounter_types
+
         self.update_user_option_dict(
             option_key="add",
             option_function=self.add_encounter_to_save,
@@ -388,7 +421,7 @@ class UserInterfaceSave(UserInterface):
         self.save_file_name = save_file_name
         self.encounter_list = encounter_list
 
-    def present_interface(self):
+    def present_interface(self) -> object:
 
         print("")
 
@@ -438,12 +471,14 @@ class UserInterfaceSave(UserInterface):
                 GridLocation(
                     self.multiple_choice_question(
                         question="What is the character of that scenario's location?",
+                        # TODO: refactor to single defenition
                         options=tuple(chr(i) for i in range(65, 80)),
                         range_options="(A-O)"
                     ),
                     int(
                         self.multiple_choice_question(
                             question="What is the number of that scenario's location?",
+                            # TODO: refactor to single defenition
                             options=tuple(str(i) for i in range(1, 19)),
                             range_options="(1-18)")
                     )

@@ -50,8 +50,3 @@ class Controller:
 
         print('Bye!')
         exit()
-
-    @staticmethod
-    def load_campaign_save():
-
-        pass

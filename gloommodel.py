@@ -1,7 +1,7 @@
 import json
 
 
-class HandlerJSON(object):
+class HandlerJSON:
     """
     An abstract class to standardize JSON handling among objects
     """
@@ -18,7 +18,7 @@ class HandlerJSON(object):
         # enforce only abstract use of this class
         assert type(self) != HandlerJSON
 
-    def fromJSON(self, fullJSON):
+    def fromJSON(self, fullJSON: str) -> dict:
         """
         fullJSON (str):
             JSON representation of an object
@@ -38,7 +38,7 @@ class HandlerJSON(object):
 
         return fullDict["data"]
 
-    def toJSON(self):
+    def toJSON(self) -> str:
         """
         Returns the JSON string representation of the information in the object
         """
@@ -58,7 +58,7 @@ class Encounter(HandlerJSON):
     # should be overwritten by child classes
     friendly_name = "encounter"
 
-    def __init__(self, number=None, fullJSON=None):
+    def __init__(self, number: int = None, fullJSON: str = None):
         """
         number (int):
             the number of the Encounter
@@ -79,7 +79,7 @@ class Encounter(HandlerJSON):
 
         self.number = number
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """
         Other (Encounter):
             the encounter to compare to
@@ -90,7 +90,7 @@ class Encounter(HandlerJSON):
 
         return self.number == other.number
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns general info about the encouter (str)
         """
@@ -103,7 +103,7 @@ class GridLocation(HandlerJSON):
     A location by the grid on the map of Gloomhaven
     """
 
-    def __init__(self, character=None, number=None, fullJSON=None):
+    def __init__(self, character: str = None, number: int = None, fullJSON: str = None):
         """
         character (single character string: A - O):
             the character denoting the horizontal / row value of the GridLocation
@@ -133,7 +133,7 @@ class GridLocation(HandlerJSON):
         self.character = character
         self.number = number
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """
         other (GridLocation):
             the grid location to compare to
@@ -145,7 +145,7 @@ class GridLocation(HandlerJSON):
 
         return self.character == other.character and self.number == other.number
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns general info about the GridLocation
         """
@@ -160,7 +160,7 @@ class Scenario(Encounter):
 
     friendly_name = "scenario"
 
-    def __init__(self, number=None, name=None, gridLocation=None, fullJSON=None):
+    def __init__(self, number: int = None, name: str = None, gridLocation: GridLocation = None, fullJSON: str = None):
         """
         number (int):
             the number of the Scenario
@@ -190,7 +190,7 @@ class Scenario(Encounter):
         self.name = name
         self.gridLocation = gridLocation
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns general info about the Scenario
         """
@@ -206,7 +206,7 @@ class Event(Encounter):
     # should be overwritten by child classes
     friendly_name = "event"
 
-    def __init__(self, number=None, fullJSON=None):
+    def __init__(self, number: int = None, fullJSON: int = None):
         """
         number (int):
             the number of the event
@@ -216,7 +216,7 @@ class Event(Encounter):
 
         super().__init__(number=number, fullJSON=fullJSON)
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns general info about the event
         """
@@ -231,7 +231,7 @@ class RoadEvent(Event):
 
     friendly_name = "road event"
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns general info about the road event
         """
@@ -246,7 +246,7 @@ class CityEvent(Event):
 
     friendly_name = "city event"
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Returns general info about the city event
         """

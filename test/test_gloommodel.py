@@ -4,27 +4,27 @@ import unittest
 import sys
 sys.path.insert(0, '../')
 sys.path.insert(0, './')
-import gloomlog  # noqa
+import gloommodel  # noqa
 
 
 logging.basicConfig(level=logging.WARN, format='')
 
 
-class HandlerJSONCopy(gloomlog.HandlerJSON):
+class HandlerJSONCopy(gloommodel.HandlerJSON):
     """
     HandlerJSON is an abstract class, but its functionality should still be tested
     """
     pass
 
 
-class EncounterCopy(gloomlog.Encounter):
+class EncounterCopy(gloommodel.Encounter):
     """
     Encounter is an abstract class, but its functionality should still be tested
     """
     pass
 
 
-class EventCopy(gloomlog.Event):
+class EventCopy(gloommodel.Event):
     """
     Event is an abstract class, but its functionality should still be tested
     """
@@ -197,9 +197,9 @@ class TestGloomlogGridLocation(unittest.TestCase):
         with open("TestGloomlogGridLocation.json", "r") as file:
             cls.textJSON = file.read()
 
-        cls.gridLocTest = gloomlog.GridLocation(
+        cls.gridLocTest = gloommodel.GridLocation(
             cls.gridLocChar, cls.gridLocNumb)
-        cls.gridLocTestJSON = gloomlog.GridLocation(
+        cls.gridLocTestJSON = gloommodel.GridLocation(
             fullJSON=cls.textJSON)
 
     def helperFunctionEqualityAndFromJSON(self):
@@ -211,7 +211,7 @@ class TestGloomlogGridLocation(unittest.TestCase):
         gridLocCharacter = gridLocDict["character"]
         gridLocNumber = gridLocDict["number"]
 
-        gridLocCopy = gloomlog.GridLocation(gridLocCharacter, gridLocNumber)
+        gridLocCopy = gloommodel.GridLocation(gridLocCharacter, gridLocNumber)
 
         self.assertEqual(self.gridLocTest, gridLocCopy)
         self.assertEqual(self.gridLocTestJSON, gridLocCopy)
@@ -310,9 +310,9 @@ class TestGloomlogScenario(unittest.TestCase):
         with open("TestGloomlogScenario.json", "r") as file:
             cls.textJSON = file.read()
 
-        cls.scenTest = gloomlog.Scenario(
-            cls.number, cls.name, gloomlog.GridLocation(cls.gridLocChar, cls.gridLocNumb))
-        cls.scenTestJSON = gloomlog.Scenario(fullJSON=cls.textJSON)
+        cls.scenTest = gloommodel.Scenario(
+            cls.number, cls.name, gloommodel.GridLocation(cls.gridLocChar, cls.gridLocNumb))
+        cls.scenTestJSON = gloommodel.Scenario(fullJSON=cls.textJSON)
 
     def testScenarioFromJSON(self):
         """
@@ -325,10 +325,10 @@ class TestGloomlogScenario(unittest.TestCase):
         scenDict = self.scenTest.fromJSON(self.textJSON)
         scenNumber = scenDict["number"]
         scenName = scenDict["name"]
-        scenGridLoc = gloomlog.GridLocation(
+        scenGridLoc = gloommodel.GridLocation(
             fullJSON=json.dumps(scenDict["gridLocation"]))
 
-        scenCopy = gloomlog.Scenario(scenNumber, scenName, scenGridLoc)
+        scenCopy = gloommodel.Scenario(scenNumber, scenName, scenGridLoc)
 
         self.assertEqual(self.scenTest, scenCopy)
         self.assertEqual(self.scenTestJSON, scenCopy)
@@ -366,7 +366,8 @@ class TestGloomlogScenario(unittest.TestCase):
         logging.info(
             "Testing whether the scenario location has been correctly set")
 
-        gridLocCopy = gloomlog.GridLocation(self.gridLocChar, self.gridLocNumb)
+        gridLocCopy = gloommodel.GridLocation(
+            self.gridLocChar, self.gridLocNumb)
 
         self.assertEqual(self.scenTest.gridLocation, gridLocCopy)
 
@@ -439,7 +440,7 @@ class TestGloomlogRoadEvent(unittest.TestCase):
 
         cls.number = 1000
 
-        cls.roadEventTest = gloomlog.RoadEvent(cls.number)
+        cls.roadEventTest = gloommodel.RoadEvent(cls.number)
 
     def testRoadEventString(self):
         """
@@ -474,7 +475,7 @@ class TestGloomlogCityEvent(unittest.TestCase):
 
         cls.number = 1000
 
-        cls.cityEventTest = gloomlog.CityEvent(cls.number)
+        cls.cityEventTest = gloommodel.CityEvent(cls.number)
 
     def testCityEventString(self):
         """

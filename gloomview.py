@@ -326,26 +326,12 @@ class UserInterfaceMain(UserInterface):
             else:
                 break
 
-        if self.yes_no_question(question="Would you like to add the default campaign starter to your save (recommended)?"):
-            self.save_interface = UserInterfaceSave(
-                save_file_name=save_file,
-                encounter_list=[CityEvent(number=0)]
-            )
-        else:
-            self.save_interface = UserInterfaceSave(save_file_name=save_file)
+        self.save_interface = UserInterfaceSave(
+            save_file_name=save_file,
+            encounter_list=[CityEvent(number=0)]
+        )
 
-        # TODO remove code duplication (from gloomcontroller) if possible
-        hold = True
-
-        while hold:
-            hold = self.save_interface.present_interface()
-            if hold == 2:
-                self.save_interface = None
-                return True
-            if type(hold) == tuple:
-                return hold
-
-        return hold
+        return self.save_interface.get_save_data()
 
     def load_campaign_save(self) -> str:
 
@@ -355,11 +341,10 @@ class UserInterfaceMain(UserInterface):
             options=tuple(self.list_saves)
         )
 
-        self.save_interface = UserInterfaceSave(save_file_name=save_file)
-
         return save_file
 
-    def prepare_save_interface(self, save_text: str):
+    def prepare_save_interface(self, save_file: str, save_text: str):
+        assert isinstance(save_file, str)
         assert isinstance(save_text, str)
 
         try:
@@ -380,14 +365,17 @@ class UserInterfaceMain(UserInterface):
             print("Invalid save file :(")
             error_exit_interfaces()
 
-        self.save_interface.encounter_list = encounter_list
+        self.save_interface = UserInterfaceSave(
+            save_file_name=save_file,
+            encounter_list=encounter_list
+        )
 
 
 class UserInterfaceSave(UserInterface):
 
     interface_header = "What would you like to do with the campaign save?"
 
-    def __init__(self, save_file_name: str, encounter_list: list = []):
+    def __init__(self, save_file_name: str, encounter_list: list):
 
         super().__init__()
 
@@ -488,9 +476,12 @@ class UserInterfaceSave(UserInterface):
         new_encounter = new_encounter_class(*new_encounter_info)
         self.encounter_list.append(new_encounter)
 
+        return self.get_save_data()
+
+    def get_save_data(self):
         try:
             save_info = json.dumps(
-                {"EnounterList": [json.loads(new_encounter.toJSON()), ]}, indent=2)
+                {"EnounterList": [json.loads(self.encounter_list[-1].toJSON()), ]}, indent=2)
         except BaseException:
             print("Invalid encounters created :(")
             error_exit_interfaces()

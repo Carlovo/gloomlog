@@ -38,7 +38,10 @@ class Controller:
                 self.interface.list_saves = self.backend.check_saves()
             if type(hold) == str:
                 save_text = self.backend.load_save_file_as_text(save_file=hold)
-                self.interface.prepare_save_interface(save_text=save_text)
+                self.interface.prepare_save_interface(
+                    save_file=hold,
+                    save_text=save_text
+                )
 
         self.exit_gloomlog()
 

@@ -50,6 +50,10 @@ class UserInterface:
         option_function: callable,
         option_print: str
     ):
+        """
+        Add an entry to the user options in an interface
+        according to the standard
+        """
         assert isinstance(option_key, str)
         assert callable(option_function)
         assert isinstance(option_print, str)
@@ -60,6 +64,12 @@ class UserInterface:
         }
 
     def scale_interface(self):
+        """
+        For readability a line of ='s and -'s
+        is added around parts of the interface.
+        The length of this line should align with
+        the longest string in the interface.
+        """
         self.user_option_tuple = tuple(
             option for option in self.user_option_dict
         )
@@ -81,6 +91,10 @@ class UserInterface:
             self.interface_bottom += "-"
 
     def present_interface(self):
+        """
+        Print a user interface and
+        return what the user selected there.
+        """
 
         self.scale_interface()
 
@@ -138,6 +152,10 @@ class UserInterface:
 
     @staticmethod
     def tuple_to_pretty_string(input_tuple: tuple) -> str:
+        """
+        Remove a trailing comma from strings
+        of single entry tuples.
+        """
         assert isinstance(input_tuple, tuple)
 
         if len(input_tuple) > 1:
@@ -290,6 +308,9 @@ class UserInterfaceMain(UserInterface):
             # implement delete, copy, rename and restore here at some point
 
     def present_interface(self) -> object:
+        """
+        Coordinates data flow in the interface based on user input
+        """
         # TODO: refactor to a single return type
         if self.save_interface is None:
             return super().present_interface()
@@ -309,6 +330,8 @@ class UserInterfaceMain(UserInterface):
 
     def new_campaign_save(self) -> object:
         """
+        Create a new campagin save file.
+
         listSaves (list of str): list of save files already present
         """
 
@@ -334,6 +357,9 @@ class UserInterfaceMain(UserInterface):
         return self.save_interface.get_save_data()
 
     def load_campaign_save(self) -> str:
+        """
+        Load a saved campaign file
+        """
 
         print("Which save would you like to load?")
 
@@ -344,6 +370,9 @@ class UserInterfaceMain(UserInterface):
         return save_file
 
     def prepare_save_interface(self, save_file: str, save_text: str):
+        """
+        Load save information into a save interface
+        """
         assert isinstance(save_file, str)
         assert isinstance(save_text, str)
 
@@ -410,6 +439,9 @@ class UserInterfaceSave(UserInterface):
         self.encounter_list = encounter_list
 
     def present_interface(self) -> object:
+        """
+        Present the save interface
+        """
 
         print("")
 
@@ -422,6 +454,10 @@ class UserInterfaceSave(UserInterface):
         return super().present_interface()
 
     def add_encounter_to_save(self):
+        """
+        Get the necessary data to add an encounter to the save file
+        from the user's input.
+        """
 
         new_encounter_friendly_name = self.multiple_choice_question(
             question="What type was your last encounter?",
@@ -479,6 +515,9 @@ class UserInterfaceSave(UserInterface):
         return self.get_save_data()
 
     def get_save_data(self):
+        """
+        Convert a list of Encounters to saveable text.
+        """
         try:
             save_info = json.dumps(
                 {"EnounterList": [json.loads(self.encounter_list[-1].toJSON()), ]}, indent=2)

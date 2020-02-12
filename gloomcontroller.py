@@ -19,6 +19,9 @@ class Controller:
         self.interface = None
 
     def run(self):
+        """
+        Call this command to boot up GloomLog
+        """
 
         self.backend = Backend()
         saves_copy = self.backend.check_saves()
@@ -27,6 +30,11 @@ class Controller:
         self.present_user_interface_main()
 
     def present_user_interface_main(self):
+        """
+        The main control function.
+        Boots an interface.
+        Coordinates data flow in the programm based on user input
+        """
 
         hold = True
 

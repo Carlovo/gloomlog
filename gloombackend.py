@@ -10,6 +10,9 @@ class Backend:
     new_extension = ".new"
 
     def check_saves(self) -> list:
+        """
+        Check for current save files on disk
+        """
         list_saves = []
 
         if os.path.exists(self.save_path):
@@ -105,6 +108,9 @@ class Backend:
 
     @classmethod
     def load_save_file_as_text(cls, save_file: str) -> str:
+        """
+        Get the text info in a save file on disk
+        """
         assert isinstance(save_file, str)
 
         with open(cls.save_path + "/" + save_file + cls.save_extension, "r") as file:

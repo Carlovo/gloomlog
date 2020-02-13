@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.WARN, format="")
 
 class TestInAndOut(unittest.TestCase):
     """
-    Test exiting GloomLog
+    Test exiting GloomLog and some simple user commands
     """
 
     @classmethod
@@ -27,6 +27,9 @@ class TestInAndOut(unittest.TestCase):
         logging.info(
             "Setting up variables for testing"
         )
+
+        # TODO: check if there is a more Pythonic way for this
+        assert not os.path.exists("__gloomsave__")
 
         cls.controller = Controller()
 
@@ -67,17 +70,82 @@ class TestInAndOut(unittest.TestCase):
     @mock.patch("builtins.input", side_effect="nahce")
     def test_newsave_help_close_exit(self, mock_present, mock_exit, mock_help):
         """
-        Test whether a user can immediately exit GloomLog
+        Test whether a user can go to and exit the save interface
         """
 
         logging.info(
-            "Testing whether a user can immediately exit GloomLog"
+            "Testing whether a user can go to and exit the save interface"
         )
 
         self.controller.run()
 
         mock_exit.assert_called_once()
         mock_help.assert_called_once()
+
+        os.remove("__gloomsave__/a.json.gml")
+        os.rmdir("__gloomsave__")
+
+    @mock.patch("gloomcontroller.Controller.exit_gloomlog")
+    @mock.patch("builtins.input", side_effect="naclae")
+    def test_loadnewsave_exit(self, mock_present, mock_exit):
+        """
+        Test whether a user can create a save file and load it
+        """
+
+        logging.info(
+            "Testing whether a user can create a save file and load it"
+        )
+
+        self.controller.run()
+
+        mock_exit.assert_called_once()
+
+        os.remove("__gloomsave__/a.json.gml")
+        os.rmdir("__gloomsave__")
+
+
+class TestCorrectSaving(unittest.TestCase):
+    """
+    Test correct saving of GloomLog campaign save files
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Set up variables for testing
+        """
+
+        logging.info(
+            "Setting up variables for testing"
+        )
+
+        # TODO: check if there is a more Pythonic way for this
+        assert not os.path.exists("__gloomsave__")
+
+        cls.controller = Controller()
+
+    @mock.patch("gloomcontroller.Controller.exit_gloomlog")
+    @mock.patch("builtins.input", side_effect="nae")
+    def test_file_newsave(self, mock_present, mock_exit):
+        """
+        Test whether a new save is correctly created
+        """
+
+        logging.info(
+            "Testing whether a new save is correctly created"
+        )
+
+        self.controller.run()
+
+        # sanity check
+        mock_exit.assert_called_once()
+
+        with open("__gloomsave__/a.json.gml", "r") as file:
+            test_text = file.read()
+        with open("TestNewCampaignSave.json", "r") as file:
+            validation_text = file.read()
+
+        self.assertEqual(test_text, validation_text)
 
         os.remove("__gloomsave__/a.json.gml")
         os.rmdir("__gloomsave__")

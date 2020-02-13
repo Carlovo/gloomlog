@@ -1,0 +1,10 @@
+{
+  "EnounterList": [
+    {
+      "type": "CityEvent",
+      "data": {
+        "number": 0
+      }
+    }
+  ]
+}

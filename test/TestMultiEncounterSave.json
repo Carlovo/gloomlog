@@ -1,0 +1,24 @@
+{
+  "EnounterList": [
+    {
+      "type": "CityEvent",
+      "data": {
+        "number": 0
+      }
+    },
+    {
+      "type": "Scenario",
+      "data": {
+        "number": 1,
+        "name": "B",
+        "gridLocation": {
+          "type": "GridLocation",
+          "data": {
+            "character": "G",
+            "number": 4
+          }
+        }
+      }
+    }
+  ]
+}

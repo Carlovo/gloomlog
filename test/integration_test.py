@@ -150,6 +150,32 @@ class TestCorrectSaving(unittest.TestCase):
         os.remove("__gloomsave__/a.json.gml")
         os.rmdir("__gloomsave__")
 
+    @mock.patch("gloomcontroller.Controller.exit_gloomlog")
+    @mock.patch("builtins.input", side_effect="naas1BG4e")
+    def test_file_multiencounter(self, mock_present, mock_exit):
+        """
+        Test whether encounters can be added to a save file
+        """
+
+        logging.info(
+            "Testing whether encounters can be added to a save file"
+        )
+
+        self.controller.run()
+
+        # sanity check
+        mock_exit.assert_called_once()
+
+        with open("__gloomsave__/a.json.gml", "r") as file:
+            test_text = file.read()
+        with open("TestMultiEncounterSave.json", "r") as file:
+            validation_text = file.read()
+
+        self.assertEqual(test_text, validation_text)
+
+        os.remove("__gloomsave__/a.json.gml")
+        os.rmdir("__gloomsave__")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

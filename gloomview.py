@@ -416,7 +416,6 @@ class UserInterfaceSave(UserInterface):
         self.update_user_option_dict(
             option_key="add",
             option_function=self.add_encounter_to_save,
-            # TODO
             option_print="ADD new encounter"
         )
         self.update_user_option_dict(
@@ -425,7 +424,11 @@ class UserInterfaceSave(UserInterface):
             option_print="CLOSE save and go back to main interface"
         )
 
-        # implement here at some point:
+        # TODO: implement here at some point:
+        # LIST encounters so far
+        # PRESENT available encounters
+        # show MAP of scenarios
+        # show LOG of progress (achievements, retires, sanctuary donations etc.)
         # SAVE progress
         # REMOVE encounters from save file
         # EDIT encounter properties

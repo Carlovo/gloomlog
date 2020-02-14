@@ -417,7 +417,7 @@ class UserInterfaceSave(UserInterface):
             option_key="add",
             option_function=self.add_encounter_to_save,
             # TODO
-            option_print="ADD new encounter (implemented as replace for now)"
+            option_print="ADD new encounter"
         )
         self.update_user_option_dict(
             option_key="close",
@@ -518,11 +518,21 @@ class UserInterfaceSave(UserInterface):
         """
         Convert a list of Encounters to saveable text.
         """
+
+        encounters_as_dicts = []
+
         try:
-            save_info = json.dumps(
-                {"EnounterList": [json.loads(self.encounter_list[-1].toJSON()), ]}, indent=2)
+            # there is some juggling around to and from JSON here
+            # it's not pretty,
+            # but it works well to get everything uniformly JSON serialized
+            for encounter in self.encounter_list:
+                encounter_json = encounter.toJSON()
+                encounter_as_dict = json.loads(encounter_json)
+                encounters_as_dicts.append(encounter_as_dict)
         except BaseException:
             print("Invalid encounters created :(")
             error_exit_interfaces()
+
+        save_info = json.dumps({"EnounterList": encounters_as_dicts}, indent=2)
 
         return (self.save_file_name, save_info)

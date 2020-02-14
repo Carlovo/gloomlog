@@ -173,6 +173,7 @@ class TestCorrectSaving(unittest.TestCase):
 
         self.assertEqual(test_text, validation_text)
 
+        os.remove("__gloomsave__/a.json.gml.prev")
         os.remove("__gloomsave__/a.json.gml")
         os.rmdir("__gloomsave__")
 

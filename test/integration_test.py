@@ -3,6 +3,7 @@ import logging
 import unittest
 from unittest import mock
 import os
+import shutil
 import sys
 sys.path.insert(0, "../")
 sys.path.insert(0, "./")
@@ -174,6 +175,69 @@ class TestCorrectSaving(unittest.TestCase):
         self.assertEqual(test_text, validation_text)
 
         os.remove("__gloomsave__/a.json.gml.prev")
+        os.remove("__gloomsave__/a.json.gml")
+        os.rmdir("__gloomsave__")
+
+
+class TestStOut(unittest.TestCase):
+    """
+    Test whether GloomLog presents the right UI texts
+    """
+
+    def setUp(self):
+        """
+        Set up variables for testing
+        """
+
+        logging.info(
+            "Setting up variables for testing"
+        )
+
+        # TODO: check if there is a more Pythonic way for this
+        assert not os.path.exists("__gloomsave__")
+
+        self.controller = Controller()
+
+        os.mkdir("__gloomsave__")
+        shutil.copyfile(
+            "TestMultiEncounterSave.json",
+            "__gloomsave__/a.json.gml"
+        )
+
+    @mock.patch("gloomcontroller.Controller.exit_gloomlog")
+    @mock.patch("builtins.input", side_effect="lale")
+    @mock.patch("sys.stdout")
+    def test_list_encounters(self, mock_stdout, mock_present, mock_exit):
+        """
+        Test whether GloomLog can correctly list the encounters had so far
+        """
+
+        logging.info(
+            "Testing whether GloomLog can correctly list the encounters had so far"
+        )
+
+        self.controller.run()
+
+        # sanity check
+        mock_exit.assert_called_once()
+
+        mock_stdout.assert_has_calls(
+            [mock.call.write("City Event: 0."),
+             mock.call.write("Scenario: 1. B (G-4)"),
+             mock.call.write("Scenario: 1. B (G-4)"),
+             mock.call.write("ADD new encounter")],
+            any_order=True
+        )
+
+    def tearDown(self):
+        """
+        Tear down variables for testing
+        """
+
+        logging.info(
+            "Tearing down variables for testing"
+        )
+
         os.remove("__gloomsave__/a.json.gml")
         os.rmdir("__gloomsave__")
 

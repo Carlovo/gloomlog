@@ -86,9 +86,7 @@ class Encounter(HandlerJSON):
         Return whether the two encounters are the same (bool)
         """
 
-        assert type(other) == type(self)
-
-        return self.number == other.number
+        return type(other) == type(self) and self.number == other.number
 
     def __str__(self) -> str:
         """
@@ -141,9 +139,7 @@ class GridLocation(HandlerJSON):
         (bool)
         """
 
-        assert type(other) == type(self)
-
-        return self.character == other.character and self.number == other.number
+        return type(other) == type(self) and self.character == other.character and self.number == other.number
 
     def __str__(self) -> str:
         """

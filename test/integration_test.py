@@ -224,7 +224,6 @@ class TestStOut(unittest.TestCase):
         mock_stdout.assert_has_calls(
             [mock.call.write("City Event: 0."),
              mock.call.write("Scenario: 1. B (G-4)"),
-             mock.call.write("Scenario: 1. B (G-4)"),
              mock.call.write("ADD new encounter")],
             any_order=True
         )

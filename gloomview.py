@@ -402,7 +402,7 @@ class UserInterfaceMain(UserInterface):
 
 class UserInterfaceSave(UserInterface):
 
-    interface_header = "What would you like to do with the campaign save?"
+    # interface_header should be instance specific in this class
 
     def __init__(self, save_file_name: str, encounter_list: list):
 
@@ -413,6 +413,11 @@ class UserInterfaceSave(UserInterface):
         for encounter in encounter_list:
             assert type(encounter) in self.encounter_types
 
+        self.update_user_option_dict(
+            option_key="list",
+            option_function=self.list_encounters,
+            option_print="LIST encounters so far"
+        )
         self.update_user_option_dict(
             option_key="add",
             option_function=self.add_encounter_to_save,
@@ -425,7 +430,6 @@ class UserInterfaceSave(UserInterface):
         )
 
         # TODO: implement here at some point:
-        # LIST encounters so far
         # PRESENT available encounters
         # show MAP of scenarios
         # show LOG of progress (achievements, retires, sanctuary donations etc.)
@@ -441,20 +445,19 @@ class UserInterfaceSave(UserInterface):
         self.save_file_name = save_file_name
         self.encounter_list = encounter_list
 
-    def present_interface(self) -> object:
+        self.interface_header = f"What would you like to do with campaign save '{self.save_file_name}'?"
+
+    def list_encounters(self):
         """
-        Present the save interface
+        Print all the encounters so far in the campaign
         """
 
-        print("")
+        print("Your encounters so far were:")
 
-        if self.encounter_list:
-            print("Your last encounter was:")
-            print(self.encounter_list[-1])
-        else:
-            print("Your campaign save does not yet contain any encounters.")
+        for encounter in self.encounter_list:
+            print(encounter)
 
-        return super().present_interface()
+        return True
 
     def add_encounter_to_save(self):
         """

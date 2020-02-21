@@ -203,6 +203,10 @@ class TestStOut(unittest.TestCase):
             "TestMultiEncounterSave.json",
             "__gloomsave__/a.json.gml"
         )
+        shutil.copyfile(
+            "TestLongCampaignSave.json",
+            "__gloomsave__/v.json.gml"
+        )
 
     @mock.patch("gloomcontroller.Controller.exit_gloomlog")
     @mock.patch("builtins.input", side_effect="lale")
@@ -228,6 +232,35 @@ class TestStOut(unittest.TestCase):
             any_order=True
         )
 
+    @mock.patch("gloomcontroller.Controller.exit_gloomlog")
+    @mock.patch("builtins.input", side_effect="lvle")
+    @mock.patch("sys.stdout")
+    def test_list_campaign(self, mock_stdout, mock_present, mock_exit):
+        """
+        Test whether GloomLog can correctly list the encounters had so far
+        """
+
+        logging.info(
+            "Testing whether GloomLog can correctly list the encounters had so far"
+        )
+
+        self.controller.run()
+
+        # sanity check
+        mock_exit.assert_called_once()
+
+        mock_stdout.assert_has_calls(
+            [mock.call.write("City Event: 0."),
+             mock.call.write("Scenario: 1. B (G-4)"),
+             mock.call.write("Scenario: 2. L (D-8)"),
+             mock.call.write("Scenario: 2. L (D-8)"),
+             mock.call.write("City Event: 1."),
+             mock.call.write("Road Event: 9."),
+             mock.call.write("Scenario: 5. I (C-2)"),
+             mock.call.write("ADD new encounter")],
+            any_order=True
+        )
+
     def tearDown(self):
         """
         Tear down variables for testing
@@ -238,6 +271,7 @@ class TestStOut(unittest.TestCase):
         )
 
         os.remove("__gloomsave__/a.json.gml")
+        os.remove("__gloomsave__/v.json.gml")
         os.rmdir("__gloomsave__")
 
 

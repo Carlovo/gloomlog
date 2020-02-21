@@ -1,0 +1,85 @@
+{
+  "EnounterList": [
+    {
+      "type": "CityEvent",
+      "data": {
+        "number": 0,
+        "choice": "A"
+      }
+    },
+    {
+      "type": "Scenario",
+      "data": {
+        "number": 1,
+        "name": "B",
+        "gridLocation": {
+          "type": "GridLocation",
+          "data": {
+            "character": "G",
+            "number": 4
+          }
+        },
+        "succes": true
+      }
+    },
+    {
+      "type": "Scenario",
+      "data": {
+        "number": 2,
+        "name": "L",
+        "gridLocation": {
+          "type": "GridLocation",
+          "data": {
+            "character": "D",
+            "number": 8
+          }
+        },
+        "succes": false
+      }
+    },
+    {
+      "type": "Scenario",
+      "data": {
+        "number": 2,
+        "name": "L",
+        "gridLocation": {
+          "type": "GridLocation",
+          "data": {
+            "character": "D",
+            "number": 8
+          }
+        },
+        "succes": true
+      }
+    },
+    {
+      "type": "CityEvent",
+      "data": {
+        "number": 1,
+        "choice": "B"
+      }
+    },
+    {
+      "type": "RoadEvent",
+      "data": {
+        "number": 9,
+        "choice": "B"
+      }
+    },
+    {
+      "type": "Scenario",
+      "data": {
+        "number": 5,
+        "name": "I",
+        "gridLocation": {
+          "type": "GridLocation",
+          "data": {
+            "character": "C",
+            "number": 2
+          }
+        },
+        "succes": true
+      }
+    }
+  ]
+}

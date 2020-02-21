@@ -179,7 +179,7 @@ class TestCorrectSaving(unittest.TestCase):
         os.rmdir("__gloomsave__")
 
 
-class TestStOut(unittest.TestCase):
+class TestStdOut(unittest.TestCase):
     """
     Test whether GloomLog presents the right UI texts
     """
@@ -226,8 +226,8 @@ class TestStOut(unittest.TestCase):
         mock_exit.assert_called_once()
 
         mock_stdout.assert_has_calls(
-            [mock.call.write("City Event: 0."),
-             mock.call.write("Scenario: 1. B (G-4)"),
+            [mock.call.write("City Event: 0.: A"),
+             mock.call.write("Scenario: 1. B (G-4): succes"),
              mock.call.write("ADD new encounter")],
             any_order=True
         )

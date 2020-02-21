@@ -3,7 +3,8 @@
     {
       "type": "CityEvent",
       "data": {
-        "number": 0
+        "number": 0,
+        "choice": "A"
       }
     },
     {
@@ -17,7 +18,8 @@
             "character": "G",
             "number": 4
           }
-        }
+        },
+        "succes": true
       }
     }
   ]

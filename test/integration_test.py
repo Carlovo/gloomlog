@@ -250,14 +250,13 @@ class TestStOut(unittest.TestCase):
         mock_exit.assert_called_once()
 
         mock_stdout.assert_has_calls(
-            [mock.call.write("City Event: 0."),
-             mock.call.write("Scenario: 1. B (G-4)"),
-             mock.call.write("Scenario: 2. L (D-8)"),
-             mock.call.write("Scenario: 2. L (D-8)"),
-             mock.call.write("City Event: 1."),
-             mock.call.write("Road Event: 9."),
-             mock.call.write("Scenario: 5. I (C-2)"),
-             mock.call.write("ADD new encounter")],
+            [mock.call.write("City Event: 0.: A"),
+             mock.call.write("Scenario: 1. B (G-4): succes"),
+             mock.call.write("Scenario: 2. L (D-8): failure"),
+             mock.call.write("Scenario: 2. L (D-8): succes"),
+             mock.call.write("City Event: 1.: B"),
+             mock.call.write("Road Event: 9.: B"),
+             mock.call.write("Scenario: 5. I (C-2): succes")],
             any_order=True
         )
 

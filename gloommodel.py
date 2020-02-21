@@ -156,7 +156,14 @@ class Scenario(Encounter):
 
     friendly_name = "scenario"
 
-    def __init__(self, number: int = None, name: str = None, gridLocation: GridLocation = None, fullJSON: str = None):
+    def __init__(
+        self,
+        number: int = None,
+        name: str = None,
+        gridLocation: GridLocation = None,
+        succes: bool = True,
+        fullJSON: str = None
+    ):
         """
         number (int):
             the number of the Scenario
@@ -176,22 +183,34 @@ class Scenario(Encounter):
             number = fullDict["number"]
             name = fullDict["name"]
             gridLocation = GridLocation(
-                fullJSON=json.dumps(fullDict["gridLocation"]))
+                fullJSON=json.dumps(fullDict["gridLocation"])
+            )
+            succes = fullDict["succes"]
 
         assert type(name) == str
         assert type(gridLocation) == GridLocation
+        assert type(succes) == bool
 
         super().__init__(number)
 
         self.name = name
         self.gridLocation = gridLocation
+        self.succes = succes
 
     def __str__(self) -> str:
         """
         Returns general info about the Scenario
         """
 
-        return "Scenario: " + super().__str__() + " " + self.name + " " + self.gridLocation.__str__()
+        super_str = super().__str__()
+        location_str = self.gridLocation.__str__()
+        
+        if self.succes == True:
+            succes_str = "succes"
+        else:
+            succes_str = "failure"
+
+        return f"Scenario: {super_str} {self.name} {location_str}: {succes_str}"
 
 
 class Event(Encounter):
@@ -202,7 +221,12 @@ class Event(Encounter):
     # should be overwritten by child classes
     friendly_name = "event"
 
-    def __init__(self, number: int = None, fullJSON: int = None):
+    def __init__(
+        self,
+        number: int = None,
+        choice: str = None,
+        fullJSON: int = None
+    ):
         """
         number (int):
             the number of the event
@@ -210,14 +234,25 @@ class Event(Encounter):
 
         assert type(self) != Event
 
-        super().__init__(number=number, fullJSON=fullJSON)
+        if fullJSON is not None:
+            fullDict = self.fromJSON(fullJSON)
+            number = fullDict["number"]
+            choice = fullDict["choice"]
+
+        assert choice == "A" or "B"
+
+        super().__init__(number)
+
+        self.choice = choice
 
     def __str__(self) -> str:
         """
         Returns general info about the event
         """
 
-        return "Event: " + super().__str__()
+        super_str = super().__str__()
+
+        return f"Event: {super_str}: {self.choice}"
 
 
 class RoadEvent(Event):

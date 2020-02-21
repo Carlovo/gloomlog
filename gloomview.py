@@ -351,7 +351,7 @@ class UserInterfaceMain(UserInterface):
 
         self.save_interface = UserInterfaceSave(
             save_file_name=save_file,
-            encounter_list=[CityEvent(number=0)]
+            encounter_list=[CityEvent(number=0, choice="A")]
         )
 
         return self.save_interface.get_save_data()

@@ -19,7 +19,21 @@
             "number": 4
           }
         },
-        "succes": true
+        "succes": false
+      }
+    },
+    {
+      "type": "CityEvent",
+      "data": {
+        "number": 5,
+        "choice": "B"
+      }
+    },
+    {
+      "type": "RoadEvent",
+      "data": {
+        "number": 2,
+        "choice": "A"
       }
     }
   ]

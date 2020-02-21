@@ -3,7 +3,8 @@
     {
       "type": "CityEvent",
       "data": {
-        "number": 0
+        "number": 0,
+        "choice": "A"
       }
     }
   ]

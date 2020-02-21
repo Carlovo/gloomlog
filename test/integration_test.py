@@ -152,7 +152,7 @@ class TestCorrectSaving(unittest.TestCase):
         os.rmdir("__gloomsave__")
 
     @mock.patch("gloomcontroller.Controller.exit_gloomlog")
-    @mock.patch("builtins.input", side_effect="naas1BG4e")
+    @mock.patch("builtins.input", side_effect="naas1BG4nac5Bar2Ae")
     def test_file_multiencounter(self, mock_present, mock_exit):
         """
         Test whether encounters can be added to a save file
@@ -227,7 +227,9 @@ class TestStdOut(unittest.TestCase):
 
         mock_stdout.assert_has_calls(
             [mock.call.write("City Event: 0.: A"),
-             mock.call.write("Scenario: 1. B (G-4): succes"),
+             mock.call.write("Scenario: 1. B (G-4): failure"),
+             mock.call.write("City Event: 5.: B"),
+             mock.call.write("Road Event: 2.: A"),
              mock.call.write("ADD new encounter")],
             any_order=True
         )

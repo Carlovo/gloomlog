@@ -514,6 +514,20 @@ class UserInterfaceSave(UserInterface):
                     )
                 )
             )
+            # get completion status
+            new_encounter_info.append(
+                self.yes_no_question(
+                    question="Did you succesfully complete the scenario?"
+                )
+            )
+        else:
+            # get event choice
+            new_encounter_info.append(
+                self.multiple_choice_question(
+                    options=("A", "B"),
+                    question="Which option did you choose?"
+                )
+            )
 
         new_encounter = new_encounter_class(*new_encounter_info)
         self.encounter_list.append(new_encounter)

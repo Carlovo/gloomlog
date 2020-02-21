@@ -306,12 +306,17 @@ class TestGloomlogScenario(unittest.TestCase):
         cls.name = "Black Barrow"
         cls.gridLocChar = "G"
         cls.gridLocNumb = 10
+        cls.succes = False
 
         with open("TestGloomlogScenario.json", "r") as file:
             cls.textJSON = file.read()
 
         cls.scenTest = gloommodel.Scenario(
-            cls.number, cls.name, gloommodel.GridLocation(cls.gridLocChar, cls.gridLocNumb))
+            cls.number,
+            cls.name,
+            gloommodel.GridLocation(cls.gridLocChar, cls.gridLocNumb),
+            cls.succes
+        )
         cls.scenTestJSON = gloommodel.Scenario(fullJSON=cls.textJSON)
 
     def testScenarioFromJSON(self):
@@ -327,8 +332,11 @@ class TestGloomlogScenario(unittest.TestCase):
         scenName = scenDict["name"]
         scenGridLoc = gloommodel.GridLocation(
             fullJSON=json.dumps(scenDict["gridLocation"]))
+        scenSucces = scenDict["succes"]
 
-        scenCopy = gloommodel.Scenario(scenNumber, scenName, scenGridLoc)
+        scenCopy = gloommodel.Scenario(
+            scenNumber, scenName, scenGridLoc, scenSucces
+        )
 
         self.assertEqual(self.scenTest, scenCopy)
         self.assertEqual(self.scenTestJSON, scenCopy)
@@ -381,7 +389,8 @@ class TestGloomlogScenario(unittest.TestCase):
 
         expectedString = "Scenario: " + \
             str(self.number) + ". " + self.name + \
-            " (" + self.gridLocChar + "-" + str(self.gridLocNumb) + ")"
+            " (" + self.gridLocChar + "-" + str(self.gridLocNumb) + ")" + \
+            ": failure"
 
         logging.info(
             "Expected scenario string representation: " + expectedString)

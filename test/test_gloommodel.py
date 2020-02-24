@@ -414,8 +414,9 @@ class TestGloomlogEvent(unittest.TestCase):
         logging.info("Setting up variables for testing Event class")
 
         cls.number = 1000
+        cls.choice = "B"
 
-        cls.eventTest = EventCopy(cls.number)
+        cls.eventTest = EventCopy(cls.number, cls.choice)
 
     def testEventString(self):
         """
@@ -425,7 +426,8 @@ class TestGloomlogEvent(unittest.TestCase):
         logging.info(
             "Testing whether the Event string representation is correct")
 
-        expectedString = "Event: " + str(self.number) + "."
+        expectedString = "Event: " + \
+            str(self.number) + "." + ": " + self.choice
 
         logging.info("Expected Event string representation: " + expectedString)
         logging.info("Outputted Event string representation: " +
@@ -448,8 +450,9 @@ class TestGloomlogRoadEvent(unittest.TestCase):
         logging.info("Setting up variables for testing RoadEvent class")
 
         cls.number = 1000
+        cls.choice = "B"
 
-        cls.roadEventTest = gloommodel.RoadEvent(cls.number)
+        cls.roadEventTest = gloommodel.RoadEvent(cls.number, cls.choice)
 
     def testRoadEventString(self):
         """
@@ -459,7 +462,8 @@ class TestGloomlogRoadEvent(unittest.TestCase):
         logging.info(
             "Testing whether the RoadEvent string representation is correct")
 
-        expectedString = "Road Event: " + str(self.number) + "."
+        expectedString = "Road Event: " + \
+            str(self.number) + ".: " + self.choice
 
         logging.info(
             "Expected RoadEvent string representation: " + expectedString)
@@ -483,8 +487,9 @@ class TestGloomlogCityEvent(unittest.TestCase):
         logging.info("Setting up variables for testing CityEvent class")
 
         cls.number = 1000
+        cls.choice = "A"
 
-        cls.cityEventTest = gloommodel.CityEvent(cls.number)
+        cls.cityEventTest = gloommodel.CityEvent(cls.number, cls.choice)
 
     def testCityEventString(self):
         """
@@ -494,7 +499,8 @@ class TestGloomlogCityEvent(unittest.TestCase):
         logging.info(
             "Testing whether the CityEvent string representation is correct")
 
-        expectedString = "City Event: " + str(self.number) + "."
+        expectedString = "City Event: " + \
+            str(self.number) + ".: " + self.choice
 
         logging.info(
             "Expected CityEvent string representation: " + expectedString)

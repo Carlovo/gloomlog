@@ -184,6 +184,16 @@ class TestStdOut(unittest.TestCase):
     Test whether GloomLog presents the right UI texts
     """
 
+    # TODO:
+    # implement global achievements
+    # implement party achievements
+    # implement golden chests loot
+    # implement character retirement
+    # implement available characters
+    # implement available items
+    # implement available events
+    # implement available scenarios
+
     def setUp(self):
         """
         Set up variables for testing

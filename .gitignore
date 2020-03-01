@@ -16,5 +16,8 @@ __pycache__
 # ignore compiled python
 **.[pP][yY][cC]
 
+# ignore vscode settings
+.vscode
+
 # ignore gloomlog's saves
 __gloomsave__

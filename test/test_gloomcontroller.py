@@ -1,7 +1,7 @@
 import logging
 import unittest
 import sys
-import mock
+from unittest import mock
 import random
 sys.path.insert(0, '../')
 sys.path.insert(0, './')

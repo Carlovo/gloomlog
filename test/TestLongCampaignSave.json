@@ -8,6 +8,12 @@
       }
     },
     {
+      "type": "Treasure",
+      "data": {
+        "number": 42
+      }
+    },
+    {
       "type": "Scenario",
       "data": {
         "number": 1,
@@ -20,6 +26,18 @@
           }
         },
         "succes": true
+      }
+    },
+    {
+      "type": "Treasure",
+      "data": {
+        "number": 17
+      }
+    },
+    {
+      "type": "Treasure",
+      "data": {
+        "number": 1
       }
     },
     {
@@ -64,6 +82,12 @@
       "data": {
         "number": 9,
         "choice": "B"
+      }
+    },
+    {
+      "type": "Treasure",
+      "data": {
+        "number": 38
       }
     },
     {

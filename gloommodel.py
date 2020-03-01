@@ -204,7 +204,7 @@ class Scenario(Encounter):
 
         super_str = super().__str__()
         location_str = self.gridLocation.__str__()
-        
+
         if self.succes == True:
             succes_str = "succes"
         else:
@@ -283,6 +283,24 @@ class CityEvent(Event):
         """
 
         return "City " + super().__str__()
+
+
+class Treasure(Encounter):
+    """
+    A abstract class for treasure from the game Gloomhaven
+    """
+
+    # should be overwritten by child classes
+    friendly_name = "treasure"
+
+    def __str__(self) -> str:
+        """
+        Returns general info about the event
+        """
+
+        super_str = super().__str__()
+
+        return f"Treasure: {super_str}"
 
 
 if __name__ == "__main__":

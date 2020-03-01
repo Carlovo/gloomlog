@@ -187,7 +187,6 @@ class TestStdOut(unittest.TestCase):
     # TODO:
     # implement global achievements
     # implement party achievements
-    # implement golden chests loot
     # implement character retirement
     # implement available characters
     # implement available items

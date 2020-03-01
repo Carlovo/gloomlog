@@ -1,4 +1,4 @@
-from gloommodel import Scenario, GridLocation, CityEvent, RoadEvent
+from gloommodel import Scenario, GridLocation, CityEvent, RoadEvent, Treasure
 import json
 
 
@@ -24,7 +24,8 @@ class UserInterface:
     encounter_types = (
         Scenario,
         RoadEvent,
-        CityEvent
+        CityEvent,
+        Treasure
     )
 
     def __init__(self):

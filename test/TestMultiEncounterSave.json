@@ -8,10 +8,16 @@
       }
     },
     {
+      "type": "Treasure",
+      "data": {
+        "number": 18
+      }
+    },
+    {
       "type": "Scenario",
       "data": {
         "number": 1,
-        "name": "B",
+        "name": "Black Barrow",
         "gridLocation": {
           "type": "GridLocation",
           "data": {

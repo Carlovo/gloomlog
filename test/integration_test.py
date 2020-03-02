@@ -152,7 +152,29 @@ class TestCorrectSaving(unittest.TestCase):
         os.rmdir("__gloomsave__")
 
     @mock.patch("gloomcontroller.Controller.exit_gloomlog")
-    @mock.patch("builtins.input", side_effect="naas1BG4nac5Bar2Ae")
+    @mock.patch("builtins.input", side_effect=[
+        "new",
+        "testers",
+        "add",
+        "treasure",
+        "18",
+        "add",
+        "scenario",
+        "1",
+        "Black Barrow",
+        "G",
+        "4",
+        "no",
+        "add",
+        "city event",
+        "5",
+        "B",
+        "add",
+        "road event",
+        "2",
+        "A",
+        "exit"
+    ])
     def test_file_multiencounter(self, mock_present, mock_exit):
         """
         Test whether encounters can be added to a save file
@@ -167,15 +189,15 @@ class TestCorrectSaving(unittest.TestCase):
         # sanity check
         mock_exit.assert_called_once()
 
-        with open("__gloomsave__/a.json.gml", "r") as file:
+        with open("__gloomsave__/testers.json.gml", "r") as file:
             test_text = file.read()
         with open("TestMultiEncounterSave.json", "r") as file:
             validation_text = file.read()
 
         self.assertEqual(test_text, validation_text)
 
-        os.remove("__gloomsave__/a.json.gml.prev")
-        os.remove("__gloomsave__/a.json.gml")
+        os.remove("__gloomsave__/testers.json.gml.prev")
+        os.remove("__gloomsave__/testers.json.gml")
         os.rmdir("__gloomsave__")
 
 
@@ -236,7 +258,8 @@ class TestStdOut(unittest.TestCase):
 
         mock_stdout.assert_has_calls(
             [mock.call.write("City Event: 0.: A"),
-             mock.call.write("Scenario: 1. B (G-4): failure"),
+             mock.call.write("Treasure: 18."),
+             mock.call.write("Scenario: 1. Black Barrow (G-4): failure"),
              mock.call.write("City Event: 5.: B"),
              mock.call.write("Road Event: 2.: A"),
              mock.call.write("ADD new encounter")],

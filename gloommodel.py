@@ -295,12 +295,56 @@ class Treasure(Encounter):
 
     def __str__(self) -> str:
         """
-        Returns general info about the event
+        Returns general info about the treasure
         """
 
         super_str = super().__str__()
 
         return f"Treasure: {super_str}"
+
+
+class Quest(Encounter):
+    """
+    A personal quest from the game Gloomhaven
+    """
+
+    friendly_name = "quest"
+
+    def __init__(
+        self,
+        number: int = None,
+        name: str = None,
+        fullJSON: str = None
+    ):
+        """
+        number (int):
+            the number of the Quest
+        name (string):
+            the name of the Quest
+
+        Provide either a JSON or all other parameters as input.
+        The JSON will override any other input if set.
+        """
+
+        if fullJSON is not None:
+            fullDict = self.fromJSON(fullJSON)
+            number = fullDict["number"]
+            name = fullDict["name"]
+
+        assert type(name) == str
+
+        super().__init__(number)
+
+        self.name = name
+
+    def __str__(self) -> str:
+        """
+        Returns general info about the Quest
+        """
+
+        super_str = super().__str__()
+
+        return f"Quest: {super_str} {self.name}"
 
 
 if __name__ == "__main__":

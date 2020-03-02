@@ -29,6 +29,13 @@
       }
     },
     {
+      "type": "Quest",
+      "data": {
+        "number": 511,
+        "name": "Because we can"
+      }
+    },
+    {
       "type": "CityEvent",
       "data": {
         "number": 5,

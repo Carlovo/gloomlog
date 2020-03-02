@@ -8,6 +8,13 @@
       }
     },
     {
+      "type": "Quest",
+      "data": {
+        "number": 537,
+        "name": "Help Vermlings"
+      }
+    },
+    {
       "type": "Treasure",
       "data": {
         "number": 42
@@ -68,6 +75,13 @@
           }
         },
         "succes": true
+      }
+    },
+    {
+      "type": "Quest",
+      "data": {
+        "number": 512,
+        "name": "Kill Enemies"
       }
     },
     {

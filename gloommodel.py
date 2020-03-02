@@ -239,7 +239,7 @@ class Event(Encounter):
             number = fullDict["number"]
             choice = fullDict["choice"]
 
-        assert choice == "A" or "B"
+        assert choice == "A" or choice == "B"
 
         super().__init__(number)
 

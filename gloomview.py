@@ -485,7 +485,7 @@ class UserInterfaceSave(UserInterface):
         new_encounter_info.append(
             int(
                 self.multiple_choice_question(
-                    question="What is the number of the {encounter} you did?".format(
+                    question="What is the {encounter}'s number?".format(
                         encounter=new_encounter_friendly_name),
                     options=tuple(str(i) for i in range(1, 101)),
                     range_options="(1-100)"
@@ -521,7 +521,7 @@ class UserInterfaceSave(UserInterface):
                     question="Did you succesfully complete the scenario?"
                 )
             )
-        else:
+        elif new_encounter_class == RoadEvent or new_encounter_class == CityEvent:
             # get event choice
             new_encounter_info.append(
                 self.multiple_choice_question(

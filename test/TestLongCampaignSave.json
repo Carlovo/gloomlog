@@ -17,7 +17,7 @@
       "type": "Scenario",
       "data": {
         "number": 1,
-        "name": "B",
+        "name": "Black Barrel",
         "gridLocation": {
           "type": "GridLocation",
           "data": {
@@ -44,7 +44,7 @@
       "type": "Scenario",
       "data": {
         "number": 2,
-        "name": "L",
+        "name": "Left Hill",
         "gridLocation": {
           "type": "GridLocation",
           "data": {
@@ -59,7 +59,7 @@
       "type": "Scenario",
       "data": {
         "number": 2,
-        "name": "L",
+        "name": "Left Hill",
         "gridLocation": {
           "type": "GridLocation",
           "data": {
@@ -94,7 +94,7 @@
       "type": "Scenario",
       "data": {
         "number": 5,
-        "name": "I",
+        "name": "Candy Mountain",
         "gridLocation": {
           "type": "GridLocation",
           "data": {

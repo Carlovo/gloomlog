@@ -260,6 +260,7 @@ class TestStdOut(unittest.TestCase):
             [mock.call.write("City Event: 0.: A"),
              mock.call.write("Treasure: 18."),
              mock.call.write("Scenario: 1. Black Barrow (G-4): failure"),
+             mock.call.write("Quest: 511.: Because we can"),
              mock.call.write("City Event: 5.: B"),
              mock.call.write("Road Event: 2.: A"),
              mock.call.write("ADD new encounter")],
@@ -285,16 +286,18 @@ class TestStdOut(unittest.TestCase):
 
         mock_stdout.assert_has_calls(
             [mock.call.write("City Event: 0.: A"),
+             mock.call.write("Quest: 537.: Help Vermlings"),
              mock.call.write("Treasure: 42."),
-             mock.call.write("Scenario: 1. B (G-4): succes"),
+             mock.call.write("Scenario: 1. Black Barrel (G-4): succes"),
              mock.call.write("Treasure: 17."),
              mock.call.write("Treasure: 1."),
-             mock.call.write("Scenario: 2. L (D-8): failure"),
-             mock.call.write("Scenario: 2. L (D-8): succes"),
+             mock.call.write("Scenario: 2. Left Hill (D-8): failure"),
+             mock.call.write("Scenario: 2. Left Hill (D-8): succes"),
+             mock.call.write("Quest: 512.: Kill Enemies"),
              mock.call.write("City Event: 1.: B"),
              mock.call.write("Road Event: 9.: B"),
              mock.call.write("Treasure: 38."),
-             mock.call.write("Scenario: 5. I (C-2): succes")],
+             mock.call.write("Scenario: 5. Candy Mountain (C-2): succes")],
             any_order=True
         )
 

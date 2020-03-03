@@ -488,17 +488,21 @@ class UserInterfaceSave(UserInterface):
                 self.multiple_choice_question(
                     question="What is the {encounter}'s number?".format(
                         encounter=new_encounter_friendly_name),
-                    options=tuple(str(i) for i in range(1, 101)),
-                    range_options="(1-100)"
+                    options=tuple(str(i) for i in range(1, 1000)),
+                    range_options="(1-999)"
                 )
             )
         )
 
-        if new_encounter_class == Scenario:
-            # get scenario name
+        # get encounter name
+        if new_encounter_class == Scenario or new_encounter_class == Quest:
             new_encounter_info.append(
-                input("What is the name of the scenario you did?: "))
-            # get/create scenario gridLocation
+                input(f"What is the {new_encounter_friendly_name}'s name?: ")
+            )
+
+        # get/create scenario gridLocation
+        # get scenario completion status
+        if new_encounter_class == Scenario:
             new_encounter_info.append(
                 GridLocation(
                     self.multiple_choice_question(
@@ -516,14 +520,14 @@ class UserInterfaceSave(UserInterface):
                     )
                 )
             )
-            # get completion status
             new_encounter_info.append(
                 self.yes_no_question(
                     question="Did you succesfully complete the scenario?"
                 )
             )
-        elif new_encounter_class == RoadEvent or new_encounter_class == CityEvent:
-            # get event choice
+
+        # get event choice
+        if new_encounter_class == RoadEvent or new_encounter_class == CityEvent:
             new_encounter_info.append(
                 self.multiple_choice_question(
                     options=("A", "B"),

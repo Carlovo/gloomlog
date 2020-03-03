@@ -484,16 +484,24 @@ class UserInterfaceSave(UserInterface):
         new_encounter_info = []
 
         # get encounter number
-        new_encounter_info.append(
-            int(
-                self.multiple_choice_question(
-                    question="What is the {encounter}'s number?".format(
-                        encounter=new_encounter_friendly_name),
-                    options=tuple(str(i) for i in range(1, 1000)),
-                    range_options="(1-999)"
+        if new_encounter_class == Donation:
+            for encounter in reversed(self.encounter_list):
+                if type(encounter) == Donation:
+                    new_encounter_info.append(encounter.number + 1)
+                    break
+            else:
+                new_encounter_info.append(1)
+        else:
+            new_encounter_info.append(
+                int(
+                    self.multiple_choice_question(
+                        question="What is the {encounter}'s number?".format(
+                            encounter=new_encounter_friendly_name),
+                        options=tuple(str(i) for i in range(1, 1000)),
+                        range_options="(1-999)"
+                    )
                 )
             )
-        )
 
         # get encounter name
         if new_encounter_class == Scenario or new_encounter_class == Quest:

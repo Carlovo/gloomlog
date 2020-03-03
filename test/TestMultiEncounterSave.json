@@ -35,6 +35,12 @@
       }
     },
     {
+      "type": "Donation",
+      "data": {
+        "number": 2
+      }
+    },
+    {
       "type": "Quest",
       "data": {
         "number": 511,

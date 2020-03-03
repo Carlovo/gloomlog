@@ -211,9 +211,9 @@ class TestStdOut(unittest.TestCase):
     """
 
     # TODO:
+    # implement random results (scenarios, item designs etc.)
     # implement global achievements
     # implement party achievements
-    # implement character retirement
     # implement available characters
     # implement available items
     # implement available events

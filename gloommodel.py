@@ -215,7 +215,7 @@ class Scenario(Encounter):
 
 class Event(Encounter):
     """
-    A abstract class for events from the game Gloomhaven
+    An abstract class for events from the game Gloomhaven
     """
 
     # should be overwritten by child classes
@@ -287,7 +287,7 @@ class CityEvent(Event):
 
 class Treasure(Encounter):
     """
-    A abstract class for treasure from the game Gloomhaven
+    An abstract class for treasure from the game Gloomhaven
     """
 
     # should be overwritten by child classes
@@ -345,6 +345,24 @@ class Quest(Encounter):
         super_str = super().__str__()
 
         return f"Quest: {super_str} {self.name}"
+
+
+class Donation(Encounter):
+    """
+    An abstract class for sanctuary donations from the game Gloomhaven
+    """
+
+    # should be overwritten by child classes
+    friendly_name = "donation"
+
+    def __str__(self) -> str:
+        """
+        Returns general info about the donations
+        """
+
+        super_str = super().__str__()
+
+        return f"Donation: {super_str}"
 
 
 if __name__ == "__main__":

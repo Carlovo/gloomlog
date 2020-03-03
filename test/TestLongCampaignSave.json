@@ -1,6 +1,12 @@
 {
   "EnounterList": [
     {
+      "type": "Donation",
+      "data": {
+        "number": 1
+      }
+    },
+    {
       "type": "CityEvent",
       "data": {
         "number": 0,
@@ -8,10 +14,22 @@
       }
     },
     {
+      "type": "Donation",
+      "data": {
+        "number": 2
+      }
+    },
+    {
       "type": "Quest",
       "data": {
         "number": 537,
         "name": "Help Vermlings"
+      }
+    },
+    {
+      "type": "Donation",
+      "data": {
+        "number": 3
       }
     },
     {
@@ -89,6 +107,18 @@
       "data": {
         "number": 1,
         "choice": "B"
+      }
+    },
+    {
+      "type": "Donation",
+      "data": {
+        "number": 4
+      }
+    },
+    {
+      "type": "Donation",
+      "data": {
+        "number": 5
       }
     },
     {

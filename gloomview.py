@@ -1,4 +1,4 @@
-from gloommodel import Scenario, GridLocation, CityEvent, RoadEvent, Treasure, Quest
+from gloommodel import Scenario, GridLocation, CityEvent, RoadEvent, Treasure, Quest, Donation
 import json
 
 
@@ -26,7 +26,8 @@ class UserInterface:
         RoadEvent,
         CityEvent,
         Treasure,
-        Quest
+        Quest,
+        Donation
     )
 
     def __init__(self):

@@ -149,7 +149,49 @@ class GridLocation(HandlerJSON):
         return "(" + self.character + "-" + str(self.number) + ")"
 
 
-class Scenario(Encounter):
+class NamedEncounter(Encounter):
+    """
+    An abstract class for encounters with a name from the game Gloomhaven
+    """
+
+    def __init__(
+        self,
+        number: int = None,
+        name: str = None,
+        fullJSON: str = None
+    ):
+        """
+        number (int):
+            the number of the named encounter
+        name (string):
+            the name of the named encounter
+
+        Provide either a JSON or all other parameters as input.
+        The JSON will override any other input if set.
+        """
+
+        if fullJSON is not None:
+            fullDict = self.fromJSON(fullJSON)
+            number = fullDict["number"]
+            name = fullDict["name"]
+
+        assert type(name) == str
+
+        super().__init__(number)
+
+        self.name = name
+
+    def __str__(self) -> str:
+        """
+        Returns general info about the named encounter
+        """
+
+        super_str = super().__str__()
+
+        return f"{super_str} {self.name}"
+
+
+class Scenario(NamedEncounter):
     """
     A scenario from the game Gloomhaven
     """
@@ -187,13 +229,11 @@ class Scenario(Encounter):
             )
             succes = fullDict["succes"]
 
-        assert type(name) == str
         assert type(gridLocation) == GridLocation
         assert type(succes) == bool
 
-        super().__init__(number)
+        super().__init__(number, name)
 
-        self.name = name
         self.gridLocation = gridLocation
         self.succes = succes
 
@@ -210,7 +250,7 @@ class Scenario(Encounter):
         else:
             succes_str = "failure"
 
-        return f"Scenario: {super_str} {self.name} {location_str}: {succes_str}"
+        return f"Scenario: {super_str} {location_str}: {succes_str}"
 
 
 class Event(Encounter):
@@ -303,39 +343,12 @@ class Treasure(Encounter):
         return f"Treasure: {super_str}"
 
 
-class Quest(Encounter):
+class Quest(NamedEncounter):
     """
     A personal quest from the game Gloomhaven
     """
 
     friendly_name = "quest"
-
-    def __init__(
-        self,
-        number: int = None,
-        name: str = None,
-        fullJSON: str = None
-    ):
-        """
-        number (int):
-            the number of the Quest
-        name (string):
-            the name of the Quest
-
-        Provide either a JSON or all other parameters as input.
-        The JSON will override any other input if set.
-        """
-
-        if fullJSON is not None:
-            fullDict = self.fromJSON(fullJSON)
-            number = fullDict["number"]
-            name = fullDict["name"]
-
-        assert type(name) == str
-
-        super().__init__(number)
-
-        self.name = name
 
     def __str__(self) -> str:
         """
@@ -344,7 +357,7 @@ class Quest(Encounter):
 
         super_str = super().__str__()
 
-        return f"Quest: {super_str} {self.name}"
+        return f"Quest: {super_str}"
 
 
 class Donation(Encounter):

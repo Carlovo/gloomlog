@@ -387,7 +387,7 @@ class TestGloomlogScenario(unittest.TestCase):
         logging.info(
             "Testing whether the scenario string representation is correct")
 
-        expectedString = "Scenario: " + \
+        expectedString = "Scenario " + \
             str(self.number) + ". " + self.name + \
             " (" + self.gridLocChar + "-" + str(self.gridLocNumb) + ")" + \
             ": failure"
@@ -426,7 +426,7 @@ class TestGloomlogEvent(unittest.TestCase):
         logging.info(
             "Testing whether the Event string representation is correct")
 
-        expectedString = "Event: " + \
+        expectedString = "Event " + \
             str(self.number) + "." + ": " + self.choice
 
         logging.info("Expected Event string representation: " + expectedString)
@@ -462,7 +462,7 @@ class TestGloomlogRoadEvent(unittest.TestCase):
         logging.info(
             "Testing whether the RoadEvent string representation is correct")
 
-        expectedString = "Road Event: " + \
+        expectedString = "Road Event " + \
             str(self.number) + ".: " + self.choice
 
         logging.info(
@@ -499,7 +499,7 @@ class TestGloomlogCityEvent(unittest.TestCase):
         logging.info(
             "Testing whether the CityEvent string representation is correct")
 
-        expectedString = "City Event: " + \
+        expectedString = "City Event " + \
             str(self.number) + ".: " + self.choice
 
         logging.info(

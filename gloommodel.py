@@ -250,7 +250,7 @@ class Scenario(NamedEncounter):
         else:
             succes_str = "failure"
 
-        return f"Scenario: {super_str} {location_str}: {succes_str}"
+        return f"Scenario {super_str} {location_str}: {succes_str}"
 
 
 class Event(Encounter):
@@ -292,7 +292,7 @@ class Event(Encounter):
 
         super_str = super().__str__()
 
-        return f"Event: {super_str}: {self.choice}"
+        return f"Event {super_str}: {self.choice}"
 
 
 class RoadEvent(Event):
@@ -340,7 +340,7 @@ class Treasure(Encounter):
 
         super_str = super().__str__()
 
-        return f"Treasure: {super_str}"
+        return f"Treasure {super_str}"
 
 
 class Quest(NamedEncounter):
@@ -357,7 +357,7 @@ class Quest(NamedEncounter):
 
         super_str = super().__str__()
 
-        return f"Quest: {super_str}"
+        return f"Quest {super_str}"
 
 
 class Donation(Encounter):
@@ -375,7 +375,7 @@ class Donation(Encounter):
 
         super_str = super().__str__()
 
-        return f"Donation: {super_str}"
+        return f"Donation {super_str}"
 
 
 if __name__ == "__main__":

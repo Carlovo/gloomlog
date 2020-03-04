@@ -93,7 +93,7 @@ class Encounter(HandlerJSON):
         Returns general info about the encouter (str)
         """
 
-        return str(self.number) + "."
+        return f"{self.friendly_name} {self.number}.".capitalize()
 
 
 class GridLocation(HandlerJSON):
@@ -153,6 +153,9 @@ class NamedEncounter(Encounter):
     """
     An abstract class for encounters with a name from the game Gloomhaven
     """
+
+    # should be overwritten by child classes
+    friendly_name = "named encounter"
 
     def __init__(
         self,
@@ -250,7 +253,7 @@ class Scenario(NamedEncounter):
         else:
             succes_str = "failure"
 
-        return f"Scenario {super_str} {location_str}: {succes_str}"
+        return f"{super_str} {location_str}: {succes_str}"
 
 
 class Event(Encounter):
@@ -292,7 +295,7 @@ class Event(Encounter):
 
         super_str = super().__str__()
 
-        return f"Event {super_str}: {self.choice}"
+        return f"{super_str}: {self.choice}"
 
 
 class RoadEvent(Event):
@@ -302,13 +305,6 @@ class RoadEvent(Event):
 
     friendly_name = "road event"
 
-    def __str__(self) -> str:
-        """
-        Returns general info about the road event
-        """
-
-        return "Road " + super().__str__()
-
 
 class CityEvent(Event):
     """
@@ -316,13 +312,6 @@ class CityEvent(Event):
     """
 
     friendly_name = "city event"
-
-    def __str__(self) -> str:
-        """
-        Returns general info about the city event
-        """
-
-        return "City " + super().__str__()
 
 
 class Treasure(Encounter):
@@ -333,15 +322,6 @@ class Treasure(Encounter):
     # should be overwritten by child classes
     friendly_name = "treasure"
 
-    def __str__(self) -> str:
-        """
-        Returns general info about the treasure
-        """
-
-        super_str = super().__str__()
-
-        return f"Treasure {super_str}"
-
 
 class Quest(NamedEncounter):
     """
@@ -349,15 +329,6 @@ class Quest(NamedEncounter):
     """
 
     friendly_name = "quest"
-
-    def __str__(self) -> str:
-        """
-        Returns general info about the Quest
-        """
-
-        super_str = super().__str__()
-
-        return f"Quest {super_str}"
 
 
 class Donation(Encounter):
@@ -367,15 +338,6 @@ class Donation(Encounter):
 
     # should be overwritten by child classes
     friendly_name = "donation"
-
-    def __str__(self) -> str:
-        """
-        Returns general info about the donations
-        """
-
-        super_str = super().__str__()
-
-        return f"Donation {super_str}"
 
 
 if __name__ == "__main__":

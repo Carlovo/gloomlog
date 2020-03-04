@@ -168,7 +168,7 @@ class TestGloomlogEncounterCopy(unittest.TestCase):
         logging.info(
             "Testing whether the Encounter string representation is correct")
 
-        expectedString = str(self.number) + "."
+        expectedString = "Encounter " + str(self.number) + "."
 
         logging.info(
             "Expected Encounter string representation: " + expectedString)
@@ -462,7 +462,7 @@ class TestGloomlogRoadEvent(unittest.TestCase):
         logging.info(
             "Testing whether the RoadEvent string representation is correct")
 
-        expectedString = "Road Event " + \
+        expectedString = "Road event " + \
             str(self.number) + ".: " + self.choice
 
         logging.info(
@@ -499,7 +499,7 @@ class TestGloomlogCityEvent(unittest.TestCase):
         logging.info(
             "Testing whether the CityEvent string representation is correct")
 
-        expectedString = "City Event " + \
+        expectedString = "City event " + \
             str(self.number) + ".: " + self.choice
 
         logging.info(

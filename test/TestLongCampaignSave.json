@@ -33,6 +33,13 @@
       }
     },
     {
+      "type": "RoadEvent",
+      "data": {
+        "number": 13,
+        "choice": "B"
+      }
+    },
+    {
       "type": "Treasure",
       "data": {
         "number": 42
@@ -147,6 +154,20 @@
           }
         },
         "succes": true
+      }
+    },
+    {
+      "type": "CityEvent",
+      "data": {
+        "number": 17,
+        "choice": "B"
+      }
+    },
+    {
+      "type": "RoadEvent",
+      "data": {
+        "number": 24,
+        "choice": "A"
       }
     }
   ]

@@ -215,13 +215,13 @@ class TestStdOut(unittest.TestCase):
     """
 
     # TODO:
-    # implement random results (scenarios, item designs etc.)
-    # implement global achievements
-    # implement party achievements
     # implement available characters
     # implement available items
     # implement available events
     # implement available scenarios
+    # implement Drake achievements
+    # implement Gloomhaven prosperity
+    # implement Party reputation
 
     def setUp(self):
         """
@@ -294,25 +294,49 @@ class TestStdOut(unittest.TestCase):
         # sanity check
         mock_exit.assert_called_once()
 
+        # TODO: implement and uncomment below
         mock_stdout.assert_has_calls(
             [mock.call.write("Donation 1."),
              mock.call.write("City event 0.: A"),
+             #  mock.call.write("City event 0.: A-"),
              mock.call.write("Donation 2."),
              mock.call.write("Quest 537. Help Vermlings"),
+             #  mock.call.write("+ Character Sassy Savvas"),
+             #  mock.call.write("+ Road event 40."),
+             #  mock.call.write("+ City event 40."),
+             #  mock.call.write("+ Road event 58."),
+             #  mock.call.write("+ City event 58."),
              mock.call.write("Donation 3."),
+             mock.call.write("Road event 13.: B"),
+             #  mock.call.write("+ Ancient technology 1."),
              mock.call.write("Treasure 42."),
+             #  mock.call.write("+ Scenario 18. High Ocean (H-11)"),
              mock.call.write("Scenario 1. Black Barrel (G-4): succes"),
+             #  mock.call.write("+ Party achievement Leave the City"),
+             #  mock.call.write("+ Scenario 2. Left Hill (D-8)"),
              mock.call.write("Treasure 17."),
              mock.call.write("Treasure 1."),
              mock.call.write("Scenario 2. Left Hill (D-8): failure"),
              mock.call.write("Scenario 2. Left Hill (D-8): succes"),
+             #  mock.call.write("+ Ancient technology 2."),
+             #  mock.call.write("+ Road event 9."),
              mock.call.write("Quest 512. Kill Enemies"),
+             #  mock.call.write("+ Scenario 5. Candy Mountain (C-2)"),
+             #  mock.call.write("+ Item design 143. Sharp Arrow"),
              mock.call.write("City event 1.: B"),
+             #  mock.call.write("+ Item design 112. Expensive Crown"),
              mock.call.write("Donation 4."),
              mock.call.write("Donation 5."),
              mock.call.write("Road event 9.: B"),
+             #  mock.call.write("Road event 9.: B-"),
+             #  mock.call.write("+ City event 31."),
              mock.call.write("Treasure 38."),
-             mock.call.write("Scenario 5. Candy Mountain (C-2): succes")],
+             #  mock.call.write("+ Item design 112. Old Coin"),
+             mock.call.write("Scenario 5. Candy Mountain (C-2): succes"),
+             #  mock.call.write("+ Global achievement Candy Eaten"),
+             #  mock.call.write("+ City event 33."),
+             mock.call.write("City event 17.: B"),
+             mock.call.write("Road event 24.: A")],
             any_order=True
         )
 

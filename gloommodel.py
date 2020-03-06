@@ -58,10 +58,12 @@ class Encounter(HandlerJSON):
     # should be overwritten by child classes
     friendly_name = "encounter"
 
-    def __init__(self, number: int = None, fullJSON: str = None):
+    def __init__(self, number: int = None, unlockables: list = [], fullJSON: str = None):
         """
         number (int):
             the number of the Encounter
+        unlockables (list of Encounter):
+            list of Encounter objects this Encounter unlocked
         fullJSON (str):
             JSON representation of the Encounter
 
@@ -73,11 +75,21 @@ class Encounter(HandlerJSON):
         assert type(self) != Encounter
 
         if fullJSON is not None:
-            number = self.fromJSON(fullJSON)["number"]
+            fullDict = self.fromJSON(fullJSON)
+            number = fullDict["number"]
+            unlockables = fullDict["unlockables"]
 
         assert type(number) == int
+        assert type(unlockables) == list
 
         self.number = number
+        self.unlockables = []
+
+        for unlockable_dict in unlockables:
+            unlockable_json = json.dumps(unlockable_dict)
+            unlockable_class = globals()[unlockable_dict["type"]]
+            unlockable_object = unlockable_class(fullJSON=unlockable_json)
+            self.unlockables.append(unlockable_object)
 
     def __eq__(self, other) -> bool:
         """
@@ -161,6 +173,7 @@ class NamedEncounter(Encounter):
         self,
         number: int = None,
         name: str = None,
+        unlockables: list = [],
         fullJSON: str = None
     ):
         """
@@ -168,6 +181,8 @@ class NamedEncounter(Encounter):
             the number of the named encounter
         name (string):
             the name of the named encounter
+        unlockables (list of Encounter):
+            list of Encounter objects this Encounter unlocked
 
         Provide either a JSON or all other parameters as input.
         The JSON will override any other input if set.
@@ -177,10 +192,11 @@ class NamedEncounter(Encounter):
             fullDict = self.fromJSON(fullJSON)
             number = fullDict["number"]
             name = fullDict["name"]
+            unlockables = fullDict["unlockables"]
 
         assert type(name) == str
 
-        super().__init__(number)
+        super().__init__(number, unlockables)
 
         self.name = name
 
@@ -206,7 +222,8 @@ class Scenario(NamedEncounter):
         number: int = None,
         name: str = None,
         gridLocation: GridLocation = None,
-        succes: bool = True,
+        succes=None,
+        unlockables: list = [],
         fullJSON: str = None
     ):
         """
@@ -216,6 +233,10 @@ class Scenario(NamedEncounter):
             the name of the Scenario
         gridLocation (GridLocation):
             the grid location of the Scenario on the map of Gloomhaven
+        succes (bool or ""):
+            bool for whether scenario was accomplished, "" if only unlocked
+        unlockables (list of Encounter):
+            list of Encounter objects this Encounter unlocked
         fullJSON (str):
             JSON representation of the Scenario
 
@@ -231,11 +252,12 @@ class Scenario(NamedEncounter):
                 fullJSON=json.dumps(fullDict["gridLocation"])
             )
             succes = fullDict["succes"]
+            unlockables = fullDict["unlockables"]
 
         assert type(gridLocation) == GridLocation
-        assert type(succes) == bool
+        assert type(succes) == bool or succes == ""
 
-        super().__init__(number, name)
+        super().__init__(number, name, unlockables)
 
         self.gridLocation = gridLocation
         self.succes = succes
@@ -248,12 +270,14 @@ class Scenario(NamedEncounter):
         super_str = super().__str__()
         location_str = self.gridLocation.__str__()
 
-        if self.succes == True:
-            succes_str = "succes"
+        if self.succes == "":
+            str_end = ""
+        elif self.succes:
+            str_end = ": succes"
         else:
-            succes_str = "failure"
+            str_end = ": failure"
 
-        return f"{super_str} {location_str}: {succes_str}"
+        return f"{super_str} {location_str}{str_end}"
 
 
 class Event(Encounter):
@@ -268,11 +292,16 @@ class Event(Encounter):
         self,
         number: int = None,
         choice: str = None,
+        unlockables: list = [],
         fullJSON: int = None
     ):
         """
         number (int):
             the number of the event
+        choice ("A", "B" or ""):
+            "A" or "B" for outcome choice, "" if only unlocked
+        unlockables (list of Encounter):
+            list of Encounter objects this Encounter unlocked
         """
 
         assert type(self) != Event
@@ -281,10 +310,11 @@ class Event(Encounter):
             fullDict = self.fromJSON(fullJSON)
             number = fullDict["number"]
             choice = fullDict["choice"]
+            unlockables = fullDict["unlockables"]
 
-        assert choice == "A" or choice == "B"
+        assert choice == "A" or choice == "B" or choice == ""
 
-        super().__init__(number)
+        super().__init__(number, unlockables)
 
         self.choice = choice
 
@@ -295,7 +325,12 @@ class Event(Encounter):
 
         super_str = super().__str__()
 
-        return f"{super_str}: {self.choice}"
+        if self.choice:
+            str_end = f": {self.choice}"
+        else:
+            str_end = ""
+
+        return f"{super_str}{str_end}"
 
 
 class RoadEvent(Event):

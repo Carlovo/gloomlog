@@ -3,46 +3,103 @@
     {
       "type": "Donation",
       "data": {
-        "number": 1
+        "number": 1,
+        "unlockables": []
       }
     },
     {
       "type": "CityEvent",
       "data": {
         "number": 0,
-        "choice": "A"
+        "choice": "A",
+        "unlockables": []
       }
     },
     {
       "type": "Donation",
       "data": {
-        "number": 2
+        "number": 2,
+        "unlockables": []
       }
     },
     {
       "type": "Quest",
       "data": {
         "number": 537,
-        "name": "Help Vermlings"
+        "name": "Help Vermlings",
+        "unlockables": [
+          {
+            "type": "RoadEvent",
+            "data": {
+              "number": 40,
+              "choice": "",
+              "unlockables": []
+            }
+          },
+          {
+            "type": "CityEvent",
+            "data": {
+              "number": 40,
+              "choice": "",
+              "unlockables": []
+            }
+          },
+          {
+            "type": "RoadEvent",
+            "data": {
+              "number": 58,
+              "choice": "",
+              "unlockables": []
+            }
+          },
+          {
+            "type": "CityEvent",
+            "data": {
+              "number": 58,
+              "choice": "",
+              "unlockables": []
+            }
+          }
+        ]
       }
     },
     {
       "type": "Donation",
       "data": {
-        "number": 3
+        "number": 3,
+        "unlockables": []
       }
     },
     {
       "type": "RoadEvent",
       "data": {
         "number": 13,
-        "choice": "B"
+        "choice": "B",
+        "unlockables": []
       }
     },
     {
       "type": "Treasure",
       "data": {
-        "number": 42
+        "number": 42,
+        "unlockables": [
+          {
+            "type": "Scenario",
+            "data": {
+              "number": 18,
+              "name": "High Ocean",
+              "gridLocation": {
+                "type": "GridLocation",
+                "data": {
+                  "character": "H",
+                  "number": 11
+                }
+              },
+              "succes": "",
+              "unlockables": []
+            }
+          }
+        ]
       }
     },
     {
@@ -57,19 +114,39 @@
             "number": 4
           }
         },
-        "succes": true
+        "succes": true,
+        "unlockables": [
+          {
+            "type": "Scenario",
+            "data": {
+              "number": 2,
+              "name": "Left Hill",
+              "gridLocation": {
+                "type": "GridLocation",
+                "data": {
+                  "character": "D",
+                  "number": 8
+                }
+              },
+              "succes": "",
+              "unlockables": []
+            }
+          }
+        ]
       }
     },
     {
       "type": "Treasure",
       "data": {
-        "number": 17
+        "number": 17,
+        "unlockables": []
       }
     },
     {
       "type": "Treasure",
       "data": {
-        "number": 1
+        "number": 1,
+        "unlockables": []
       }
     },
     {
@@ -84,7 +161,8 @@
             "number": 8
           }
         },
-        "succes": false
+        "succes": false,
+        "unlockables": []
       }
     },
     {
@@ -99,46 +177,88 @@
             "number": 8
           }
         },
-        "succes": true
+        "succes": true,
+        "unlockables": [
+          {
+            "type": "RoadEvent",
+            "data": {
+              "number": 9,
+              "choice": "",
+              "unlockables": []
+            }
+          }
+        ]
       }
     },
     {
       "type": "Quest",
       "data": {
         "number": 512,
-        "name": "Kill Enemies"
+        "name": "Kill Enemies",
+        "unlockables": [
+          {
+            "type": "Scenario",
+            "data": {
+              "number": 5,
+              "name": "Candy Mountain",
+              "gridLocation": {
+                "type": "GridLocation",
+                "data": {
+                  "character": "C",
+                  "number": 2
+                }
+              },
+              "succes": "",
+              "unlockables": []
+            }
+          }
+        ]
       }
     },
     {
       "type": "CityEvent",
       "data": {
         "number": 1,
-        "choice": "B"
+        "choice": "B",
+        "unlockables": []
       }
     },
     {
       "type": "Donation",
       "data": {
-        "number": 4
+        "number": 4,
+        "unlockables": []
       }
     },
     {
       "type": "Donation",
       "data": {
-        "number": 5
+        "number": 5,
+        "unlockables": []
       }
     },
     {
       "type": "RoadEvent",
       "data": {
         "number": 9,
-        "choice": "B"
+        "choice": "B",
+        "unlockables": [
+          {
+            "type": "CityEvent",
+            "data": {
+              "number": 31,
+              "choice": "",
+              "unlockables": []
+            }
+          }
+        ]
       }
     },
     {
       "type": "Treasure",
       "data": {
-        "number": 38
+        "number": 38,
+        "unlockables": []
       }
     },
     {
@@ -153,21 +273,33 @@
             "number": 2
           }
         },
-        "succes": true
+        "succes": true,
+        "unlockables": [
+          {
+            "type": "CityEvent",
+            "data": {
+              "number": 33,
+              "choice": "",
+              "unlockables": []
+            }
+          }
+        ]
       }
     },
     {
       "type": "CityEvent",
       "data": {
         "number": 17,
-        "choice": "B"
+        "choice": "B",
+        "unlockables": []
       }
     },
     {
       "type": "RoadEvent",
       "data": {
         "number": 24,
-        "choice": "A"
+        "choice": "A",
+        "unlockables": []
       }
     }
   ]

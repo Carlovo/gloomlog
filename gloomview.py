@@ -459,6 +459,8 @@ class UserInterfaceSave(UserInterface):
 
         for encounter in self.encounter_list:
             print(encounter)
+            for unlockable in encounter.unlockables:
+                print(f"+ {unlockable}")
 
         return True
 

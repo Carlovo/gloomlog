@@ -1,6 +1,7 @@
 {
   "type": "EncounterCopy",
   "data": {
-    "number": 1000
+    "number": 1000,
+    "unlockables": []
   }
 }

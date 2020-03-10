@@ -2,6 +2,7 @@
   "type": "Scenario",
   "data": {
     "number": 1,
+    "unlockables": [],
     "name": "Black Barrow",
     "gridLocation": {
       "type": "GridLocation",

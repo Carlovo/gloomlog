@@ -4,7 +4,8 @@
       "type": "CityEvent",
       "data": {
         "number": 0,
-        "choice": "A"
+        "choice": "A",
+        "unlockables": []
       }
     }
   ]

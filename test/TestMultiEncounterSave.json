@@ -4,8 +4,8 @@
       "type": "CityEvent",
       "data": {
         "number": 0,
-        "choice": "A",
-        "unlockables": []
+        "unlockables": [],
+        "choice": "A"
       }
     },
     {
@@ -19,6 +19,7 @@
       "type": "Scenario",
       "data": {
         "number": 1,
+        "unlockables": [],
         "name": "Black Barrow",
         "gridLocation": {
           "type": "GridLocation",
@@ -27,8 +28,7 @@
             "number": 4
           }
         },
-        "succes": false,
-        "unlockables": []
+        "succes": false
       }
     },
     {
@@ -49,24 +49,24 @@
       "type": "Quest",
       "data": {
         "number": 511,
-        "name": "Because we can",
-        "unlockables": []
+        "unlockables": [],
+        "name": "Because we can"
       }
     },
     {
       "type": "CityEvent",
       "data": {
         "number": 5,
-        "choice": "B",
-        "unlockables": []
+        "unlockables": [],
+        "choice": "B"
       }
     },
     {
       "type": "RoadEvent",
       "data": {
         "number": 2,
-        "choice": "A",
-        "unlockables": []
+        "unlockables": [],
+        "choice": "A"
       }
     }
   ]

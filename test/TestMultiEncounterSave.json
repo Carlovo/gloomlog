@@ -4,13 +4,15 @@
       "type": "CityEvent",
       "data": {
         "number": 0,
-        "choice": "A"
+        "choice": "A",
+        "unlockables": []
       }
     },
     {
       "type": "Treasure",
       "data": {
-        "number": 18
+        "number": 18,
+        "unlockables": []
       }
     },
     {
@@ -25,40 +27,46 @@
             "number": 4
           }
         },
-        "succes": false
+        "succes": false,
+        "unlockables": []
       }
     },
     {
       "type": "Donation",
       "data": {
-        "number": 1
+        "number": 1,
+        "unlockables": []
       }
     },
     {
       "type": "Donation",
       "data": {
-        "number": 2
+        "number": 2,
+        "unlockables": []
       }
     },
     {
       "type": "Quest",
       "data": {
         "number": 511,
-        "name": "Because we can"
+        "name": "Because we can",
+        "unlockables": []
       }
     },
     {
       "type": "CityEvent",
       "data": {
         "number": 5,
-        "choice": "B"
+        "choice": "B",
+        "unlockables": []
       }
     },
     {
       "type": "RoadEvent",
       "data": {
         "number": 2,
-        "choice": "A"
+        "choice": "A",
+        "unlockables": []
       }
     }
   ]

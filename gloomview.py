@@ -101,7 +101,7 @@ class UserInterface:
 
         self.scale_interface()
 
-        print('')
+        print("")
         print(self.interface_top)
         print(self.interface_header)
         print(self.interface_top)
@@ -110,7 +110,7 @@ class UserInterface:
             print(self.user_option_dict[option]["print"])
         print(self.interface_bottom)
 
-        print('Please choose from')
+        print("Please choose from")
         user_input = UserInterface.multiple_choice_question(
             options=self.user_option_tuple)
 
@@ -130,10 +130,10 @@ class UserInterface:
         Print GloomLog's help text
         """
 
-        print(':, only literal options')
-        print('#, literal options + numbered positions')
-        print('@, literal options + one character shorthands')
-        print('>, literals + numbers + shorthands')
+        print(":, only literal options")
+        print("#, literal options + numbered positions")
+        print("@, literal options + one character shorthands")
+        print(">, literals + numbers + shorthands")
 
         return True
 
@@ -475,7 +475,7 @@ class UserInterfaceSave(UserInterface):
         """
 
         new_encounter_friendly_name = self.multiple_choice_question(
-            question="What type was your last encounter?",
+            question="What type of encounter?",
             options=tuple(encounter_type.friendly_name
                           for encounter_type in self.encounter_types)
         )
@@ -570,11 +570,9 @@ class UserInterfaceSave(UserInterface):
             )
 
         # get encounter unlockables
-        if self.yes_no_question(question="Did you unlock any encounters?"):
-            # TODO: ask further
-            pass
-        else:
-            pass
+        while self.yes_no_question(question="Would you like to add an unlocked encounter?"):
+            unlocked_encounter = self.get_encounter_basics()
+            new_encounter.unlockables.append(unlocked_encounter)
 
         self.encounter_list.append(new_encounter)
 

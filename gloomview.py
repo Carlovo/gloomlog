@@ -1,4 +1,4 @@
-from gloommodel import Scenario, GridLocation, CityEvent, RoadEvent, Treasure, Quest, Donation
+from gloommodel import Scenario, GridLocation, Event, CityEvent, RoadEvent, Treasure, Quest, Donation
 import json
 
 
@@ -464,10 +464,14 @@ class UserInterfaceSave(UserInterface):
 
         return True
 
-    def add_encounter_to_save(self):
-        """
-        Get the necessary data to add an encounter to the save file
-        from the user's input.
+    def get_encounter_basics(self):
+        """Query the user for basic information of an encounter
+        Basic inforormation is the data (also) required for unlockables.
+
+        Returns
+        -------
+        [Encounter]
+            Returns an instance of a child class of Encounter.
         """
 
         new_encounter_friendly_name = self.multiple_choice_question(
@@ -512,7 +516,6 @@ class UserInterfaceSave(UserInterface):
             )
 
         # get/create scenario gridLocation
-        # get scenario completion status
         if new_encounter_class == Scenario:
             new_encounter_info.append(
                 GridLocation(
@@ -531,29 +534,48 @@ class UserInterfaceSave(UserInterface):
                     )
                 )
             )
-            new_encounter_info.append(
-                self.yes_no_question(
-                    question="Did you succesfully complete the scenario?"
-                )
+            # 'placeholder' for scenario completion status
+            new_encounter_info.append("")
+
+        # 'placeholder' for event choice
+        if new_encounter_class == RoadEvent or new_encounter_class == CityEvent:
+            new_encounter_info.append("")
+
+        # 'placeholder' for encounter unlockables
+        new_encounter_info.append([])
+
+        new_encounter = new_encounter_class(*new_encounter_info)
+
+        return new_encounter
+
+    def add_encounter_to_save(self):
+        """
+        Get the necessary data to add an encounter to the save file
+        from the user's input.
+        """
+
+        new_encounter = self.get_encounter_basics()
+
+        # get scenario completion status
+        if isinstance(new_encounter, Scenario):
+            new_encounter.succes = self.yes_no_question(
+                question="Did you succesfully complete the scenario?"
             )
 
         # get event choice
-        if new_encounter_class == RoadEvent or new_encounter_class == CityEvent:
-            new_encounter_info.append(
-                self.multiple_choice_question(
-                    options=("A", "B"),
-                    question="Which option did you choose?"
-                )
+        if isinstance(new_encounter, Event):
+            new_encounter.choice = self.multiple_choice_question(
+                options=("A", "B"),
+                question="Which option did you choose?"
             )
 
         # get encounter unlockables
         if self.yes_no_question(question="Did you unlock any encounters?"):
             # TODO: ask further
-            new_encounter_info.append([])
+            pass
         else:
-            new_encounter_info.append([])
+            pass
 
-        new_encounter = new_encounter_class(*new_encounter_info)
         self.encounter_list.append(new_encounter)
 
         return self.get_save_data()

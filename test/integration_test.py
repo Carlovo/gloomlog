@@ -153,42 +153,54 @@ class TestCorrectSaving(unittest.TestCase):
 
     @mock.patch("gloomcontroller.Controller.exit_gloomlog")
     @mock.patch("builtins.input", side_effect=[
-        "new",
-        "testers",
-        "add",
-        "treasure",
-        "18",
-        "no",
-        "add",
-        "scenario",
-        "1",
-        "Black Barrow",
-        "G",
-        "4",
-        "no",
-        "no",
-        "add",
-        "donation",
-        "no",
-        "add",
-        "donation",
-        "no",
-        "add",
-        "quest",
-        "511",
-        "Because we can",
-        "no",
-        "add",
-        "city event",
-        "5",
-        "B",
-        "no",
-        "add",
-        "road event",
-        "2",
-        "A",
-        "no",
-        "exit"
+        "new",  # "Please choose from" -> "Create NEW campaign save file"
+        "testers",  # "How would you like to call your campaign save file?: "
+        "add",  # "What would you like to do with campaign save 'testers'?" -> "ADD new encounter"
+        "treasure",  # "What type of encounter?"
+        "18",  # "What is the treasure's number?"
+        "yes",  # "Would you like to add an unlocked encounter?"
+        "scenario",  # "What type of encounter?"
+        "5",  # "What is the scenario's number?"
+        "Candy Mountain",  # "What is the scenario's name?"
+        "C",  # "What is the character of that scenario's location?"
+        "2",  # "What is the number of that scenario's location?"
+        "no",  # "Would you like to add an unlocked encounter?"
+        "add",  # "What would you like to do with campaign save 'testers'?" -> "ADD new encounter"
+        "scenario",  # "What type of encounter?"
+        "1",  # "What is the scenario's number?"
+        "Black Barrow",  # "What is the scenario's name?"
+        "G",  # "What is the character of that scenario's location?"
+        "4",  # "What is the number of that scenario's location?"
+        "no",  # "Did you succesfully complete the scenario?"
+        "no",  # "Would you like to add an unlocked encounter?"
+        "add",  # "What would you like to do with campaign save 'testers'?" -> "ADD new encounter"
+        "donation",  # "What type of encounter?"
+        "no",  # "Would you like to add an unlocked encounter?"
+        "add",  # "What would you like to do with campaign save 'testers'?" -> "ADD new encounter"
+        "donation",  # "What type of encounter?"
+        "no",  # "Would you like to add an unlocked encounter?"
+        "add",  # "What would you like to do with campaign save 'testers'?" -> "ADD new encounter"
+        "quest",  # "What type of encounter?"
+        "511",  # "What is the quest's number?"
+        "Because we can",  # "What is the quest's name?"
+        "yes",  # "Would you like to add an unlocked encounter?"
+        "city event",  # "What type of encounter?"
+        "40",  # "What is the city event's number?"
+        "yes",  # "Would you like to add an unlocked encounter?"
+        "road event",  # "What type of encounter?"
+        "58",  # "What is the road event's number?"
+        "no",  # "Would you like to add an unlocked encounter?"
+        "add",  # "What would you like to do with campaign save 'testers'?" -> "ADD new encounter"
+        "city event",  # "What type of encounter?"
+        "5",  # "What is the city event's number?"
+        "B",  # "Which option did you choose?"
+        "no",  # "Would you like to add an unlocked encounter?"
+        "add",  # "What would you like to do with campaign save 'testers'?" -> "ADD new encounter"
+        "road event",  # "What type of encounter?"
+        "2",  # "What is the road event's number?"
+        "A",  # "Which option did you choose?"
+        "no",  # "Would you like to add an unlocked encounter?"
+        "exit"  # "What would you like to do with campaign save 'testers'?" -> "EXIT GloomLog"
     ])
     def test_file_multiencounter(self, mock_present, mock_exit):
         """

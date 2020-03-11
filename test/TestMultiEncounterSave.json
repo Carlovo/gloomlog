@@ -12,7 +12,24 @@
       "type": "Treasure",
       "data": {
         "number": 18,
-        "unlockables": []
+        "unlockables": [
+          {
+            "type": "Scenario",
+            "data": {
+              "number": 5,
+              "unlockables": [],
+              "name": "Candy Mountain",
+              "gridLocation": {
+                "type": "GridLocation",
+                "data": {
+                  "character": "C",
+                  "number": 2
+                }
+              },
+              "succes": ""
+            }
+          }
+        ]
       }
     },
     {
@@ -49,7 +66,24 @@
       "type": "Quest",
       "data": {
         "number": 511,
-        "unlockables": [],
+        "unlockables": [
+          {
+            "type": "CityEvent",
+            "data": {
+              "number": 40,
+              "unlockables": [],
+              "choice": ""
+            }
+          },
+          {
+            "type": "RoadEvent",
+            "data": {
+              "number": 58,
+              "unlockables": [],
+              "choice": ""
+            }
+          }
+        ],
         "name": "Because we can"
       }
     },

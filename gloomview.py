@@ -546,6 +546,13 @@ class UserInterfaceSave(UserInterface):
                 )
             )
 
+        # get encounter unlockables
+        if self.yes_no_question(question="Did you unlock any encounters?"):
+            # TODO: ask further
+            new_encounter_info.append([])
+        else:
+            new_encounter_info.append([])
+
         new_encounter = new_encounter_class(*new_encounter_info)
         self.encounter_list.append(new_encounter)
 

@@ -1,7 +1,7 @@
 {
-  "type": "GridLocation",
   "data": {
     "character": "G",
     "number": 10
-  }
+  },
+  "type": "GridLocation"
 }

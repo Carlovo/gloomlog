@@ -1,16 +1,16 @@
 {
-  "type": "Scenario",
   "data": {
-    "number": 1,
-    "unlockables": [],
-    "name": "Black Barrow",
     "gridLocation": {
-      "type": "GridLocation",
       "data": {
         "character": "G",
         "number": 10
-      }
+      },
+      "type": "GridLocation"
     },
-    "succes": false
-  }
+    "name": "Black Barrow",
+    "number": 1,
+    "succes": false,
+    "unlockables": []
+  },
+  "type": "Scenario"
 }

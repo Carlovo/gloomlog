@@ -1,107 +1,107 @@
 {
   "EnounterList": [
     {
-      "type": "CityEvent",
       "data": {
+        "choice": "A",
         "number": 0,
-        "unlockables": [],
-        "choice": "A"
-      }
+        "unlockables": []
+      },
+      "type": "CityEvent"
     },
     {
-      "type": "Treasure",
       "data": {
         "number": 18,
         "unlockables": [
           {
-            "type": "Scenario",
             "data": {
-              "number": 5,
-              "unlockables": [],
-              "name": "Candy Mountain",
               "gridLocation": {
-                "type": "GridLocation",
                 "data": {
                   "character": "C",
                   "number": 2
-                }
+                },
+                "type": "GridLocation"
               },
-              "succes": ""
-            }
+              "name": "Candy Mountain",
+              "number": 5,
+              "succes": "",
+              "unlockables": []
+            },
+            "type": "Scenario"
           }
         ]
-      }
+      },
+      "type": "Treasure"
     },
     {
-      "type": "Scenario",
       "data": {
-        "number": 1,
-        "unlockables": [],
-        "name": "Black Barrow",
         "gridLocation": {
-          "type": "GridLocation",
           "data": {
             "character": "G",
             "number": 4
-          }
+          },
+          "type": "GridLocation"
         },
-        "succes": false
-      }
+        "name": "Black Barrow",
+        "number": 1,
+        "succes": false,
+        "unlockables": []
+      },
+      "type": "Scenario"
     },
     {
-      "type": "Donation",
       "data": {
         "number": 1,
         "unlockables": []
-      }
+      },
+      "type": "Donation"
     },
     {
-      "type": "Donation",
       "data": {
         "number": 2,
         "unlockables": []
-      }
+      },
+      "type": "Donation"
     },
     {
-      "type": "Quest",
       "data": {
+        "name": "Because we can",
         "number": 511,
         "unlockables": [
           {
-            "type": "CityEvent",
             "data": {
+              "choice": "",
               "number": 40,
-              "unlockables": [],
-              "choice": ""
-            }
+              "unlockables": []
+            },
+            "type": "CityEvent"
           },
           {
-            "type": "RoadEvent",
             "data": {
+              "choice": "",
               "number": 58,
-              "unlockables": [],
-              "choice": ""
-            }
+              "unlockables": []
+            },
+            "type": "RoadEvent"
           }
-        ],
-        "name": "Because we can"
-      }
+        ]
+      },
+      "type": "Quest"
     },
     {
-      "type": "CityEvent",
       "data": {
+        "choice": "B",
         "number": 5,
-        "unlockables": [],
-        "choice": "B"
-      }
+        "unlockables": []
+      },
+      "type": "CityEvent"
     },
     {
-      "type": "RoadEvent",
       "data": {
+        "choice": "A",
         "number": 2,
-        "unlockables": [],
-        "choice": "A"
-      }
+        "unlockables": []
+      },
+      "type": "RoadEvent"
     }
   ]
 }

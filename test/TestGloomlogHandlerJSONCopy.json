@@ -1,14 +1,14 @@
 {
-  "type": "HandlerJSONCopy",
   "data": {
-    "number": 4,
-    "name": "Jason",
     "handlersHandler": {
-      "type": "HandlerJSONCopy",
       "data": {
         "lastName": "Bourne",
         "number": 3
-      }
-    }
-  }
+      },
+      "type": "HandlerJSONCopy"
+    },
+    "name": "Jason",
+    "number": 4
+  },
+  "type": "HandlerJSONCopy"
 }

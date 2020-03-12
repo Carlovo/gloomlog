@@ -599,6 +599,10 @@ class UserInterfaceSave(UserInterface):
             print("Invalid encounters created :(")
             error_exit_interfaces()
 
-        save_info = json.dumps({"EnounterList": encounters_as_dicts}, indent=2)
+        save_info = json.dumps(
+            {"EnounterList": encounters_as_dicts},
+            indent=2,
+            sort_keys=True
+        )
 
         return (self.save_file_name, save_info)

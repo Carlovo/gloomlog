@@ -1,12 +1,12 @@
 {
   "EnounterList": [
     {
-      "type": "CityEvent",
       "data": {
+        "choice": "A",
         "number": 0,
-        "unlockables": [],
-        "choice": "A"
-      }
+        "unlockables": []
+      },
+      "type": "CityEvent"
     }
   ]
 }

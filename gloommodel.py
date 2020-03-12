@@ -46,7 +46,7 @@ class HandlerJSON:
         # It would be better to inherit and override json.JSONEncoder.default() for this,
         # but that seems to give errors in the unittest framework
 
-        return json.dumps(self, default=lambda o: {"type": type(o).__name__, "data": o.__dict__}, indent=2)
+        return json.dumps(self, default=lambda o: {"type": type(o).__name__, "data": o.__dict__}, indent=2, sort_keys=True)
 
 
 class Encounter(HandlerJSON):

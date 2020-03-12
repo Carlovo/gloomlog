@@ -2,13 +2,13 @@
   "data": {
     "handlersHandler": {
       "data": {
-        "lastName": "Bourne",
-        "number": 3
+        "identifier": 3,
+        "lastName": "Bourne"
       },
       "type": "HandlerJSONCopy"
     },
-    "name": "Jason",
-    "number": 4
+    "identifier": 4,
+    "name": "Jason"
   },
   "type": "HandlerJSONCopy"
 }

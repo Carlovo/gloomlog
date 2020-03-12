@@ -58,10 +58,10 @@ class Encounter(HandlerJSON):
     # should be overwritten by child classes
     friendly_name = "encounter"
 
-    def __init__(self, number: int = None, unlockables: list = [], fullJSON: str = None):
+    def __init__(self, identifier: int = None, unlockables: list = [], fullJSON: str = None):
         """
-        number (int):
-            the number of the Encounter
+        identifier (int):
+            the identifier of the Encounter
         unlockables (list of Encounter):
             list of Encounter objects this Encounter unlocked
         fullJSON (str):
@@ -76,13 +76,13 @@ class Encounter(HandlerJSON):
 
         if fullJSON is not None:
             fullDict = self.fromJSON(fullJSON)
-            number = fullDict["number"]
+            identifier = fullDict["identifier"]
             unlockables = fullDict["unlockables"]
 
-        assert type(number) == int
+        assert type(identifier) == int
         assert type(unlockables) == list
 
-        self.number = number
+        self.identifier = identifier
         self.unlockables = []
 
         for unlockable_dict in unlockables:
@@ -98,14 +98,14 @@ class Encounter(HandlerJSON):
         Return whether the two encounters are the same (bool)
         """
 
-        return type(other) == type(self) and self.number == other.number
+        return type(other) == type(self) and self.identifier == other.identifier
 
     def __str__(self) -> str:
         """
         Returns general info about the encouter (str)
         """
 
-        return f"{self.friendly_name} {self.number}.".capitalize()
+        return f"{self.friendly_name} {self.identifier}.".capitalize()
 
 
 class GridLocation(HandlerJSON):
@@ -113,12 +113,12 @@ class GridLocation(HandlerJSON):
     A location by the grid on the map of Gloomhaven
     """
 
-    def __init__(self, character: str = None, number: int = None, fullJSON: str = None):
+    def __init__(self, character: str = None, identifier: int = None, fullJSON: str = None):
         """
         character (single character string: A - O):
             the character denoting the horizontal / row value of the GridLocation
-        number (int: 1 - 18):
-            the number denoting the vertical / column value of the GridLocation
+        identifier (int: 1 - 18):
+            the identifier denoting the vertical / column value of the GridLocation
 
         fullJSON (str):
             JSON representation of the GridLocation
@@ -130,18 +130,18 @@ class GridLocation(HandlerJSON):
         if fullJSON is not None:
             fullDict = self.fromJSON(fullJSON)
             character = fullDict["character"]
-            number = fullDict["number"]
+            identifier = fullDict["identifier"]
 
         assert type(character) == str
         assert len(character) == 1
 
         assert 64 < ord(character) and ord(character) < 80
 
-        assert type(number) == int
-        assert 0 < number and number < 19
+        assert type(identifier) == int
+        assert 0 < identifier and identifier < 19
 
         self.character = character
-        self.number = number
+        self.identifier = identifier
 
     def __eq__(self, other) -> bool:
         """
@@ -151,14 +151,14 @@ class GridLocation(HandlerJSON):
         (bool)
         """
 
-        return type(other) == type(self) and self.character == other.character and self.number == other.number
+        return type(other) == type(self) and self.character == other.character and self.identifier == other.identifier
 
     def __str__(self) -> str:
         """
         Returns general info about the GridLocation
         """
 
-        return "(" + self.character + "-" + str(self.number) + ")"
+        return "(" + self.character + "-" + str(self.identifier) + ")"
 
 
 class NamedEncounter(Encounter):
@@ -171,14 +171,14 @@ class NamedEncounter(Encounter):
 
     def __init__(
         self,
-        number: int = None,
+        identifier: int = None,
         name: str = None,
         unlockables: list = [],
         fullJSON: str = None
     ):
         """
-        number (int):
-            the number of the named encounter
+        identifier (int):
+            the identifier of the named encounter
         name (string):
             the name of the named encounter
         unlockables (list of Encounter):
@@ -190,13 +190,13 @@ class NamedEncounter(Encounter):
 
         if fullJSON is not None:
             fullDict = self.fromJSON(fullJSON)
-            number = fullDict["number"]
+            identifier = fullDict["identifier"]
             name = fullDict["name"]
             unlockables = fullDict["unlockables"]
 
         assert type(name) == str
 
-        super().__init__(number, unlockables)
+        super().__init__(identifier, unlockables)
 
         self.name = name
 
@@ -219,7 +219,7 @@ class Scenario(NamedEncounter):
 
     def __init__(
         self,
-        number: int = None,
+        identifier: int = None,
         name: str = None,
         gridLocation: GridLocation = None,
         succes=None,
@@ -227,8 +227,8 @@ class Scenario(NamedEncounter):
         fullJSON: str = None
     ):
         """
-        number (int):
-            the number of the Scenario
+        identifier (int):
+            the identifier of the Scenario
         name (string):
             the name of the Scenario
         gridLocation (GridLocation):
@@ -246,7 +246,7 @@ class Scenario(NamedEncounter):
 
         if fullJSON is not None:
             fullDict = self.fromJSON(fullJSON)
-            number = fullDict["number"]
+            identifier = fullDict["identifier"]
             name = fullDict["name"]
             gridLocation = GridLocation(
                 fullJSON=json.dumps(fullDict["gridLocation"])
@@ -257,7 +257,7 @@ class Scenario(NamedEncounter):
         assert type(gridLocation) == GridLocation
         assert type(succes) == bool or succes == ""
 
-        super().__init__(number, name, unlockables)
+        super().__init__(identifier, name, unlockables)
 
         self.gridLocation = gridLocation
         self.succes = succes
@@ -290,14 +290,14 @@ class Event(Encounter):
 
     def __init__(
         self,
-        number: int = None,
+        identifier: int = None,
         choice: str = None,
         unlockables: list = [],
         fullJSON: int = None
     ):
         """
-        number (int):
-            the number of the event
+        identifier (int):
+            the identifier of the event
         choice ("A", "B" or ""):
             "A" or "B" for outcome choice, "" if only unlocked
         unlockables (list of Encounter):
@@ -308,13 +308,13 @@ class Event(Encounter):
 
         if fullJSON is not None:
             fullDict = self.fromJSON(fullJSON)
-            number = fullDict["number"]
+            identifier = fullDict["identifier"]
             choice = fullDict["choice"]
             unlockables = fullDict["unlockables"]
 
         assert choice == "A" or choice == "B" or choice == ""
 
-        super().__init__(number, unlockables)
+        super().__init__(identifier, unlockables)
 
         self.choice = choice
 
@@ -376,7 +376,7 @@ class ItemDesign(NamedEncounter):
 class IncrementalEncounter(Encounter):
     """
     An abstract class for incremental encounters from the game Gloomhaven
-    Incremental encounters are encounters which number is the number of
+    Incremental encounters are encounters which identifier is the identifier of
     the previous encounter of the same type increased by one
     """
 

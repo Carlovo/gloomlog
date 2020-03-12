@@ -3,26 +3,26 @@
     {
       "data": {
         "choice": "A",
-        "number": 0,
+        "identifier": 0,
         "unlockables": []
       },
       "type": "CityEvent"
     },
     {
       "data": {
-        "number": 18,
+        "identifier": 18,
         "unlockables": [
           {
             "data": {
               "gridLocation": {
                 "data": {
                   "character": "C",
-                  "number": 2
+                  "identifier": 2
                 },
                 "type": "GridLocation"
               },
+              "identifier": 5,
               "name": "Candy Mountain",
-              "number": 5,
               "succes": "",
               "unlockables": []
             },
@@ -37,12 +37,12 @@
         "gridLocation": {
           "data": {
             "character": "G",
-            "number": 4
+            "identifier": 4
           },
           "type": "GridLocation"
         },
+        "identifier": 1,
         "name": "Black Barrow",
-        "number": 1,
         "succes": false,
         "unlockables": []
       },
@@ -50,27 +50,27 @@
     },
     {
       "data": {
-        "number": 1,
+        "identifier": 1,
         "unlockables": []
       },
       "type": "Donation"
     },
     {
       "data": {
-        "number": 2,
+        "identifier": 2,
         "unlockables": []
       },
       "type": "Donation"
     },
     {
       "data": {
+        "identifier": 511,
         "name": "Because we can",
-        "number": 511,
         "unlockables": [
           {
             "data": {
               "choice": "",
-              "number": 40,
+              "identifier": 40,
               "unlockables": []
             },
             "type": "CityEvent"
@@ -78,7 +78,7 @@
           {
             "data": {
               "choice": "",
-              "number": 58,
+              "identifier": 58,
               "unlockables": []
             },
             "type": "RoadEvent"
@@ -90,7 +90,7 @@
     {
       "data": {
         "choice": "B",
-        "number": 5,
+        "identifier": 5,
         "unlockables": []
       },
       "type": "CityEvent"
@@ -98,7 +98,7 @@
     {
       "data": {
         "choice": "A",
-        "number": 2,
+        "identifier": 2,
         "unlockables": []
       },
       "type": "RoadEvent"

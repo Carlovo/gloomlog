@@ -3,12 +3,12 @@
     "gridLocation": {
       "data": {
         "character": "G",
-        "number": 10
+        "identifier": 10
       },
       "type": "GridLocation"
     },
+    "identifier": 1,
     "name": "Black Barrow",
-    "number": 1,
     "succes": false,
     "unlockables": []
   },

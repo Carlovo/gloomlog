@@ -1,7 +1,7 @@
 {
   "data": {
     "character": "G",
-    "number": 10
+    "identifier": 10
   },
   "type": "GridLocation"
 }

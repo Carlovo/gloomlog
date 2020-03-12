@@ -3,7 +3,7 @@
     {
       "data": {
         "choice": "A",
-        "number": 0,
+        "identifier": 0,
         "unlockables": []
       },
       "type": "CityEvent"

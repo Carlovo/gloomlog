@@ -45,11 +45,11 @@ class TestHandlerJSONCopy(unittest.TestCase):
         logging.info("Setting up variables for testing HandlerJSON class")
 
         cls.handlerJSONTest = HandlerJSONCopy()
-        cls.handlerJSONTest.number = 4
+        cls.handlerJSONTest.identifier = 4
         cls.handlerJSONTest.name = "Jason"
         cls.handlerJSONTest.handlersHandler = HandlerJSONCopy()
         cls.handlerJSONTest.handlersHandler.lastName = "Bourne"
-        cls.handlerJSONTest.handlersHandler.number = 3
+        cls.handlerJSONTest.handlersHandler.identifier = 3
 
         with open("TestGloomlogHandlerJSONCopy.json", "r") as file:
             cls.textJSON = file.read()
@@ -66,14 +66,15 @@ class TestHandlerJSONCopy(unittest.TestCase):
 
         self.assertEqual(type(testDict), dict)
 
-        self.assertEqual(testDict["number"], self.handlerJSONTest.number)
+        self.assertEqual(testDict["identifier"],
+                         self.handlerJSONTest.identifier)
         self.assertEqual(testDict["name"], self.handlerJSONTest.name)
         self.assertEqual(testDict["handlersHandler"]["type"],
                          type(self.handlerJSONTest.handlersHandler).__name__)
         self.assertEqual(testDict["handlersHandler"]["data"]["lastName"],
                          self.handlerJSONTest.handlersHandler.lastName)
-        self.assertEqual(testDict["handlersHandler"]["data"]["number"],
-                         self.handlerJSONTest.handlersHandler.number)
+        self.assertEqual(testDict["handlersHandler"]["data"]["identifier"],
+                         self.handlerJSONTest.handlersHandler.identifier)
 
     def testHandlerJSONToJSON(self):
         """
@@ -100,12 +101,12 @@ class TestGloomlogEncounterCopy(unittest.TestCase):
 
         logging.info("Setting up variables for testing Encounter class")
 
-        cls.number = 1000
+        cls.identifier = 1000
 
         with open("TestGloomlogEncounterCopy.json", "r") as file:
             cls.textJSON = file.read()
 
-        cls.nctrTest = EncounterCopy(cls.number)
+        cls.nctrTest = EncounterCopy(cls.identifier)
         cls.nctrTestJSON = EncounterCopy(fullJSON=cls.textJSON)
 
     def helperFunctionEqualityAndFromJSON(self):
@@ -113,7 +114,7 @@ class TestGloomlogEncounterCopy(unittest.TestCase):
         Helper function for testing the __eq__ and fromJSON methods
         """
 
-        ncrtNumber = self.nctrTest.fromJSON(self.textJSON)["number"]
+        ncrtNumber = self.nctrTest.fromJSON(self.textJSON)["identifier"]
         nctrCopy = EncounterCopy(ncrtNumber)
 
         self.assertEqual(self.nctrTest, nctrCopy)
@@ -122,13 +123,13 @@ class TestGloomlogEncounterCopy(unittest.TestCase):
 
     def testEncounterNumber(self):
         """
-        Test whether the Encounter number has been correctly set
+        Test whether the Encounter identifier has been correctly set
         """
 
         logging.info(
-            "Testing whether the Encounter number has been correctly set")
+            "Testing whether the Encounter identifier has been correctly set")
 
-        self.assertEqual(self.number, self.nctrTest.number)
+        self.assertEqual(self.identifier, self.nctrTest.identifier)
 
     def testEncounterFromJSON(self):
         """
@@ -168,7 +169,7 @@ class TestGloomlogEncounterCopy(unittest.TestCase):
         logging.info(
             "Testing whether the Encounter string representation is correct")
 
-        expectedString = "Encounter " + str(self.number) + "."
+        expectedString = "Encounter " + str(self.identifier) + "."
 
         logging.info(
             "Expected Encounter string representation: " + expectedString)
@@ -209,7 +210,7 @@ class TestGloomlogGridLocation(unittest.TestCase):
 
         gridLocDict = self.gridLocTest.fromJSON(self.textJSON)
         gridLocCharacter = gridLocDict["character"]
-        gridLocNumber = gridLocDict["number"]
+        gridLocNumber = gridLocDict["identifier"]
 
         gridLocCopy = gloommodel.GridLocation(gridLocCharacter, gridLocNumber)
 
@@ -229,13 +230,13 @@ class TestGloomlogGridLocation(unittest.TestCase):
 
     def testGridLocationNumber(self):
         """
-        Test whether the GridLocation number has been correctly set
+        Test whether the GridLocation identifier has been correctly set
         """
 
         logging.info(
-            "Testing whether the GridLocation number has been correctly set")
+            "Testing whether the GridLocation identifier has been correctly set")
 
-        self.assertEqual(self.gridLocNumb, self.gridLocTest.number)
+        self.assertEqual(self.gridLocNumb, self.gridLocTest.identifier)
 
     def testGridLocationFromJSON(self):
         """
@@ -302,7 +303,7 @@ class TestGloomlogScenario(unittest.TestCase):
 
         logging.info("Setting up variables for testing Scenario class")
 
-        cls.number = 1
+        cls.identifier = 1
         cls.name = "Black Barrow"
         cls.gridLocChar = "G"
         cls.gridLocNumb = 10
@@ -312,7 +313,7 @@ class TestGloomlogScenario(unittest.TestCase):
             cls.textJSON = file.read()
 
         cls.scenTest = gloommodel.Scenario(
-            cls.number,
+            cls.identifier,
             cls.name,
             gloommodel.GridLocation(cls.gridLocChar, cls.gridLocNumb),
             cls.succes
@@ -328,7 +329,7 @@ class TestGloomlogScenario(unittest.TestCase):
             "Testing whether a Scenario can be succesfully generated from a correct JSON")
 
         scenDict = self.scenTest.fromJSON(self.textJSON)
-        scenNumber = scenDict["number"]
+        scenNumber = scenDict["identifier"]
         scenName = scenDict["name"]
         scenGridLoc = gloommodel.GridLocation(
             fullJSON=json.dumps(scenDict["gridLocation"]))
@@ -388,7 +389,7 @@ class TestGloomlogScenario(unittest.TestCase):
             "Testing whether the scenario string representation is correct")
 
         expectedString = "Scenario " + \
-            str(self.number) + ". " + self.name + \
+            str(self.identifier) + ". " + self.name + \
             " (" + self.gridLocChar + "-" + str(self.gridLocNumb) + ")" + \
             ": failure"
 
@@ -413,10 +414,10 @@ class TestGloomlogEvent(unittest.TestCase):
 
         logging.info("Setting up variables for testing Event class")
 
-        cls.number = 1000
+        cls.identifier = 1000
         cls.choice = "B"
 
-        cls.eventTest = EventCopy(cls.number, cls.choice)
+        cls.eventTest = EventCopy(cls.identifier, cls.choice)
 
     def testEventString(self):
         """
@@ -427,7 +428,7 @@ class TestGloomlogEvent(unittest.TestCase):
             "Testing whether the Event string representation is correct")
 
         expectedString = "Event " + \
-            str(self.number) + "." + ": " + self.choice
+            str(self.identifier) + "." + ": " + self.choice
 
         logging.info("Expected Event string representation: " + expectedString)
         logging.info("Outputted Event string representation: " +
@@ -449,10 +450,10 @@ class TestGloomlogRoadEvent(unittest.TestCase):
 
         logging.info("Setting up variables for testing RoadEvent class")
 
-        cls.number = 1000
+        cls.identifier = 1000
         cls.choice = "B"
 
-        cls.roadEventTest = gloommodel.RoadEvent(cls.number, cls.choice)
+        cls.roadEventTest = gloommodel.RoadEvent(cls.identifier, cls.choice)
 
     def testRoadEventString(self):
         """
@@ -463,7 +464,7 @@ class TestGloomlogRoadEvent(unittest.TestCase):
             "Testing whether the RoadEvent string representation is correct")
 
         expectedString = "Road event " + \
-            str(self.number) + ".: " + self.choice
+            str(self.identifier) + ".: " + self.choice
 
         logging.info(
             "Expected RoadEvent string representation: " + expectedString)
@@ -486,10 +487,10 @@ class TestGloomlogCityEvent(unittest.TestCase):
 
         logging.info("Setting up variables for testing CityEvent class")
 
-        cls.number = 1000
+        cls.identifier = 1000
         cls.choice = "A"
 
-        cls.cityEventTest = gloommodel.CityEvent(cls.number, cls.choice)
+        cls.cityEventTest = gloommodel.CityEvent(cls.identifier, cls.choice)
 
     def testCityEventString(self):
         """
@@ -500,7 +501,7 @@ class TestGloomlogCityEvent(unittest.TestCase):
             "Testing whether the CityEvent string representation is correct")
 
         expectedString = "City event " + \
-            str(self.number) + ".: " + self.choice
+            str(self.identifier) + ".: " + self.choice
 
         logging.info(
             "Expected CityEvent string representation: " + expectedString)

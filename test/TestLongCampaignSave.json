@@ -2,7 +2,7 @@
   "EnounterList": [
     {
       "data": {
-        "number": 1,
+        "identifier": 1,
         "unlockables": []
       },
       "type": "Donation"
@@ -10,27 +10,27 @@
     {
       "data": {
         "choice": "A",
-        "number": 0,
+        "identifier": 0,
         "unlockables": []
       },
       "type": "CityEvent"
     },
     {
       "data": {
-        "number": 2,
+        "identifier": 2,
         "unlockables": []
       },
       "type": "Donation"
     },
     {
       "data": {
+        "identifier": 537,
         "name": "Help Vermlings",
-        "number": 537,
         "unlockables": [
           {
             "data": {
               "choice": "",
-              "number": 40,
+              "identifier": 40,
               "unlockables": []
             },
             "type": "RoadEvent"
@@ -38,7 +38,7 @@
           {
             "data": {
               "choice": "",
-              "number": 40,
+              "identifier": 40,
               "unlockables": []
             },
             "type": "CityEvent"
@@ -46,7 +46,7 @@
           {
             "data": {
               "choice": "",
-              "number": 58,
+              "identifier": 58,
               "unlockables": []
             },
             "type": "RoadEvent"
@@ -54,7 +54,7 @@
           {
             "data": {
               "choice": "",
-              "number": 58,
+              "identifier": 58,
               "unlockables": []
             },
             "type": "CityEvent"
@@ -65,7 +65,7 @@
     },
     {
       "data": {
-        "number": 3,
+        "identifier": 3,
         "unlockables": []
       },
       "type": "Donation"
@@ -73,11 +73,11 @@
     {
       "data": {
         "choice": "B",
-        "number": 13,
+        "identifier": 13,
         "unlockables": [
           {
             "data": {
-              "number": 1,
+              "identifier": 1,
               "unlockables": []
             },
             "type": "AncientTechnology"
@@ -88,19 +88,19 @@
     },
     {
       "data": {
-        "number": 42,
+        "identifier": 42,
         "unlockables": [
           {
             "data": {
               "gridLocation": {
                 "data": {
                   "character": "H",
-                  "number": 11
+                  "identifier": 11
                 },
                 "type": "GridLocation"
               },
+              "identifier": 18,
               "name": "High Ocean",
-              "number": 18,
               "succes": "",
               "unlockables": []
             },
@@ -115,12 +115,12 @@
         "gridLocation": {
           "data": {
             "character": "G",
-            "number": 4
+            "identifier": 4
           },
           "type": "GridLocation"
         },
+        "identifier": 1,
         "name": "Black Barrel",
-        "number": 1,
         "succes": true,
         "unlockables": [
           {
@@ -128,12 +128,12 @@
               "gridLocation": {
                 "data": {
                   "character": "D",
-                  "number": 8
+                  "identifier": 8
                 },
                 "type": "GridLocation"
               },
+              "identifier": 2,
               "name": "Left Hill",
-              "number": 2,
               "succes": "",
               "unlockables": []
             },
@@ -145,14 +145,14 @@
     },
     {
       "data": {
-        "number": 17,
+        "identifier": 17,
         "unlockables": []
       },
       "type": "Treasure"
     },
     {
       "data": {
-        "number": 1,
+        "identifier": 1,
         "unlockables": []
       },
       "type": "Treasure"
@@ -162,12 +162,12 @@
         "gridLocation": {
           "data": {
             "character": "D",
-            "number": 8
+            "identifier": 8
           },
           "type": "GridLocation"
         },
+        "identifier": 2,
         "name": "Left Hill",
-        "number": 2,
         "succes": false,
         "unlockables": []
       },
@@ -178,17 +178,17 @@
         "gridLocation": {
           "data": {
             "character": "D",
-            "number": 8
+            "identifier": 8
           },
           "type": "GridLocation"
         },
+        "identifier": 2,
         "name": "Left Hill",
-        "number": 2,
         "succes": true,
         "unlockables": [
           {
             "data": {
-              "number": 2,
+              "identifier": 2,
               "unlockables": []
             },
             "type": "AncientTechnology"
@@ -196,7 +196,7 @@
           {
             "data": {
               "choice": "",
-              "number": 9,
+              "identifier": 9,
               "unlockables": []
             },
             "type": "RoadEvent"
@@ -207,13 +207,13 @@
     },
     {
       "data": {
+        "identifier": 512,
         "name": "Kill Enemies",
-        "number": 512,
         "unlockables": [
           {
             "data": {
+              "identifier": 143,
               "name": "Sharp Arrow",
-              "number": 143,
               "unlockables": []
             },
             "type": "ItemDesign"
@@ -223,12 +223,12 @@
               "gridLocation": {
                 "data": {
                   "character": "C",
-                  "number": 2
+                  "identifier": 2
                 },
                 "type": "GridLocation"
               },
+              "identifier": 5,
               "name": "Candy Mountain",
-              "number": 5,
               "succes": "",
               "unlockables": []
             },
@@ -241,12 +241,12 @@
     {
       "data": {
         "choice": "B",
-        "number": 1,
+        "identifier": 1,
         "unlockables": [
           {
             "data": {
+              "identifier": 112,
               "name": "Expensive Crown",
-              "number": 112,
               "unlockables": []
             },
             "type": "ItemDesign"
@@ -257,14 +257,14 @@
     },
     {
       "data": {
-        "number": 4,
+        "identifier": 4,
         "unlockables": []
       },
       "type": "Donation"
     },
     {
       "data": {
-        "number": 5,
+        "identifier": 5,
         "unlockables": []
       },
       "type": "Donation"
@@ -272,12 +272,12 @@
     {
       "data": {
         "choice": "B",
-        "number": 9,
+        "identifier": 9,
         "unlockables": [
           {
             "data": {
               "choice": "",
-              "number": 31,
+              "identifier": 31,
               "unlockables": []
             },
             "type": "CityEvent"
@@ -288,12 +288,12 @@
     },
     {
       "data": {
-        "number": 38,
+        "identifier": 38,
         "unlockables": [
           {
             "data": {
+              "identifier": 97,
               "name": "Old Coin",
-              "number": 97,
               "unlockables": []
             },
             "type": "ItemDesign"
@@ -307,18 +307,18 @@
         "gridLocation": {
           "data": {
             "character": "C",
-            "number": 2
+            "identifier": 2
           },
           "type": "GridLocation"
         },
+        "identifier": 5,
         "name": "Candy Mountain",
-        "number": 5,
         "succes": true,
         "unlockables": [
           {
             "data": {
               "choice": "",
-              "number": 33,
+              "identifier": 33,
               "unlockables": []
             },
             "type": "CityEvent"
@@ -330,7 +330,7 @@
     {
       "data": {
         "choice": "B",
-        "number": 17,
+        "identifier": 17,
         "unlockables": []
       },
       "type": "CityEvent"
@@ -338,7 +338,7 @@
     {
       "data": {
         "choice": "A",
-        "number": 24,
+        "identifier": 24,
         "unlockables": []
       },
       "type": "RoadEvent"

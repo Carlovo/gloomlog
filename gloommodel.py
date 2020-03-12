@@ -354,7 +354,6 @@ class Treasure(Encounter):
     An abstract class for treasure from the game Gloomhaven
     """
 
-    # should be overwritten by child classes
     friendly_name = "treasure"
 
 
@@ -366,13 +365,39 @@ class Quest(NamedEncounter):
     friendly_name = "quest"
 
 
-class Donation(Encounter):
+class ItemDesign(NamedEncounter):
     """
-    An abstract class for sanctuary donations from the game Gloomhaven
+    An item design from the game Gloomhaven
+    """
+
+    friendly_name = "item design"
+
+
+class IncrementalEncounter(Encounter):
+    """
+    An abstract class for incremental encounters from the game Gloomhaven
+    Incremental encounters are encounters which number is the number of
+    the previous encounter of the same type increased by one
     """
 
     # should be overwritten by child classes
+    friendly_name = "Incremental encounter"
+
+
+class Donation(IncrementalEncounter):
+    """
+    A sanctuary donation from the game Gloomhaven
+    """
+
     friendly_name = "donation"
+
+
+class AncientTechnology(IncrementalEncounter):
+    """
+    An ancient technology from the game Gloomhaven
+    """
+
+    friendly_name = "ancient technology"
 
 
 if __name__ == "__main__":

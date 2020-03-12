@@ -75,7 +75,15 @@
       "data": {
         "number": 13,
         "choice": "B",
-        "unlockables": []
+        "unlockables": [
+          {
+            "type": "AncientTechnology",
+            "data": {
+              "number": 1,
+              "unlockables": []
+            }
+          }
+        ]
       }
     },
     {
@@ -180,6 +188,13 @@
         "succes": true,
         "unlockables": [
           {
+            "type": "AncientTechnology",
+            "data": {
+              "number": 2,
+              "unlockables": []
+            }
+          },
+          {
             "type": "RoadEvent",
             "data": {
               "number": 9,
@@ -196,6 +211,14 @@
         "number": 512,
         "name": "Kill Enemies",
         "unlockables": [
+          {
+            "type": "ItemDesign",
+            "data": {
+              "number": 143,
+              "name": "Sharp Arrow",
+              "unlockables": []
+            }
+          },
           {
             "type": "Scenario",
             "data": {
@@ -220,7 +243,16 @@
       "data": {
         "number": 1,
         "choice": "B",
-        "unlockables": []
+        "unlockables": [
+          {
+            "type": "ItemDesign",
+            "data": {
+              "number": 112,
+              "name": "Expensive Crown",
+              "unlockables": []
+            }
+          }
+        ]
       }
     },
     {
@@ -258,7 +290,16 @@
       "type": "Treasure",
       "data": {
         "number": 38,
-        "unlockables": []
+        "unlockables": [
+          {
+            "type": "ItemDesign",
+            "data": {
+              "number": 97,
+              "name": "Old Coin",
+              "unlockables": []
+            }
+          }
+        ]
       }
     },
     {

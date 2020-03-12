@@ -1,4 +1,4 @@
-from gloommodel import Scenario, GridLocation, Event, CityEvent, RoadEvent, Treasure, Quest, Donation
+from gloommodel import Scenario, GridLocation, Event, CityEvent, RoadEvent, Treasure, Quest, Donation, NamedEncounter, ItemDesign, AncientTechnology, IncrementalEncounter
 import json
 
 
@@ -27,7 +27,9 @@ class UserInterface:
         CityEvent,
         Treasure,
         Quest,
-        Donation
+        Donation,
+        ItemDesign,
+        AncientTechnology
     )
 
     def __init__(self):
@@ -490,9 +492,9 @@ class UserInterfaceSave(UserInterface):
         new_encounter_info = []
 
         # get encounter number
-        if new_encounter_class == Donation:
+        if issubclass(new_encounter_class, IncrementalEncounter):
             for encounter in reversed(self.encounter_list):
-                if type(encounter) == Donation:
+                if type(encounter) == new_encounter_class:
                     new_encounter_info.append(encounter.number + 1)
                     break
             else:
@@ -510,7 +512,7 @@ class UserInterfaceSave(UserInterface):
             )
 
         # get encounter name
-        if new_encounter_class == Scenario or new_encounter_class == Quest:
+        if issubclass(new_encounter_class, NamedEncounter):
             new_encounter_info.append(
                 input(f"What is the {new_encounter_friendly_name}'s name?: ")
             )
@@ -538,7 +540,7 @@ class UserInterfaceSave(UserInterface):
             new_encounter_info.append("")
 
         # 'placeholder' for event choice
-        if new_encounter_class == RoadEvent or new_encounter_class == CityEvent:
+        if issubclass(new_encounter_class, Event):
             new_encounter_info.append("")
 
         # 'placeholder' for encounter unlockables

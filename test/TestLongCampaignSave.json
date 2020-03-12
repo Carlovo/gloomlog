@@ -29,6 +29,13 @@
         "unlockables": [
           {
             "data": {
+              "identifier": "Sassy Savvas",
+              "unlockables": []
+            },
+            "type": "Character"
+          },
+          {
+            "data": {
               "choice": "",
               "identifier": 40,
               "unlockables": []
@@ -123,6 +130,13 @@
         "name": "Black Barrel",
         "succes": true,
         "unlockables": [
+          {
+            "data": {
+              "identifier": "Leave the City",
+              "unlockables": []
+            },
+            "type": "PartyAchievement"
+          },
           {
             "data": {
               "gridLocation": {
@@ -315,6 +329,13 @@
         "name": "Candy Mountain",
         "succes": true,
         "unlockables": [
+          {
+            "data": {
+              "identifier": "Candy Eaten",
+              "unlockables": []
+            },
+            "type": "GlobalAchievement"
+          },
           {
             "data": {
               "choice": "",

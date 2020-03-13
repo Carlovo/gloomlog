@@ -169,7 +169,7 @@ class TestGloomlogEncounterCopy(unittest.TestCase):
         logging.info(
             "Testing whether the Encounter string representation is correct")
 
-        expectedString = "Encounter " + str(self.identifier) + "."
+        expectedString = "Numbered encounter " + str(self.identifier) + "."
 
         logging.info(
             "Expected Encounter string representation: " + expectedString)

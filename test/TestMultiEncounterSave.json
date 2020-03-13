@@ -69,6 +69,13 @@
         "unlockables": [
           {
             "data": {
+              "identifier": "Sassy Savvas",
+              "unlockables": []
+            },
+            "type": "Character"
+          },
+          {
+            "data": {
               "choice": "",
               "identifier": 40,
               "unlockables": []

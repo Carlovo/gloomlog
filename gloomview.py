@@ -1,4 +1,20 @@
-from gloommodel import Scenario, GridLocation, Event, CityEvent, RoadEvent, Treasure, Quest, Donation, NamedEncounter, ItemDesign, AncientTechnology, IncrementalEncounter
+from gloommodel import (
+    AncientTechnology,
+    Character,
+    CityEvent,
+    Donation,
+    Event,
+    GlobalAchievement,
+    GridLocation,
+    IncrementalEncounter,
+    ItemDesign,
+    NamedEncounter,
+    PartyAchievement,
+    Quest,
+    RoadEvent,
+    Scenario,
+    Treasure
+)
 import json
 
 
@@ -22,14 +38,17 @@ class UserInterface:
     interface_header = ""
 
     encounter_types = (
-        Scenario,
-        RoadEvent,
+        AncientTechnology,
+        Character,
         CityEvent,
-        Treasure,
-        Quest,
         Donation,
+        GlobalAchievement,
         ItemDesign,
-        AncientTechnology
+        PartyAchievement,
+        Quest,
+        RoadEvent,
+        Scenario,
+        Treasure
     )
 
     def __init__(self):

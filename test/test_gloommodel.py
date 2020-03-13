@@ -17,7 +17,7 @@ class HandlerJSONCopy(gloommodel.HandlerJSON):
     pass
 
 
-class EncounterCopy(gloommodel.Encounter):
+class EncounterCopy(gloommodel.NumberedEncounter):
     """
     Encounter is an abstract class, but its functionality should still be tested
     """

@@ -52,15 +52,15 @@ class HandlerJSON:
 class Encounter(HandlerJSON):
     """
     An encouter from the game Gloomhaven
-    Abstract class to capture scenarios and events
+    Abstract class to capture as much as possible of what is in Gloomhaven
     """
 
     # should be overwritten by child classes
     friendly_name = "encounter"
 
-    def __init__(self, identifier: int = None, unlockables: list = [], fullJSON: str = None):
+    def __init__(self, identifier=None, unlockables: list = [], fullJSON: str = None):
         """
-        identifier (int):
+        identifier (something unique):
             the identifier of the Encounter
         unlockables (list of Encounter):
             list of Encounter objects this Encounter unlocked
@@ -79,7 +79,6 @@ class Encounter(HandlerJSON):
             identifier = fullDict["identifier"]
             unlockables = fullDict["unlockables"]
 
-        assert type(identifier) == int
         assert type(unlockables) == list
 
         self.identifier = identifier
@@ -105,7 +104,86 @@ class Encounter(HandlerJSON):
         Returns general info about the encouter (str)
         """
 
-        return f"{self.friendly_name} {self.identifier}.".capitalize()
+        capitalized_friendly_name = self.friendly_name.capitalize()
+
+        return f"{capitalized_friendly_name} {self.identifier}"
+
+
+class EncounterByName(Encounter):
+    """
+    An encouter identified with a unique name from the game Gloomhaven
+    Abstract class to capture mostly available characters and achievements
+    """
+
+    # should be overwritten by child classes
+    friendly_name = "numbered encounter"
+
+    def __init__(self, identifier: str = None, unlockables: list = [], fullJSON: str = None):
+        """
+        identifier (int):
+            the identifier of the Encounter
+        unlockables (list of Encounter):
+            list of Encounter objects this Encounter unlocked
+        fullJSON (str):
+            JSON representation of the Encounter
+
+        Provide either a JSON or all other parameters as input.
+        The JSON will override any other input if set.
+        """
+
+        # enforce only abstract use of this class
+        assert type(self) != NumberedEncounter
+
+        super().__init__(
+            identifier=identifier,
+            unlockables=unlockables,
+            fullJSON=fullJSON
+        )
+
+        assert type(self.identifier) == str
+
+
+class NumberedEncounter(Encounter):
+    """
+    An encouter identified with a unique number from the game Gloomhaven
+    Abstract class to capture mostly scenarios and events
+    """
+
+    # should be overwritten by child classes
+    friendly_name = "numbered encounter"
+
+    def __init__(self, identifier: int = None, unlockables: list = [], fullJSON: str = None):
+        """
+        identifier (int):
+            the identifier of the Encounter
+        unlockables (list of Encounter):
+            list of Encounter objects this Encounter unlocked
+        fullJSON (str):
+            JSON representation of the Encounter
+
+        Provide either a JSON or all other parameters as input.
+        The JSON will override any other input if set.
+        """
+
+        # enforce only abstract use of this class
+        assert type(self) != NumberedEncounter
+
+        super().__init__(
+            identifier=identifier,
+            unlockables=unlockables,
+            fullJSON=fullJSON
+        )
+
+        assert type(self.identifier) == int
+
+    def __str__(self) -> str:
+        """
+        Returns general info about the encouter (str)
+        """
+
+        super_str = super().__str__()
+
+        return f"{super_str}."
 
 
 class GridLocation(HandlerJSON):
@@ -161,7 +239,7 @@ class GridLocation(HandlerJSON):
         return "(" + self.character + "-" + str(self.identifier) + ")"
 
 
-class NamedEncounter(Encounter):
+class NamedEncounter(NumberedEncounter):
     """
     An abstract class for encounters with a name from the game Gloomhaven
     """
@@ -280,7 +358,7 @@ class Scenario(NamedEncounter):
         return f"{super_str} {location_str}{str_end}"
 
 
-class Event(Encounter):
+class Event(NumberedEncounter):
     """
     An abstract class for events from the game Gloomhaven
     """
@@ -349,7 +427,7 @@ class CityEvent(Event):
     friendly_name = "city event"
 
 
-class Treasure(Encounter):
+class Treasure(NumberedEncounter):
     """
     An abstract class for treasure from the game Gloomhaven
     """
@@ -373,7 +451,7 @@ class ItemDesign(NamedEncounter):
     friendly_name = "item design"
 
 
-class IncrementalEncounter(Encounter):
+class IncrementalEncounter(NumberedEncounter):
     """
     An abstract class for incremental encounters from the game Gloomhaven
     Incremental encounters are encounters which identifier is the identifier of
@@ -398,6 +476,30 @@ class AncientTechnology(IncrementalEncounter):
     """
 
     friendly_name = "ancient technology"
+
+
+class Character(EncounterByName):
+    """
+    An ancient technology from the game Gloomhaven
+    """
+
+    friendly_name = "character"
+
+
+class PartyAchievement(EncounterByName):
+    """
+    A party achievement from the game Gloomhaven
+    """
+
+    friendly_name = "party achievement"
+
+
+class GlobalAchievement(EncounterByName):
+    """
+    A lobal achievement from the game Gloomhaven
+    """
+
+    friendly_name = "global achievement"
 
 
 if __name__ == "__main__":

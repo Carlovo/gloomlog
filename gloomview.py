@@ -40,17 +40,23 @@ class UserInterface:
     interface_header = ""
 
     encounter_types = (
-        AncientTechnology,
-        Character,
         CityEvent,
         Donation,
-        GlobalAchievement,
-        ItemDesign,
-        PartyAchievement,
         Quest,
         RoadEvent,
         Scenario,
         Treasure
+    )
+
+    unlockable_types = (
+        AncientTechnology,
+        Character,
+        CityEvent,
+        GlobalAchievement,
+        ItemDesign,
+        PartyAchievement,
+        RoadEvent,
+        Scenario
     )
 
     def __init__(self):
@@ -487,9 +493,12 @@ class UserInterfaceSave(UserInterface):
 
         return True
 
-    def get_encounter_basics(self):
+    def get_encounter_basics(self, unlockable: bool = False):
         """Query the user for basic information of an encounter
         Basic inforormation is the data (also) required for unlockables.
+
+        unlockable (bool, False)
+            changes the encounter options to unlockables
 
         Returns
         -------
@@ -497,13 +506,19 @@ class UserInterfaceSave(UserInterface):
             Returns an instance of a child class of Encounter.
         """
 
+        if unlockable:
+            type_list = self.unlockable_types
+        else:
+            type_list = self.encounter_types
+
         new_encounter_friendly_name = self.multiple_choice_question(
             question="What type of encounter?",
             options=tuple(encounter_type.friendly_name
-                          for encounter_type in self.encounter_types)
+                          for encounter_type in type_list)
         )
 
-        for new_encounter_class in self.encounter_types:
+        # slightly hacky way of converting strings to class types
+        for new_encounter_class in type_list:
             if new_encounter_class.friendly_name == new_encounter_friendly_name:
                 break
         else:
@@ -606,7 +621,7 @@ class UserInterfaceSave(UserInterface):
 
         # get encounter unlockables
         while self.yes_no_question(question="Would you like to add an unlocked encounter?"):
-            unlocked_encounter = self.get_encounter_basics()
+            unlocked_encounter = self.get_encounter_basics(unlockable=True)
             new_encounter.unlockables.append(unlocked_encounter)
 
         self.encounter_list.append(new_encounter)

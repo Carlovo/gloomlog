@@ -3,12 +3,14 @@ from gloommodel import (
     Character,
     CityEvent,
     Donation,
+    EncounterByName,
     Event,
     GlobalAchievement,
     GridLocation,
     IncrementalEncounter,
     ItemDesign,
     NamedEncounter,
+    NumberedEncounter,
     PartyAchievement,
     Quest,
     RoadEvent,
@@ -511,29 +513,41 @@ class UserInterfaceSave(UserInterface):
         new_encounter_info = []
 
         # get encounter identifier
-        if issubclass(new_encounter_class, IncrementalEncounter):
-            for encounter in reversed(self.encounter_list):
-                if type(encounter) == new_encounter_class:
-                    new_encounter_info.append(encounter.identifier + 1)
-                    break
+        # TODO refactor this and related stuff to Pythonic try/catch duck typing
+        if issubclass(new_encounter_class, NumberedEncounter):
+            if issubclass(new_encounter_class, IncrementalEncounter):
+                for encounter in reversed(self.encounter_list):
+                    if type(encounter) == new_encounter_class:
+                        new_encounter_info.append(encounter.identifier + 1)
+                        break
+                else:
+                    new_encounter_info.append(1)
             else:
-                new_encounter_info.append(1)
-        else:
-            new_encounter_info.append(
-                int(
-                    self.multiple_choice_question(
-                        question="What is the {encounter}'s identifier?".format(
-                            encounter=new_encounter_friendly_name),
-                        options=tuple(str(i) for i in range(1, 1000)),
-                        range_options="(1-999)"
+                new_encounter_info.append(
+                    int(
+                        self.multiple_choice_question(
+                            question=f"What is the {new_encounter_friendly_name}'s identifier number?",
+                            options=tuple(str(i) for i in range(1, 1000)),
+                            range_options="(1-999)"
+                        )
                     )
                 )
+        elif issubclass(new_encounter_class, EncounterByName):
+            new_encounter_info.append(
+                input(
+                    f"What is the {new_encounter_friendly_name}'s identifier name?: "
+                )
             )
+        else:
+            print("unidentifiable encounter type")
+            error_exit_interfaces()
 
         # get encounter name
         if issubclass(new_encounter_class, NamedEncounter):
             new_encounter_info.append(
-                input(f"What is the {new_encounter_friendly_name}'s name?: ")
+                input(
+                    f"What is the {new_encounter_friendly_name}'s name?: "
+                )
             )
 
         # get/create scenario gridLocation

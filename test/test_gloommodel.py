@@ -17,7 +17,7 @@ class HandlerJSONCopy(gloommodel.HandlerJSON):
     pass
 
 
-class EncounterCopy(gloommodel.NumberedEncounter):
+class EncounterCopy(gloommodel.EncounterByNumber):
     """
     Encounter is an abstract class, but its functionality should still be tested
     """
@@ -169,7 +169,7 @@ class TestGloomlogEncounterCopy(unittest.TestCase):
         logging.info(
             "Testing whether the Encounter string representation is correct")
 
-        expectedString = "Numbered encounter " + str(self.identifier) + "."
+        expectedString = "Encounter by number " + str(self.identifier) + "."
 
         logging.info(
             "Expected Encounter string representation: " + expectedString)

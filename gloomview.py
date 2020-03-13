@@ -4,13 +4,13 @@ from gloommodel import (
     CityEvent,
     Donation,
     EncounterByName,
+    EncounterByNumber,
     Event,
     GlobalAchievement,
     GridLocation,
-    IncrementalEncounter,
+    IncrementalEncounterByNumber,
     ItemDesign,
-    NamedEncounter,
-    NumberedEncounter,
+    NamedEncounterByNumber,
     PartyAchievement,
     Quest,
     RoadEvent,
@@ -514,8 +514,8 @@ class UserInterfaceSave(UserInterface):
 
         # get encounter identifier
         # TODO refactor this and related stuff to Pythonic try/catch duck typing
-        if issubclass(new_encounter_class, NumberedEncounter):
-            if issubclass(new_encounter_class, IncrementalEncounter):
+        if issubclass(new_encounter_class, EncounterByNumber):
+            if issubclass(new_encounter_class, IncrementalEncounterByNumber):
                 for encounter in reversed(self.encounter_list):
                     if type(encounter) == new_encounter_class:
                         new_encounter_info.append(encounter.identifier + 1)
@@ -543,7 +543,7 @@ class UserInterfaceSave(UserInterface):
             error_exit_interfaces()
 
         # get encounter name
-        if issubclass(new_encounter_class, NamedEncounter):
+        if issubclass(new_encounter_class, NamedEncounterByNumber):
             new_encounter_info.append(
                 input(
                     f"What is the {new_encounter_friendly_name}'s name?: "

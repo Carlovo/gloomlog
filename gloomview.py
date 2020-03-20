@@ -590,6 +590,7 @@ class UserInterfaceSave(UserInterface):
         # 'placeholder' for event choice
         if issubclass(new_encounter_class, Event):
             new_encounter_info.append("")
+            new_encounter_info.append(False)
 
         # 'placeholder' for encounter unlockables
         new_encounter_info.append([])

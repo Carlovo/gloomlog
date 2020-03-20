@@ -310,6 +310,7 @@ class Event(EncounterByNumber):
         self,
         identifier: int = None,
         choice: str = None,
+        remove: bool = False,
         unlockables: list = [],
         fullJSON: int = None
     ):
@@ -318,6 +319,8 @@ class Event(EncounterByNumber):
             the identifier of the event
         choice ("A", "B" or ""):
             "A" or "B" for outcome choice, "" if only unlocked
+        remove (bool):
+            should the event be removed from available events
         unlockables (list of Encounter):
             list of Encounter objects this Encounter unlocked
         """
@@ -328,13 +331,16 @@ class Event(EncounterByNumber):
             fullDict = self.fromJSON(fullJSON)
             identifier = fullDict["identifier"]
             choice = fullDict["choice"]
+            remove = fullDict["remove"]
             unlockables = fullDict["unlockables"]
 
         assert choice == "A" or choice == "B" or choice == ""
+        assert type(remove) == bool
 
         super().__init__(identifier, unlockables)
 
         self.choice = choice
+        self.remove = remove
 
     def __str__(self) -> str:
         """
@@ -345,6 +351,8 @@ class Event(EncounterByNumber):
 
         if self.choice:
             str_end = f": {self.choice}"
+            if self.remove:
+                str_end += "-"
         else:
             str_end = ""
 

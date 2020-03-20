@@ -242,7 +242,10 @@ class TestStdOut(unittest.TestCase):
     # implement available characters
     # implement available items
     # implement available events
-    # implement available scenarios
+    # implement available scenarios (opened and not yet succeeded)
+    # implement available scenarios (playable)
+    # implement list global achievements
+    # implement list party achievements
     # implement Drake achievements
     # implement Gloomhaven prosperity
     # implement Party reputation
@@ -318,10 +321,11 @@ class TestStdOut(unittest.TestCase):
         # sanity check
         mock_exit.assert_called_once()
 
-        # TODO: implement and uncomment below
         mock_stdout.assert_has_calls(
             [mock.call.write("Donation 1."),
              mock.call.write("City event 0.: A-"),
+             mock.call.write("+ Character Innocuous Inox"),
+             mock.call.write("+ Character Venerable Vermling"),
              mock.call.write("Donation 2."),
              mock.call.write("Quest 537. Help Vermlings"),
              mock.call.write("+ Character Sassy Savvas"),
@@ -359,6 +363,71 @@ class TestStdOut(unittest.TestCase):
              mock.call.write("+ City event 33."),
              mock.call.write("City event 17.: B"),
              mock.call.write("Road event 24.: A")],
+            any_order=True
+        )
+
+    @mock.patch("gloomcontroller.Controller.exit_gloomlog")
+    @mock.patch("builtins.input", side_effect="lvpe")
+    @mock.patch("sys.stdout")
+    def test_present_available_characters_and_items(self, mock_stdout, mock_present, mock_exit):
+        """
+        Test whether GloomLog can correctly present avaialble characters and buyable items
+        """
+
+        logging.info(
+            "Testing whether GloomLog can correctly present avaialble characters and buyable items"
+        )
+
+        self.controller.run()
+
+        # sanity check
+        mock_exit.assert_called_once()
+
+        # TODO: uncomment below or implement somewhere else
+        mock_stdout.assert_has_calls(
+            [
+                mock.call.write("Characters available for play:"),
+                mock.call.write("+ Innocuous Inox"),
+                mock.call.write("+ Venerable Vermling"),
+                mock.call.write("+ Sassy Savvas")
+                # mock.call.write("Items for sale in Gloomhaven:"),
+                # mock.call.write("+ 6. Boring Board Game"),
+                # mock.call.write("+ 97. Old Coin"),
+                # mock.call.write("+ 112. Expensive Crown"),
+                # mock.call.write("+ 143. Sharp Arrow")
+            ],
+            any_order=True
+        )
+
+    @mock.patch("gloomcontroller.Controller.exit_gloomlog")
+    @mock.patch("builtins.input", side_effect="lvpe")
+    @mock.patch("sys.stdout")
+    def test_present_unlocked_encounters(self, mock_stdout, mock_present, mock_exit):
+        """
+        Test whether GloomLog can correctly present unlocked encounters
+        """
+
+        logging.info(
+            "Testing whether GloomLog can correctly present unlocked encounters"
+        )
+
+        self.controller.run()
+
+        # sanity check
+        mock_exit.assert_called_once()
+
+        # TODO: uncomment below or implement somewhere else
+        mock_stdout.assert_has_calls(
+            [
+                # mock.call.write("Scenarios unlocked and unfinished:"),
+                # mock.call.write("+ 2. The Middle Ground (O-18)"),
+                # mock.call.write("+ 18. High Ocean (H-11)"),
+                # mock.call.write("+ 72. Low Sky (A-1)"),
+                # mock.call.write("City events playable:"),
+                # mock.call.write("+ 1 -> 4, 7, 8, 10 -> 12, 17"),
+                # mock.call.write("Road events playable:"),
+                # mock.call.write("+ 1 -> 4, 7, 8, 10 -> 12, 89")
+            ],
             any_order=True
         )
 

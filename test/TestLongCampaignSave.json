@@ -12,7 +12,22 @@
         "choice": "A",
         "identifier": 0,
         "remove": true,
-        "unlockables": []
+        "unlockables": [
+          {
+            "data": {
+              "identifier": "Innocuous Inox",
+              "unlockables": []
+            },
+            "type": "Character"
+          },
+          {
+            "data": {
+              "identifier": "Venerable Vermling",
+              "unlockables": []
+            },
+            "type": "Character"
+          }
+        ]
       },
       "type": "CityEvent"
     },

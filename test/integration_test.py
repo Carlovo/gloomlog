@@ -319,8 +319,7 @@ class TestStdOut(unittest.TestCase):
         # TODO: implement and uncomment below
         mock_stdout.assert_has_calls(
             [mock.call.write("Donation 1."),
-             mock.call.write("City event 0.: A"),
-             #  mock.call.write("City event 0.: A-"),
+             mock.call.write("City event 0.: A-"),
              mock.call.write("Donation 2."),
              mock.call.write("Quest 537. Help Vermlings"),
              mock.call.write("+ Character Sassy Savvas"),
@@ -349,8 +348,7 @@ class TestStdOut(unittest.TestCase):
              mock.call.write("+ Item design 112. Expensive Crown"),
              mock.call.write("Donation 4."),
              mock.call.write("Donation 5."),
-             mock.call.write("Road event 9.: B"),
-             #  mock.call.write("Road event 9.: B-"),
+             mock.call.write("Road event 9.: B-"),
              mock.call.write("+ City event 31."),
              mock.call.write("Treasure 38."),
              mock.call.write("+ Item design 97. Old Coin"),

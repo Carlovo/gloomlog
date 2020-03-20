@@ -295,7 +295,7 @@ class TestStdOut(unittest.TestCase):
              mock.call.write("Donation 1."),
              mock.call.write("Donation 2."),
              mock.call.write("Quest 511. Because we can"),
-             mock.call.write("City event 5.: B"),
+             mock.call.write("City event 5.: B-"),
              mock.call.write("Road event 2.: A"),
              mock.call.write("ADD new encounter")],
             any_order=True

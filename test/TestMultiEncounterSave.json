@@ -4,6 +4,7 @@
       "data": {
         "choice": "A",
         "identifier": 0,
+        "remove": false,
         "unlockables": []
       },
       "type": "CityEvent"
@@ -78,6 +79,7 @@
             "data": {
               "choice": "",
               "identifier": 40,
+              "remove": false,
               "unlockables": []
             },
             "type": "CityEvent"
@@ -86,6 +88,7 @@
             "data": {
               "choice": "",
               "identifier": 58,
+              "remove": false,
               "unlockables": []
             },
             "type": "RoadEvent"
@@ -98,6 +101,7 @@
       "data": {
         "choice": "B",
         "identifier": 5,
+        "remove": true,
         "unlockables": []
       },
       "type": "CityEvent"
@@ -106,6 +110,7 @@
       "data": {
         "choice": "A",
         "identifier": 2,
+        "remove": false,
         "unlockables": []
       },
       "type": "RoadEvent"

@@ -197,11 +197,13 @@ class TestCorrectSaving(unittest.TestCase):
         "city event",  # "What type of encounter?"
         "5",  # "What is the city event's identifier number?"
         "B",  # "Which option did you choose?"
+        "yes",  # Should the event be removed from the game?
         "no",  # "Would you like to add an unlocked encounter?"
         "add",  # "What would you like to do with campaign save 'testers'?" -> "ADD new encounter"
         "road event",  # "What type of encounter?"
         "2",  # "What is the road event's identifier number?"
         "A",  # "Which option did you choose?"
+        "no",  # Should the event be removed from the game?
         "no",  # "Would you like to add an unlocked encounter?"
         "exit"  # "What would you like to do with campaign save 'testers'?" -> "EXIT GloomLog"
     ])

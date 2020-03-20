@@ -619,6 +619,9 @@ class UserInterfaceSave(UserInterface):
                 options=("A", "B"),
                 question="Which option did you choose?"
             )
+            new_encounter.remove = self.yes_no_question(
+                question="Should the event be removed from the game?"
+            )
 
         # get encounter unlockables
         while self.yes_no_question(question="Would you like to add an unlocked encounter?"):
